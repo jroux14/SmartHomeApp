@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommunicationService } from '../service/communication.service';
+import { CommunicationService } from '../service/communication/communication.service';
 
 @Component({
   selector: 'app-root',

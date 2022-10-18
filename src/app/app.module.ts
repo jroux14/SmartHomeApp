@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { CommunicationService } from './service/communication.service';
+import { CommunicationService } from './service/communication/communication.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './component/app.component';
