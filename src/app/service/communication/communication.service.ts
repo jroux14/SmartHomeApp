@@ -8,10 +8,10 @@ export class CommunicationService {
   private usersUrl: string;
 
   constructor(private http: HttpClient) {
-    this.usersUrl = 'http://smarthome-client:8080/test';
+    this.usersUrl = 'http://smarthome-client:8080/';
   }
 
   public test(): Observable<any> {
-    return this.http.get<any>(this.usersUrl);
+    return this.http.get<any>(this.usersUrl+"test");
   }
 }
