@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { CommunicationService } from './service/communication/communication.service';
+import { EmitterService } from './service/emitter/emitter.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './component/app.component';
@@ -23,7 +24,10 @@ import { ButtonSimpleComponent } from './component/common/button-simple/button-s
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [CommunicationService],
+  providers: [
+    CommunicationService,
+    EmitterService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
