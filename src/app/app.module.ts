@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { CommunicationService } from './service/communication/communication.service';
-import { EmitterService } from './service/emitter/emitter.service';
+import { DataService } from './services/data.service';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './component/app.component';
-import { HomeComponent } from './component/pages/home/home.component';
-import { SettingsComponent } from './component/pages/settings/settings.component';
-import { ButtonRoutingComponent } from './component/common/button-routing/button-routing.component';
-import { ButtonSimpleComponent } from './component/common/button-simple/button-simple.component';
+import { AppComponent } from './components/app.component';
+import { HomeComponent } from './components/pages/home/home.component';
+import { SettingsComponent } from './components/pages/settings/settings.component';
+import { ButtonRoutingComponent } from './components/inputs/button-routing/button-routing.component';
+import { ButtonSimpleComponent } from './components/inputs/button-simple/button-simple.component';
+import { CommonComponent } from './components/common/common.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CommonComponent,
     HomeComponent,
     SettingsComponent,
     ButtonRoutingComponent,
@@ -25,8 +26,7 @@ import { ButtonSimpleComponent } from './component/common/button-simple/button-s
     HttpClientModule
   ],
   providers: [
-    CommunicationService,
-    EmitterService
+    DataService
   ],
   bootstrap: [AppComponent]
 })
