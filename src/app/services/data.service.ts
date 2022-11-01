@@ -9,7 +9,7 @@ export class DataService {
   public usersUrl: string;
 
   constructor(public http: HttpClient) {
-    this.usersUrl = 'http://smarthome-client:8080/';
+    this.usersUrl = 'http://localhost:4200/';
   }
 
   public test(): Observable<any> {
