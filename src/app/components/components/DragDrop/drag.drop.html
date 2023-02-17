@@ -1,0 +1,29 @@
+<div class="device-container">
+    <h2>Device List 1</h2>
+  
+    <div
+      cdkDropList
+      #list1List="cdkDropList"
+      [cdkDropListData]="list1"
+      [cdkDropListConnectedTo]="[list2List]"
+      class="device-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="device-box" *ngFor="let item of list1" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+  
+  <div class="device-container">
+    <h2>Device List 2</h2>
+  
+    <div
+      cdkDropList
+      #list2List="cdkDropList"
+      [cdkDropListData]="list2"
+      [cdkDropListConnectedTo]="[list1List]"
+      class="device-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="device-box" *ngFor="let item of list2" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+  
+  
