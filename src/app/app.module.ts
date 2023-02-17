@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/components/app/app.component';
@@ -13,6 +15,7 @@ import { ButtonSimpleComponent } from './components/inputs/button-simple/button-
 import { CommonComponent } from './components/components/common/common/common.component';
 import { NavbarComponent } from './components/components/navbar/navbar.component';
 import { DropdownComponent } from './components/components/dropdown/dropdown.component';
+import { DragDropComponent } from './components/components/DragDrop/drag.drop';
 
 @NgModule({
   declarations: [
@@ -23,13 +26,15 @@ import { DropdownComponent } from './components/components/dropdown/dropdown.com
     ButtonRoutingComponent,
     ButtonSimpleComponent,
     NavbarComponent,
-    DropdownComponent
+    DropdownComponent,
+    DragDropComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [
     DataService
