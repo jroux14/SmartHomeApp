@@ -1,7 +1,11 @@
 <div class="dropdown">
-    <button class="dropbtn"><i class="material-symbols-outlined menu-icon">menu</i></button>
-    <div class="dropdown-content">
-        <a routerLink='' routerLinkActive="active"><i class="material-symbols-outlined dash-icon">dashboard</i>Home</a>
-        <a routerLink='settings' routerLinkActive="active"><i class="material-symbols-outlined settings-icon">settings</i>Settings</a>
+    <button (click)="toggle()" class="dropbtn"><i class="material-symbols-outlined menu-icon">menu</i></button>
+</div>
+<div class="dropdown-container" *ngIf="isOpen" @dropDown>
+    <div *ngIf="showLogin">
+        <button class="loginBtn" (click)="onLogin()"><i class="material-symbols-outlined loginIcon">login</i>Login</button> 
+    </div>
+    <div *ngFor="let link of links; let i = index" class="dropdown-content">
+        <a [routerLink]="links[i]" routerLinkActive="active"><i class="material-symbols-outlined dash-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
     </div>
 </div>

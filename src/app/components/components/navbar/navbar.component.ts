@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonComponent } from '../common/common/common.component';
 
 @Component({
@@ -7,9 +7,12 @@ import { CommonComponent } from '../common/common/common.component';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent extends CommonComponent {
+  @Input() 
+  showLogin: boolean = false;
 
   override ngOnInit(): void {
     super.ngOnInit();
+    console.log(this.showLogin);
   }
 
 }

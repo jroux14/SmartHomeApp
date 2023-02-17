@@ -8,6 +8,7 @@ import { CommonComponent } from '../../components/common/common/common.component
 })
 export class HomeComponent extends CommonComponent {
   responseData: String = '';
+  testLogin: boolean = true;
 
   override ngOnInit() {
     super.ngOnInit();
@@ -23,7 +24,4 @@ export class HomeComponent extends CommonComponent {
       env.responseData = resp.test;
     }));
   }
-
-  
-
 }
