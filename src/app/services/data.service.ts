@@ -1,3 +1,4 @@
+import { MONGO_URL } from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,14 +7,10 @@ import { Observable } from 'rxjs';
 export class DataService {
   @Output() changeDetected: EventEmitter<any> = new EventEmitter();
 
-  public usersUrl: string;
-
-  constructor(public http: HttpClient) {
-    this.usersUrl = 'http://localhost:4200/';
-  }
+  constructor(public http: HttpClient) {}
 
   public test(): Observable<any> {
-    return this.http.get<any>(this.usersUrl+"test");
+    return this.http.get<any>(MONGO_URL+"test");
   }
 
 }

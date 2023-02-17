@@ -14,11 +14,9 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy {
 
   constructor(public dataService: DataService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(function (subscription) {

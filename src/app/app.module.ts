@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/app.component';
+import { AppComponent } from './components/components/app/app.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { SettingsComponent } from './components/pages/settings/settings.component';
 import { ButtonRoutingComponent } from './components/inputs/button-routing/button-routing.component';
 import { ButtonSimpleComponent } from './components/inputs/button-simple/button-simple.component';
-import { CommonComponent } from './components/common/common.component';
+import { CommonComponent } from './components/components/common/common/common.component';
+import { NavbarComponent } from './components/components/navbar/navbar.component';
+import { DropdownComponent } from './components/components/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { CommonComponent } from './components/common/common.component';
     HomeComponent,
     SettingsComponent,
     ButtonRoutingComponent,
-    ButtonSimpleComponent
+    ButtonSimpleComponent,
+    NavbarComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,

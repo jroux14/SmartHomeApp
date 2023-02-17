@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonComponent } from '../../common/common.component';
+import { CommonComponent } from '../../components/common/common/common.component';
 
 @Component({
   selector: 'button-simple',
