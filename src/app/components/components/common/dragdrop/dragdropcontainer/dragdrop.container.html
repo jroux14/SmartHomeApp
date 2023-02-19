@@ -1,0 +1,10 @@
+<gridster class="grid" [options]="options">
+  <gridster-item [item]="item" *ngFor="let item of dashboard; let i = index">
+    <div class="button-holder">
+      <label>Hello</label>
+      <button (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
+        delete
+      </button>
+    </div>
+  </gridster-item>
+</gridster>

@@ -9,8 +9,6 @@ import { CommonComponent } from '../../components/common/common/common.component
 export class ButtonSimpleComponent extends CommonComponent {
   @Input()
   bLabel: String = '';
-  @Output()
-  changeEmitter = new EventEmitter<any>();
 
   override ngOnInit(): void {
     super.ngOnInit();

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class DataService {
   @Output() changeDetected: EventEmitter<any> = new EventEmitter();
-
+  @Output() menuOpened: EventEmitter<any> = new EventEmitter();
+  
   constructor(public http: HttpClient) {}
 
   public test(): Observable<any> {

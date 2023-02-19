@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CommonComponent } from '../common/common/common.component';
+import { CommonComponent } from '../common/common.component';
 import { DropDownAnimation } from 'src/app/animations/animations';
 
 @Component({
@@ -23,6 +23,9 @@ export class DropdownComponent extends CommonComponent {
 
   toggle() {
     this.isOpen = !this.isOpen;
+    if(this.isOpen) {
+      this.dataService.menuOpened.emit();
+    }
   }
 
   onLogin() {
