@@ -46,10 +46,10 @@ export class DragDropContainerComponent extends CommonComponent{
     super.ngOnInit();
     this.options = {
       gridType: GridType.Fixed,
-      displayGrid: DisplayGrid.None,
+      displayGrid: DisplayGrid.OnDragAndResize,
       setGridSize: true,
-      fixedColWidth: 100,
-      fixedRowHeight: 100,
+      fixedColWidth: 250,
+      fixedRowHeight: 250,
       margin:30,
       outerMarginLeft: 250,
       outerMarginTop: 50,
@@ -69,8 +69,8 @@ export class DragDropContainerComponent extends CommonComponent{
     };
 
     this.dashboard = [
-      { cols: 1, rows: 1, y: 1, x: 0 },
-      { cols: 1, rows: 1, y: 2, x: 0 }
+      { cols: 1, rows: 1, y: 0, x: 0 },
+      { cols: 1, rows: 1, y: 1, x: 1 }
     ];
   }
 
