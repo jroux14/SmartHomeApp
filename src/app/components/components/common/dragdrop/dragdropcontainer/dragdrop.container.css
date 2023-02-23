@@ -4,6 +4,7 @@
   background-color: var(--sh-lightgray);
   display: block;
   overflow: visible;
-  border: none;
+  position: relative;
+  z-index: 0;
 }
   

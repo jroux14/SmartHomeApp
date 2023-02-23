@@ -10,7 +10,6 @@ import {
   Resizable,
 } from "angular-gridster2";
 import { CommonComponent } from '../../common/common.component';
-// import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'dragdrop-container',
@@ -30,13 +29,15 @@ export class DragDropContainerComponent extends CommonComponent{
       if(this.options.minCols < 5) {
         this.options.minCols = (event.target.innerWidth-500) / this.options.fixedColWidth;
         this.options.maxCols = (event.target.innerWidth-500) / this.options.fixedColWidth;
+        this.options.emptyCellDragMaxCols = (event.target.innerWidth-500) / this.options.fixedColWidth;
+        this.options.emptyCellDragMaxRows = (event.target.innerWidth-500) / this.options.fixedColWidth;
       }
       for(let i = 0; i < this.dashboard.length; i++) {
         if(this.dashboard[i].x > this.options.maxCols) {
           this.dashboard[i].x = this.options.maxCols-1;
         }
       }
-      this.options.api.optionsChanged();
+      this.changedOptions();
       this.options.api.resize!();
       console.log(this.options.minCols);
     }
@@ -46,7 +47,7 @@ export class DragDropContainerComponent extends CommonComponent{
     super.ngOnInit();
     this.options = {
       gridType: GridType.Fixed,
-      displayGrid: DisplayGrid.OnDragAndResize,
+      displayGrid: DisplayGrid.None,
       setGridSize: true,
       fixedColWidth: 250,
       fixedRowHeight: 250,
@@ -59,6 +60,10 @@ export class DragDropContainerComponent extends CommonComponent{
       useBodyForBreakpoint: false,
       swap: true,
       pushItems: false,
+      enableEmptyCellDrop: true,
+      enableOccupiedCellDrop: true,
+      emptyCellDragCallback: this.emptyCellClick.bind(this),
+      emptyCellDropCallback: this.emptyCellClick.bind(this),
       rowHeightRatio: 1,
       draggable: {
         enabled: true
@@ -86,6 +91,11 @@ export class DragDropContainerComponent extends CommonComponent{
     }
   }
 
+  emptyCellClick(event: MouseEvent, item: GridsterItem): void {
+    console.info('empty cell click', event, item);
+    this.dashboard.push(item);
+  }
+
   removeItem($event: MouseEvent | TouchEvent, item: GridsterItem): void {
     $event.preventDefault();
     $event.stopPropagation();
@@ -97,6 +107,13 @@ export class DragDropContainerComponent extends CommonComponent{
   addItem(): void {
     if(this.dashboard) {
       this.dashboard.push({ x: 0, y: 0, cols: 1, rows: 1 });
+    }
+  }
+
+  dragStartHandler(ev: DragEvent): void {
+    if (ev.dataTransfer) {
+      ev.dataTransfer.setData('text/plain', 'Drag Me Button');
+      ev.dataTransfer.dropEffect = 'copy';
     }
   }
 }

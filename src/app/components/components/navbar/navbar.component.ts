@@ -15,4 +15,8 @@ export class NavbarComponent extends CommonComponent {
     console.log(this.showLogin);
   }
 
+  createNewDevice() {
+    
+  }
+
 }
