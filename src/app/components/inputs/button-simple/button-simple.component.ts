@@ -9,13 +9,19 @@ import { CommonComponent } from '../../components/common/common/common.component
 export class ButtonSimpleComponent extends CommonComponent {
   @Input()
   bLabel: String = '';
+  @Input()
+  componentID: String = '';
 
   override ngOnInit(): void {
     super.ngOnInit();
   }
 
   onChangeDetect(event: any) {
-    this.dataService.changeDetected.emit(event);
+    let data: {[key: string]: any} = {
+      event: event,
+      id: this.componentID
+    }
+    this.dataService.changeDetected.emit(data);
   }
 
 }

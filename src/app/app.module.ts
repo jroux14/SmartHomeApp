@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { GridsterModule } from 'angular-gridster2';
 
@@ -16,6 +17,8 @@ import { CommonComponent } from './components/components/common/common/common.co
 import { NavbarComponent } from './components/components/navbar/navbar.component';
 import { DropdownComponent } from './components/components/common/dropdown/dropdown.component';
 import { DragDropContainerComponent } from './components/components/common/dragdrop/dragdropcontainer/dragdrop.container';
+import { LoginPopupComponent } from './components/components/common/popup/login-popup/login-popup.component';
+import { TextInputComponent } from './components/inputs/text-input/text-input.component';
 // import { DragDropItemComponent } from './components/components/common/dragdrop/dragdropitem/dragdrop.item';
 
 @NgModule({
@@ -28,8 +31,10 @@ import { DragDropContainerComponent } from './components/components/common/dragd
     ButtonSimpleComponent,
     NavbarComponent,
     DropdownComponent,
-    DragDropContainerComponent
+    DragDropContainerComponent,
     // DragDropItemComponent
+    LoginPopupComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,8 @@ import { DragDropContainerComponent } from './components/components/common/dragd
     AppRoutingModule,
     HttpClientModule,
     DragDropModule,
-    GridsterModule
+    GridsterModule,
+    MatDialogModule
   ],
   providers: [
     DataService

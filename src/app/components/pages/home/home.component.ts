@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonComponent } from '../../components/common/common/common.component';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +14,9 @@ export class HomeComponent extends CommonComponent {
   override ngOnInit() {
     super.ngOnInit();
     this.addSubscription(this.dataService.changeDetected.subscribe(resp => {
-      this.testHttp();
+      if(resp.id == 'testGet') {
+        this.testHttp();
+      }
     }));
   }
 

@@ -29,7 +29,7 @@ export class DropdownComponent extends CommonComponent {
   }
 
   onLogin() {
-    console.log('Logging In');
+    this.dataService.openLoginPopup.emit();
   }
 
 }

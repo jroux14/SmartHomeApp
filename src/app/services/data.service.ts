@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 export class DataService {
   @Output() changeDetected: EventEmitter<any> = new EventEmitter();
   @Output() menuOpened: EventEmitter<any> = new EventEmitter();
+  @Output() openLoginPopup: EventEmitter<any> = new EventEmitter();
   
   constructor(public http: HttpClient) {}
 

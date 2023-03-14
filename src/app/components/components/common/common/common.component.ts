@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'common',
@@ -12,7 +13,7 @@ import { DataService } from 'src/app/services/data.service';
 export class CommonComponent implements OnChanges, OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
-  constructor(public dataService: DataService) {}
+  constructor(public dataService: DataService, public dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
