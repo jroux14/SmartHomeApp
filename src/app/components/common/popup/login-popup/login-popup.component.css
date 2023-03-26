@@ -1,0 +1,50 @@
+.loginTitle {
+    font-family: 'Outfit';
+    font-size: 2rem;
+    position: relative;
+    top: -2rem;
+    margin-bottom: 0rem;
+    text-align: center;
+}
+
+.loginInputs {
+    padding-left: 1rem;
+}
+
+.loginBtn {
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+    filter: drop-shadow(0px 0px 4px rgb(32, 32, 32));    
+}
+
+.warning {
+    text-align: center;
+    font-weight: normal;
+    color: rgb(245, 52, 52);
+    margin: 0;
+    padding-top: 0.75rem;
+}
+
+.or {
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 0.2rem;
+}
+
+.createAcct {
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 0.2rem;
+    text-decoration: underline;
+}
+
+.createAcct:hover {
+    cursor: pointer;
+}
+
+.divLine {
+    margin-top: -1.25rem;
+    margin-bottom: 1.5rem;
+}

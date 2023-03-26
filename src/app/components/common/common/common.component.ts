@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LoginPopupComponent } from '../popup/login-popup/login-popup.component';
 
 @Component({
   selector: 'common',
@@ -30,4 +29,6 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy {
   addSubscription(sub: Subscription) {
     this.subscriptions.push(sub);
   }
+
+  
 }

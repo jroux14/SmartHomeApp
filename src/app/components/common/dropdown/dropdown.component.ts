@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonComponent } from '../common/common.component';
 import { DropDownAnimation } from 'src/app/animations/animations';
+import { LoginPopupComponent } from '../popup/login-popup/login-popup.component';
 
 @Component({
   selector: 'sh-dropdown',
@@ -24,12 +25,11 @@ export class DropdownComponent extends CommonComponent {
   toggle() {
     this.isOpen = !this.isOpen;
     if(this.isOpen) {
-      this.dataService.menuOpened.emit();
+      this.dataService.dropdownEmitter.emit();
     }
   }
 
   onLogin() {
-    this.dataService.openLoginPopup.emit();
+    this.dataService.openLoginEmitter.emit();
   }
-
 }

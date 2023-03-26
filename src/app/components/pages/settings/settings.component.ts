@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonComponent } from '../../components/common/common/common.component';
+import { CommonComponent } from '../../common/common/common.component';
 
 @Component({
   selector: 'app-settings',

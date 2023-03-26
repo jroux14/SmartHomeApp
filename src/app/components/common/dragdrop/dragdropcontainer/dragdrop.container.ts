@@ -1,13 +1,9 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {
-  CompactType,
   DisplayGrid,
-  Draggable,
   GridsterConfig,
   GridsterItem,
   GridType,
-  PushDirections,
-  Resizable,
 } from "angular-gridster2";
 import { CommonComponent } from '../../common/common.component';
 

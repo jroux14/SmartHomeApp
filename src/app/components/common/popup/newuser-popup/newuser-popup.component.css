@@ -1,0 +1,51 @@
+.popupTitle {
+    font-family: 'Outfit';
+    font-size: 2rem;
+    position: relative;
+    top: -2rem;
+    margin-bottom: 0rem;
+    text-align: center;
+}
+
+.textInputs {
+    padding-left: 1rem;
+}
+
+.warning {
+    text-align: center;
+    font-weight: normal;
+    color: rgb(245, 52, 52);
+    margin: 0;
+    padding-top: 0.75rem;
+}
+
+.loginBtn {
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+    filter: drop-shadow(0px 0px 4px rgb(32, 32, 32));    
+}
+
+.q {
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 0.75rem;
+}
+
+.login {
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 0.2rem;
+    text-decoration: underline;
+}
+
+.login:hover {
+    cursor: pointer;
+}
+
+
+.divLine {
+    margin-top: -1.25rem;
+    margin-bottom: 1.5rem;
+}

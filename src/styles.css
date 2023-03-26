@@ -39,3 +39,25 @@ body {
 .style-darkgrey {
     color: #363B4B;
 }
+
+.loginDialog > mat-dialog-container {
+    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
+    border-radius: 1rem;
+    padding-bottom: 3rem;
+    width: 20rem;
+    background-color: var(--sh-lightgrey);
+    color: var(--sh-offwhite);
+}
+
+.loginDialog > mat-dialog-actions {
+    display: contents !important;
+}
+
+.newAccountDialog > mat-dialog-container {
+    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
+    border-radius: 1rem;
+    padding-bottom: 3rem;
+    width: 20rem;
+    background-color: var(--sh-lightgrey);
+    color: var(--sh-offwhite);
+}

@@ -1,0 +1,13 @@
+<h2 class="loginTitle">WELCOME</h2>
+<hr class="divLine">
+<div class="loginInputs">
+    <sh-text [onChangeEmitter]="newUsernameEmitter" tLabel="USERNAME" componentID="userInput"></sh-text><br>
+    <sh-text [onChangeEmitter]="newPasswordEmitter" tLabel="PASSWORD" componentID="pwdInput"></sh-text>
+</div>
+<div class="loginBtn">
+    <button-simple shClass="login" [onChangeEmitter]="checkLoginEmitter" bLabel="LOGIN" componentID="loginBtn"></button-simple>
+</div>
+<h3 class="warning" *ngIf="fillAllWarning">Please Fill Out Every Field</h3>
+<h3 class="warning" *ngIf="badCredentials">Invalid Credentials</h3>
+<h3 class="or">or</h3>
+<h3 class="createAcct" (click)="createAcct()">Create An Account</h3>

@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommonComponent } from '../../components/common/common/common.component';
+import { CommonInputComponent } from '../../inputs/common-input/common-input.component';
 
 @Component({
   selector: 'button-routing',
   templateUrl: './button-routing.component.html',
   styleUrls: ['./button-routing.component.css']
 })
-export class ButtonRoutingComponent extends CommonComponent {
+export class ButtonRoutingComponent extends CommonInputComponent {
   @Input()
   bLabel: String = 'Test';
   @Input()

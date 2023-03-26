@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonComponent } from '../../components/common/common/common.component';
+import { CommonComponent } from '../../common/common/common.component';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +13,6 @@ export class HomeComponent extends CommonComponent {
 
   override ngOnInit() {
     super.ngOnInit();
-    this.addSubscription(this.dataService.changeDetected.subscribe(resp => {
-      if(resp.id == 'testGet') {
-        this.testHttp();
-      }
-    }));
   }
 
   testHttp(): void {

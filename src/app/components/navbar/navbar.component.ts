@@ -12,7 +12,6 @@ export class NavbarComponent extends CommonComponent {
 
   override ngOnInit(): void {
     super.ngOnInit();
-    console.log(this.showLogin);
   }
 
   createNewDevice() {

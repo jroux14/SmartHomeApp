@@ -1,18 +1,20 @@
 import { Component, Input } from '@angular/core';
-import { CommonComponent } from '../../components/common/common/common.component';
+import { CommonInputComponent } from '../common-input/common-input.component';
 
 @Component({
   selector: 'sh-text',
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.css']
 })
-export class TextInputComponent extends CommonComponent {
+export class TextInputComponent extends CommonInputComponent {
   @Input()
   tLabel: String = '';
   @Input()
   componentID: string = '';
   @Input()
   defaultText: String = '';
+  @Input()
+  isPwd: boolean = false;
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -25,7 +27,7 @@ export class TextInputComponent extends CommonComponent {
         value: inputValue.value,
         event: event
     }
-    this.dataService.changeDetected.emit(data);
+    this.onChangeDetected(data);
   }
 
 }

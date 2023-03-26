@@ -1,2 +1,7 @@
-<label for="thisInput">{{tLabel}}</label><br>
-<input type="text" [id]="componentID" name="thisInput" [value]="defaultText" (input)="onChangeDetect($event)">
+<label class="inputLabel" for="thisInput">{{tLabel}}</label><br>
+<div *ngIf="!isPwd">
+    <input type="text" class="baseInput" [id]="componentID" name="thisInput" [value]="defaultText" (input)="onChangeDetect($event)">
+</div>
+<div *ngIf="isPwd">
+    <input type="password" class="baseInput" [id]="componentID" name="thisInput" [value]="defaultText" (input)="onChangeDetect($event)">
+</div>
