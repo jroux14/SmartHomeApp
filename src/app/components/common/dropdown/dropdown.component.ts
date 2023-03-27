@@ -13,6 +13,7 @@ export class DropdownComponent extends CommonComponent {
   @Input() 
   showLogin: boolean = false;
   
+  userName: string = 'Login';
   links: string[] = ['', 'settings'];
   linkText: string[] = ['Dashboard', 'Settings'];
   linkIcons: string[] = ['dashboard', 'settings'];
@@ -20,6 +21,13 @@ export class DropdownComponent extends CommonComponent {
 
   override ngOnInit(): void {
     super.ngOnInit();
+    this.addSubscription(this.dataService.userChangeEmitter.subscribe(resp => {
+      if(this.authService.currentUser) {
+        this.userName = this.authService.currentUser.fName;
+      } else {
+        this.userName = 'Login';
+      }
+    }));
   }
 
   toggle() {

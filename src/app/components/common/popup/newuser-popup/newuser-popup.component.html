@@ -1,6 +1,7 @@
 <h2 class="popupTitle">NEW USER</h2>
 <hr class="divLine">
 <div class="textInputs">
+    <sh-text [onChangeEmitter]="fNameEmitter" tLabel="FIRST NAME" componentID="fName"></sh-text><br>
     <sh-text [onChangeEmitter]="updateUsernameEmitter" tLabel="USERNAME" componentID="userInput"></sh-text><br>
     <sh-text [onChangeEmitter]="updatePasswordEmitter" [isPwd]="true" tLabel="PASSWORD" componentID="pwdInput"></sh-text><br>
     <sh-text [onChangeEmitter]="confirmPasswordEmitter" [isPwd]="true" tLabel="CONFIRM PASSWORD" componentID="confirmPwdInput"></sh-text>
@@ -10,6 +11,7 @@
 </div>
 <h3 class="warning" *ngIf="pwdMatchWarning">Passwords Do Not Match</h3>
 <h3 class="warning" *ngIf="fillAllWarning">Please Fill Out Every Field</h3>
+<h3 class="warning" *ngIf="userExistsWarning">A User With This Username Already Exists</h3>
 <div class="switchView">
     <h3 class="q">Already Have an Account?</h3>
     <h3 class="login" (click)="switchBack()">Login</h3>

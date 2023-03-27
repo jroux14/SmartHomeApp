@@ -3,6 +3,13 @@ import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoginPopupComponent } from '../popup/login-popup/login-popup.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
+type User = {
+  userID: string,
+  fullUserName: string,
+  fName: string
+}
 
 @Component({
   selector: 'common',
@@ -12,7 +19,7 @@ import { LoginPopupComponent } from '../popup/login-popup/login-popup.component'
 export class CommonComponent implements OnChanges, OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
-  constructor(public dataService: DataService, public dialog: MatDialog) {}
+  constructor(public dataService: DataService, public authService: AuthenticationService, public dialog: MatDialog) {}
 
   ngOnInit(): void {}
 

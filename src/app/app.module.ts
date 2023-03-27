@@ -21,7 +21,7 @@ import { LoginPopupComponent } from './components/common/popup/login-popup/login
 import { TextInputComponent } from './components/inputs/text-input/text-input.component';
 import { CommonInputComponent } from './components/inputs/common-input/common-input.component';
 import { NewUserPopupComponent } from './components/common/popup/newuser-popup/newuser-popup.component';
-{ NewUserPopupComponent}
+import { AuthenticationService } from './services/authentication.service'
 // import { DragDropItemComponent } from './components/components/common/dragdrop/dragdropitem/dragdrop.item';
 
 @NgModule({
@@ -51,7 +51,8 @@ import { NewUserPopupComponent } from './components/common/popup/newuser-popup/n
     MatDialogModule
   ],
   providers: [
-    DataService
+    DataService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })

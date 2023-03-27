@@ -9,7 +9,6 @@ import { CommonComponent } from '../../common/common.component';
   styleUrls: ['login-popup.component.css'],
 })
 export class LoginPopupComponent extends CommonComponent {
-  globalThis: any = this;
   currentUsername: string = '';
   currentPassword: string = '';
   fillAllWarning: boolean = false;
@@ -27,21 +26,19 @@ export class LoginPopupComponent extends CommonComponent {
         this.currentPassword = resp.value;
       }));
       this.addSubscription(this.dataService.checkLoginEmitter.subscribe(resp => {
-        this.loginSubmitted();
+        let response: any = this.authService.attemptLogin(this.currentUsername, this.currentPassword);
+        if(response) {
+          this.fillAllWarning = response.noData;
+          this.badCredentials = response.invalidCreds;
+          if(response.success) {
+            this.dataService.userChangeEmitter.emit();
+            this.dataService.closeLoginEmitter.emit();
+          }
+        }
       }))
   }
 
-  loginSubmitted() {
-    if(this.currentUsername != '' && this.currentPassword != '') {
-      this.fillAllWarning = false;
-      console.log('Logging in with credentials: \nUsername: %s\nPassword: %s', this.currentUsername, this.currentPassword);
-    } else {
-      this.fillAllWarning = true;
-    }
-  }
-
   createAcct() {
-    console.log("Create new account");
     this.dataService.closeLoginEmitter.emit();
     this.dataService.openNewAccountEmitter.emit();
   }
