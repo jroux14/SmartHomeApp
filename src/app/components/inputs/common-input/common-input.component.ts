@@ -13,7 +13,7 @@ export class CommonInputComponent implements OnChanges, OnInit, OnDestroy {
   @Input()
   onChangeEmitter: EventEmitter<any> | undefined;
   @Input()
-  onChange: ((args: any) => void) | undefined;
+  onChange: ((args: any) => any) = this.nada;
 
   constructor(public dataService: DataService, public dialog: MatDialog) {}
 
@@ -27,6 +27,10 @@ export class CommonInputComponent implements OnChanges, OnInit, OnDestroy {
         subscription.unsubscribe();
       } catch(e){}
     });
+  }
+
+  nada(args: any) {
+
   }
 
   addSubscription(sub: Subscription) {

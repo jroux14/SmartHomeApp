@@ -5,12 +5,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoginPopupComponent } from '../popup/login-popup/login-popup.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
-type User = {
-  userID: string,
-  fullUserName: string,
-  fName: string
-}
-
 @Component({
   selector: 'common',
   templateUrl: './common.component.html',

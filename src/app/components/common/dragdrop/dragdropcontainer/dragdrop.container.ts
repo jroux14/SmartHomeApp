@@ -6,6 +6,7 @@ import {
   GridType,
 } from "angular-gridster2";
 import { CommonComponent } from '../../common/common.component';
+import { shDevice } from 'src/app/interfaces/device.interface';
 
 @Component({
   selector: 'dragdrop-container',
@@ -13,8 +14,9 @@ import { CommonComponent } from '../../common/common.component';
   styleUrls: ['./dragdrop.container.css'],
 })
 export class DragDropContainerComponent extends CommonComponent{
-  options: GridsterConfig | undefined;
-  dashboard: GridsterItem[] | undefined;
+  options: GridsterConfig = {};
+  dashboard: GridsterItem[] = [];
+  devices: shDevice[] = [];
   startingSize: any = {
     minCols: 0,
     maxCols: 0,
@@ -34,41 +36,16 @@ export class DragDropContainerComponent extends CommonComponent{
   }
 
   initDash() {
-    if (this.dashboard) {
-      for (let i = 0; i < this.dashboard.length; i++) {
-        if (this.dashboard[i].x > this.startingSize.maxCols) {
-          this.dashboard[i].x = this.startingSize.maxCols - 1;
-        }
+    let testDevice = new shDevice('test', 'test', 'test', 1, 1, 1, 1);
+    this.devices.push(testDevice);
+    for (let i = 0; i < this.devices.length; i++) {
+      if (this.devices[i].item.x > this.startingSize.maxCols) {
+        this.devices[i].item.x = this.startingSize.maxCols - 1;
       }
+      this.dashboard.push(this.devices[i].item);
     }
   }
   
-  @HostListener('window:resize', ['$event'])
-  sizeChange(event: any) {
-    if(this.options) {
-      if (event.target.innerWidth && event.target.innerHeight && this.options.api && this.options.api.optionsChanged && this.options.fixedColWidth) {
-        this.options.minCols = (event.target.innerWidth - 800) / this.options.fixedColWidth;
-        this.options.maxCols = (event.target.innerWidth - 800) / this.options.fixedColWidth;
-        if (this.options.minCols < 5) {
-          this.options.minCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-          this.options.maxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-          this.options.emptyCellDragMaxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-          this.options.emptyCellDragMaxRows = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-        }
-        if (this.dashboard) {
-          for (let i = 0; i < this.dashboard.length; i++) {
-            if (this.dashboard[i].x > this.options.maxCols) {
-              this.dashboard[i].x = this.options.maxCols - 1;
-            }
-          }
-        }
-
-        this.changedOptions();
-        this.options.api.resize!();
-      }
-    }
-  }
-
   override ngOnInit() {
     super.ngOnInit();
     this.initSize(window.innerWidth);
@@ -100,39 +77,61 @@ export class DragDropContainerComponent extends CommonComponent{
       emptyCellDropCallback: this.emptyCellClick.bind(this)
     };
 
-    this.dashboard = [
-      { cols: 1, rows: 1, y: 0, x: 0 },
-      { cols: 1, rows: 1, y: 1, x: 1 }
-    ];
-
     this.initDash();
+
+    this.addSubscription(this.dataService.addDeviceEmitter.subscribe(resp => {
+      this.addItem();
+    }));
+
+    this.addSubscription(this.dataService.forwardNewDeviceEmitter.subscribe(resp => {
+      this.devices.push(resp);
+      this.dashboard.push(resp.item);
+    }));
+  }
+
+  @HostListener('window:resize', ['$event'])
+  sizeChange(event: any) {
+    if (event.target.innerWidth && event.target.innerHeight && this.options.api && this.options.api.optionsChanged && this.options.fixedColWidth) {
+      this.options.minCols = (event.target.innerWidth - 800) / this.options.fixedColWidth;
+      this.options.maxCols = (event.target.innerWidth - 800) / this.options.fixedColWidth;
+      if (this.options.minCols < 5) {
+        this.options.minCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+        this.options.maxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+        this.options.emptyCellDragMaxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+        this.options.emptyCellDragMaxRows = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+      }
+      if (this.dashboard) {
+        for (let i = 0; i < this.dashboard.length; i++) {
+          if (this.dashboard[i].x > this.options.maxCols) {
+            this.dashboard[i].x = this.options.maxCols - 1;
+          }
+        }
+      }
+
+      this.changedOptions();
+      this.options.api.resize!();
+    }
   }
 
   changedOptions(): void {
-    if (this.options && this.options.api && this.options.api.optionsChanged) {
+    if(this.options.api && this.options.api.optionsChanged) {
       this.options.api.optionsChanged();
     }
   }
 
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
     console.info('empty cell click', event, item);
-    if(this.dashboard) {
-      this.dashboard.push(item);
-    }
+    this.dashboard.push(item);
   }
 
   removeItem($event: MouseEvent | TouchEvent, item: GridsterItem): void {
     $event.preventDefault();
     $event.stopPropagation();
-    if(this.dashboard) {
-      this.dashboard.splice(this.dashboard.indexOf(item), 1);
-    }
+    this.dashboard.splice(this.dashboard.indexOf(item), 1);
   }
 
   addItem(): void {
-    if(this.dashboard) {
-      this.dashboard.push({ x: 0, y: 0, cols: 1, rows: 1 });
-    }
+    this.dashboard.push({ x: 0, y: 0, cols: 1, rows: 1 });
   }
 
   dragStartHandler(ev: DragEvent): void {

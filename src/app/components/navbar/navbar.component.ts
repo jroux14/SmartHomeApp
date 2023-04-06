@@ -15,7 +15,7 @@ export class NavbarComponent extends CommonComponent {
   }
 
   createNewDevice() {
-    
+    this.dataService.addDeviceEmitter.emit();
   }
 
 }

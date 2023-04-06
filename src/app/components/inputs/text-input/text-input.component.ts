@@ -8,11 +8,13 @@ import { CommonInputComponent } from '../common-input/common-input.component';
 })
 export class TextInputComponent extends CommonInputComponent {
   @Input()
-  tLabel: String = '';
+  tLabel: string = '';
   @Input()
   componentID: string = '';
   @Input()
-  defaultText: String = '';
+  defaultText: string = '';
+  @Input()
+  shPlaceholder: string = '';
   @Input()
   isPwd: boolean = false;
 

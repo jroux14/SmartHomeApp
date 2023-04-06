@@ -1,11 +1,6 @@
 <!-- <div *ngIf="options.enableEmptyCellDrop" draggable="true" (dragstart)="dragStartHandler($event)">Drag me!</div> -->
 <gridster *ngIf="options" class="grid" [options]="options">
-  <gridster-item [item]="item" *ngFor="let item of dashboard; let i = index">
-    <div class="button-holder">
-      <label>Hello</label>
-      <button (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
-        delete
-      </button>
-    </div>
+  <gridster-item [item]="device.item" *ngFor="let device of devices; let i = index">
+
   </gridster-item>
 </gridster>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommonComponent } from '../../common/common.component';
 import { v4 as uuidv4 } from 'uuid';
+import { shUser } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'sh-login',
@@ -40,7 +40,7 @@ export class NewUserPopupComponent extends CommonComponent{
       this.addSubscription(this.dataService.createUserEmitter.subscribe(resp => {
         let newUID: string = uuidv4();
         console.log(newUID);
-        let newUser: User = {
+        let newUser: shUser = {
           userID: newUID,
           fullUserName: this.currentUser,
           fName: this.fName,

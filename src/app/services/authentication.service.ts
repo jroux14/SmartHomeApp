@@ -1,15 +1,14 @@
-import { MONGO_URL } from '../constants/constants.smarthome'
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { shUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class AuthenticationService {
-  currentUser: User | undefined;
-  tempUsers: User[] = [];
+  currentUser: shUser | undefined;
+  tempUsers: shUser[] = [];
   constructor(public http: HttpClient) {}
 
-  public registerNewUser(newUser: User, confirmPwd: string) : Object {
+  public registerNewUser(newUser: shUser, confirmPwd: string) : Object {
     let userExists: boolean = false;
     let rVal: Object;
     if(newUser.fullUserName != '' && newUser.pwd != '' && confirmPwd != '') {
@@ -92,8 +91,8 @@ export class AuthenticationService {
     }
   }
 
-  getUserByUsername(username: string) : User | undefined {
-    let rVal: User | undefined;
+  getUserByUsername(username: string) : shUser | undefined {
+    let rVal: shUser | undefined;
     this.tempUsers.forEach( (user) => {
       if(user.fullUserName == username) {
         rVal = user;

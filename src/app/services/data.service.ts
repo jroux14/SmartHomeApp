@@ -23,6 +23,14 @@ export class DataService {
   @Output() openNewAccountEmitter: EventEmitter<any> = new EventEmitter();
   @Output() closeNewAccountEmitter: EventEmitter<any> = new EventEmitter();
 
+  // Device Emitters
+  @Output() updateDeviceNameEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() updateDeviceTypeEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() addDeviceEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() deviceContainerModified: EventEmitter<any> = new EventEmitter();
+
   constructor(public http: HttpClient) {}
 
   public test(): Observable<any> {

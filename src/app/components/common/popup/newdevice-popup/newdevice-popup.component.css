@@ -1,0 +1,9 @@
+.loginBtn {
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+    filter: drop-shadow(0px 0px 4px rgb(32, 32, 32));    
+}
+
+.textInputs {
+    padding-left: 1rem;
+}
