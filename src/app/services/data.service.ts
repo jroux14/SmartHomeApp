@@ -30,6 +30,7 @@ export class DataService {
   @Output() confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deviceContainerModified: EventEmitter<any> = new EventEmitter();
+  @Output() newDevicePopupClosedEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public http: HttpClient) {}
 

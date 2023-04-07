@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogState } from '@angular/material/dialog';
 import { CommonComponent } from '../common/common/common.component';
 import { LoginPopupComponent } from '../common/popup/login-popup/login-popup.component';
-import { NewDevicePopupComponent } from '../common/popup/newdevice-popup/newDevice-popup.component';
+import { NewDevicePopupComponent } from '../common/popup/newdevice-popup/newdevice-popup.component';
 import { NewUserPopupComponent } from '../common/popup/newuser-popup/newuser-popup.component';
 
 @Component({

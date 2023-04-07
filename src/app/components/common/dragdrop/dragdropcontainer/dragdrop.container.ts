@@ -17,6 +17,8 @@ export class DragDropContainerComponent extends CommonComponent{
   options: GridsterConfig = {};
   dashboard: GridsterItem[] = [];
   devices: shDevice[] = [];
+  newDevice: shDevice | undefined;
+  devicePlaced: boolean = false;
   startingSize: any = {
     minCols: 0,
     maxCols: 0,
@@ -67,6 +69,7 @@ export class DragDropContainerComponent extends CommonComponent{
       minCols: this.startingSize.minCols,
       emptyCellDragMaxCols: this.startingSize.emptyCellDragMaxCols,
       emptyCellDragMaxRows: this.startingSize.emptyCellDragMaxRows,
+      emptyCellClickCallback: this.emptyCellClick.bind(this),
       draggable: {
         enabled: true
       },
@@ -84,9 +87,15 @@ export class DragDropContainerComponent extends CommonComponent{
     }));
 
     this.addSubscription(this.dataService.forwardNewDeviceEmitter.subscribe(resp => {
-      this.devices.push(resp);
-      this.dashboard.push(resp.item);
+      this.newDevice = resp;
+      this.options.enableEmptyCellClick = true;
+      this.options.displayGrid = DisplayGrid.Always;
+      this.changedOptions();
     }));
+    // this.addSubscription(this.dataService.newDevicePopupClosedEmitter.subscribe(resp => {
+    //   console.log('ready');
+    //   this.placeNewDevice();
+    // }));
   }
 
   @HostListener('window:resize', ['$event'])
@@ -107,7 +116,6 @@ export class DragDropContainerComponent extends CommonComponent{
           }
         }
       }
-
       this.changedOptions();
       this.options.api.resize!();
     }
@@ -120,8 +128,16 @@ export class DragDropContainerComponent extends CommonComponent{
   }
 
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
-    console.info('empty cell click', event, item);
-    this.dashboard.push(item);
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if(this.newDevice) {
+          this.newDevice.item = item;
+          resolve("done");
+        }
+      }, 100);
+    }).finally(() => {
+      this.placeNewDevice();
+    });
   }
 
   removeItem($event: MouseEvent | TouchEvent, item: GridsterItem): void {
@@ -138,6 +154,16 @@ export class DragDropContainerComponent extends CommonComponent{
     if (ev.dataTransfer) {
       ev.dataTransfer.setData('text/plain', 'Drag Me Button');
       ev.dataTransfer.dropEffect = 'copy';
+    }
+  }
+
+  placeNewDevice() {
+    if(this.newDevice) {
+      this.devices.push(this.newDevice);
+      this.dashboard.push(this.newDevice.item);
+      this.options.enableEmptyCellClick = false;
+      this.options.displayGrid = DisplayGrid.None;
+      this.changedOptions();
     }
   }
 }

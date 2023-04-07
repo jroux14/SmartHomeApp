@@ -22,7 +22,7 @@ import { TextInputComponent } from './components/inputs/text-input/text-input.co
 import { CommonInputComponent } from './components/inputs/common-input/common-input.component';
 import { NewUserPopupComponent } from './components/common/popup/newuser-popup/newuser-popup.component';
 import { AuthenticationService } from './services/authentication.service'
-import { NewDevicePopupComponent } from './components/common/popup/newdevice-popup/newDevice-popup.component';
+import { NewDevicePopupComponent } from './components/common/popup/newdevice-popup/newdevice-popup.component';
 // import { DragDropItemComponent } from './components/components/common/dragdrop/dragdropitem/dragdrop.item';
 
 @NgModule({
