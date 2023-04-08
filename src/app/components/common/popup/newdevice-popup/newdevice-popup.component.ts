@@ -8,6 +8,16 @@ import { CommonComponent } from '../../common/common.component';
   styleUrls: ['newdevice-popup.component.css'],
 })
 export class NewDevicePopupComponent extends CommonComponent {
+  deviceTypes = [
+    {
+      name: "TYPE_SWITCH",
+      displayName: "Switch"
+    },
+    {
+      name: "TYPE_SENSOR",
+      displayName: "Sensor"
+    }
+  ]
   deviceName: string = '';
   deviceType: string = '';
   updateDeviceNameEmitter: EventEmitter<any> = this.dataService.updateDeviceNameEmitter;
@@ -19,7 +29,7 @@ export class NewDevicePopupComponent extends CommonComponent {
         this.deviceName = resp.value;
       }));
       this.addSubscription(this.dataService.updateDeviceTypeEmitter.subscribe(resp => {
-        this.deviceType = resp.value;
+        this.deviceType = resp;
       }));
       this.addSubscription(this.dataService.confirmNewDeviceEmitter.subscribe(resp => {
         /* 
@@ -31,6 +41,14 @@ export class NewDevicePopupComponent extends CommonComponent {
         let device = new shDevice(this.deviceType, this.deviceName, 'test', 1, 1, 0, 0);
         this.dataService.forwardNewDeviceEmitter.emit(device);
       }));
+  }
+
+  getDropdownOptions() : string[] {
+    let rVal: string[] = [];
+    this.deviceTypes.forEach((type) => {
+      rVal.push(type.displayName);
+    });
+    return rVal;
   }
 
 }

@@ -23,7 +23,8 @@ import { CommonInputComponent } from './components/inputs/common-input/common-in
 import { NewUserPopupComponent } from './components/common/popup/newuser-popup/newuser-popup.component';
 import { AuthenticationService } from './services/authentication.service'
 import { NewDevicePopupComponent } from './components/common/popup/newdevice-popup/newdevice-popup.component';
-// import { DragDropItemComponent } from './components/components/common/dragdrop/dragdropitem/dragdrop.item';
+import { SelectDropDownInputComponent } from './components/inputs/select-dropdown/select-dropdown.component';
+import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
 
 @NgModule({
   declarations: [
@@ -36,12 +37,13 @@ import { NewDevicePopupComponent } from './components/common/popup/newdevice-pop
     NavbarComponent,
     DropdownComponent,
     DragDropContainerComponent,
-    // DragDropItemComponent
+    DragDropItemComponent,
     LoginPopupComponent,
     TextInputComponent,
     CommonInputComponent,
     NewUserPopupComponent,
-    NewDevicePopupComponent
+    NewDevicePopupComponent,
+    SelectDropDownInputComponent
   ],
   imports: [
     BrowserModule,

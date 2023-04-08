@@ -2,39 +2,25 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleCha
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { MatDialog } from '@angular/material/dialog';
+import { CommonComponent } from '../../common/common/common.component';
 
 @Component({
   selector: 'common',
   templateUrl: './common-input.component.html',
   styleUrls: ['./common-input.component.css']
 })
-export class CommonInputComponent implements OnChanges, OnInit, OnDestroy {
-  subscriptions: Subscription[] = [];
+export class CommonInputComponent extends CommonComponent {
   @Input()
   onChangeEmitter: EventEmitter<any> | undefined;
   @Input()
   onChange: ((args: any) => any) = this.nada;
 
-  constructor(public dataService: DataService, public dialog: MatDialog) {}
-
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {}
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(function (subscription) {
-      try {
-        subscription.unsubscribe();
-      } catch(e){}
-    });
+  override ngOnInit(): void {
+    super.ngOnInit();
   }
 
   nada(args: any) {
 
-  }
-
-  addSubscription(sub: Subscription) {
-    this.subscriptions.push(sub);
   }
 
   onChangeDetected(data: any) {

@@ -131,6 +131,10 @@ export class DragDropContainerComponent extends CommonComponent{
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => {
         if(this.newDevice) {
+          if(this.newDevice.deviceType == 'Sensor') {
+            item.cols = 2;
+            item.rows = 2;
+          }
           this.newDevice.item = item;
           resolve("done");
         }

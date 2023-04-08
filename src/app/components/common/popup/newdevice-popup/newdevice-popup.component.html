@@ -2,7 +2,7 @@
 <hr class="divLine">
 <div class="textInputs">
     <sh-text tLabel="DEVICE NAME" [onChangeEmitter]="updateDeviceNameEmitter" componentID="deviceName" shPlaceholder="Device Name"></sh-text><br>
-    <sh-text tLabel="DEVICE TYPE" [onChangeEmitter]="updateDeviceTypeEmitter" componentID="deviceType" shPlaceholder="Device Type"></sh-text><br>
+    <sh-select tLabel="DEVICE TYPE" [onChangeEmitter]="updateDeviceTypeEmitter" componentID="deviceType" shPlaceholder="Device Type" [shOptions]="getDropdownOptions()"></sh-select><br>
 </div>
 <div class="loginBtn">
     <button-simple [onChangeEmitter]="confirmNewDeviceEmitter" shClass="login" bLabel="CONFIRM" componentID="loginBtn"></button-simple>

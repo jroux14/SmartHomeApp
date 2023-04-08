@@ -13,7 +13,7 @@ export class AuthenticationService {
     let rVal: Object;
     if(newUser.fullUserName != '' && newUser.pwd != '' && confirmPwd != '') {
       this.tempUsers.forEach((user) => {
-        if(user.fullUserName == newUser.fullUserName) {
+        if(user.userID == newUser.userID) {
           userExists = true;
         }
       });
