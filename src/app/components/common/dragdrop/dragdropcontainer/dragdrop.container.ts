@@ -7,6 +7,7 @@ import {
 } from "angular-gridster2";
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
+import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
 
 @Component({
   selector: 'dragdrop-container',
@@ -38,8 +39,6 @@ export class DragDropContainerComponent extends CommonComponent{
   }
 
   initDash() {
-    let testDevice = new shDevice('test', 'test', 'test', 1, 1, 1, 1);
-    this.devices.push(testDevice);
     for (let i = 0; i < this.devices.length; i++) {
       if (this.devices[i].item.x > this.startingSize.maxCols) {
         this.devices[i].item.x = this.startingSize.maxCols - 1;
@@ -131,7 +130,7 @@ export class DragDropContainerComponent extends CommonComponent{
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => {
         if(this.newDevice) {
-          if(this.newDevice.deviceType == 'Sensor') {
+          if(this.newDevice.deviceType.name == TYPE_SENSOR) {
             item.cols = 2;
             item.rows = 2;
           }

@@ -1,9 +1,9 @@
 <div class="deviceContainer">
-  <div class="contents">
-    <p>Name: </p>
-    <p>{{deviceName}}</p><br>
-    <p>Type:</p>
-    <p>{{deviceType}}</p>
+  <div *ngIf="isSwitch" class="switchContents">
+    <sh-toggle></sh-toggle>
+  </div>
+  <div *ngIf="isSensor" class="contents">
+    <p>I'm a sensor</p>
   </div>
 </div>
   

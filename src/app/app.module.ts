@@ -25,6 +25,7 @@ import { AuthenticationService } from './services/authentication.service'
 import { NewDevicePopupComponent } from './components/common/popup/newdevice-popup/newdevice-popup.component';
 import { SelectDropDownInputComponent } from './components/inputs/select-dropdown/select-dropdown.component';
 import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
+import { ToggleComponent } from './components/inputs/sh-toggle/sh-toggle.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem
     CommonInputComponent,
     NewUserPopupComponent,
     NewDevicePopupComponent,
-    SelectDropDownInputComponent
+    SelectDropDownInputComponent,
+    ToggleComponent
   ],
   imports: [
     BrowserModule,

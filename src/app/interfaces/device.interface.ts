@@ -1,7 +1,7 @@
 import { GridsterItem } from "angular-gridster2";
 
 export class shDevice {
-    deviceType!: string;
+    deviceType!: any;
     deviceName!: string;
     deviceID!: string;
     displayWidth!: number;

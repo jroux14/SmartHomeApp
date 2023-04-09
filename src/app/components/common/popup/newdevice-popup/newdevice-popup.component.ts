@@ -29,7 +29,10 @@ export class NewDevicePopupComponent extends CommonComponent {
         this.deviceName = resp.value;
       }));
       this.addSubscription(this.dataService.updateDeviceTypeEmitter.subscribe(resp => {
-        this.deviceType = resp;
+        let newType: any = this.getDeviceType(resp);
+        if(newType) {
+          this.deviceType = newType;
+        }
       }));
       this.addSubscription(this.dataService.confirmNewDeviceEmitter.subscribe(resp => {
         /* 
@@ -49,6 +52,20 @@ export class NewDevicePopupComponent extends CommonComponent {
       rVal.push(type.displayName);
     });
     return rVal;
+  }
+
+  getDeviceType(typeDisplayName: string) {
+    let foundMatch: any;
+    this.deviceTypes.forEach((type) => {
+      if(type.displayName == typeDisplayName) {
+        foundMatch = type;
+      }
+    });
+    if(foundMatch) {
+      return foundMatch;
+    } else {
+      return;
+    }
   }
 
 }

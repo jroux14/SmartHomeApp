@@ -2,23 +2,19 @@ import { Component, Input } from '@angular/core';
 import { CommonInputComponent } from '../common-input/common-input.component';
 
 @Component({
-  selector: 'sh-select',
-  templateUrl: './select-dropdown.component.html',
-  styleUrls: ['./select-dropdown.component.css']
+  selector: 'sh-toggle',
+  templateUrl: './sh-toggle.component.html',
+  styleUrls: ['./sh-toggle.component.css']
 })
-export class SelectDropDownInputComponent extends CommonInputComponent {
+export class ToggleComponent extends CommonInputComponent {
   @Input()
   tLabel: string = '';
   @Input()
   componentID: string = '';
   @Input()
-  shPlaceholder: string = '';
+  shState: boolean = false;
   @Input()
-  shOptions: string[] = [];
-  @Input()
-  shDisabled: boolean = false;
-  @Input()
-  shValue: string = '';
+  shStateText: string = 'Off';
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -36,7 +32,6 @@ export class SelectDropDownInputComponent extends CommonInputComponent {
         console.log('error');
         rVal = '';
     }
-    this.shValue = rVal;
 
     this.onChangeDetected(rVal);
   }
