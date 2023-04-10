@@ -39,7 +39,6 @@ export class NewUserPopupComponent extends CommonComponent{
       }));
       this.addSubscription(this.dataService.createUserEmitter.subscribe(resp => {
         let newUID: string = uuidv4();
-        console.log(newUID);
         let newUser: shUser = {
           userID: newUID,
           fullUserName: this.currentUser,

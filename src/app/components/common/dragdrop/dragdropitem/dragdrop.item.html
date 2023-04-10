@@ -1,6 +1,15 @@
 <div class="deviceContainer">
+  <div class="topBtns">
+    <div class="drag-handler dragBtn">
+      <button-simple shIcon="drag_handle" shClass="dragBtn"></button-simple>
+    </div>
+    <div class="deleteBtn">
+      <button-simple shIcon="delete" shClass="dragBtn" [onChangeEmitter]="deleteDeviceEmitter" [emitterData]="emitterData"></button-simple>
+    </div>
+  </div>
   <div *ngIf="isSwitch" class="switchContents">
-    <sh-toggle></sh-toggle>
+    <label class="switchLabel">{{deviceName}}</label>
+    <sh-toggle [onChangeEmitter]="updateSwitchStateEmitter" [componentID]="componentID"></sh-toggle>
   </div>
   <div *ngIf="isSensor" class="contents">
     <p>I'm a sensor</p>

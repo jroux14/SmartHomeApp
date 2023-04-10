@@ -70,7 +70,9 @@ export class DragDropContainerComponent extends CommonComponent{
       emptyCellDragMaxRows: this.startingSize.emptyCellDragMaxRows,
       emptyCellClickCallback: this.emptyCellClick.bind(this),
       draggable: {
-        enabled: true
+        enabled: true,
+        dragHandleClass: 'drag-handler',
+        ignoreContent: true
       },
       resizable: {
         enabled: true
@@ -91,10 +93,9 @@ export class DragDropContainerComponent extends CommonComponent{
       this.options.displayGrid = DisplayGrid.Always;
       this.changedOptions();
     }));
-    // this.addSubscription(this.dataService.newDevicePopupClosedEmitter.subscribe(resp => {
-    //   console.log('ready');
-    //   this.placeNewDevice();
-    // }));
+    this.addSubscription(this.dataService.deleteDeviceEmitter.subscribe(resp => {
+      this.removeItem(resp.event, resp.device.item, resp.device);
+    }));
   }
 
   @HostListener('window:resize', ['$event'])
@@ -143,10 +144,11 @@ export class DragDropContainerComponent extends CommonComponent{
     });
   }
 
-  removeItem($event: MouseEvent | TouchEvent, item: GridsterItem): void {
+  removeItem($event: MouseEvent | TouchEvent, item: GridsterItem, device: shDevice): void {
     $event.preventDefault();
     $event.stopPropagation();
     this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.devices.splice(this.devices.indexOf(device), 1);
   }
 
   addItem(): void {

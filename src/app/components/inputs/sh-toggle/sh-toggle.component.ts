@@ -14,7 +14,7 @@ export class ToggleComponent extends CommonInputComponent {
   @Input()
   shState: boolean = false;
   @Input()
-  shStateText: string = 'Off';
+  shStateText: string = 'OFF';
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -25,14 +25,14 @@ export class ToggleComponent extends CommonInputComponent {
   }
 
   onChangeDetect(event: any) {
-    let rVal: any;
-    try {
-        rVal = (<HTMLInputElement> document.getElementById(this.componentID)).value;
-    } catch {
-        console.log('error');
-        rVal = '';
+    let rVal: boolean = false;
+    this.shState = !this.shState;
+    rVal = this.shState;
+    if(this.shState) {
+      this.shStateText = 'ON';
+    } else {
+      this.shStateText = 'OFF';
     }
-
     this.onChangeDetected(rVal);
   }
 

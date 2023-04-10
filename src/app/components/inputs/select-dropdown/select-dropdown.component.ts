@@ -24,10 +24,6 @@ export class SelectDropDownInputComponent extends CommonInputComponent {
     super.ngOnInit();
   }
 
-  changeDetected(event: any) {
-    this.onChangeDetect(event);
-  }
-
   onChangeDetect(event: any) {
     let rVal: any;
     try {

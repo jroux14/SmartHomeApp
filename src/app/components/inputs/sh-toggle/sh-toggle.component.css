@@ -6,6 +6,8 @@
     height : 3rem;
     background-color: white;
     border-radius: 30px;
+    filter: drop-shadow(0 0.15rem 0.25rem var(--sh-lightgrey));
+    cursor: pointer;
 }
        
 /* After slide changes */
@@ -25,7 +27,7 @@
 p {
     position: relative;
     width: 100%;
-    margin-left: 41%;
+    margin-left: 42%;
     font-family: 'Outfit';
     font-weight: bold;
     color: var(--sh-darkgrey);

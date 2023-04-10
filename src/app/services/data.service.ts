@@ -26,10 +26,12 @@ export class DataService {
   // Device Emitters
   @Output() updateDeviceNameEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateDeviceTypeEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() updateSwitchStateEmitter: EventEmitter<any> = new EventEmitter();
   @Output() addDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deviceContainerModified: EventEmitter<any> = new EventEmitter();
+  @Output() deleteDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public http: HttpClient) {}
 

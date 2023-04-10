@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input } from '@angular/core';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../../common/common.component';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'sh-newdevice',
@@ -41,7 +42,8 @@ export class NewDevicePopupComponent extends CommonComponent {
         *  select which dragdrop "cell" we want to place it in and create the device
         *  with that position and a size of 1x1
         */
-        let device = new shDevice(this.deviceType, this.deviceName, 'test', 1, 1, 0, 0);
+        let newUID: string = uuidv4();
+        let device = new shDevice(this.deviceType, this.deviceName, newUID, 1, 1, 0, 0);
         this.dataService.forwardNewDeviceEmitter.emit(device);
       }));
   }

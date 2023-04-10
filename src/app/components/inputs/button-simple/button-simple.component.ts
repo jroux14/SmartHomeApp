@@ -13,17 +13,27 @@ export class ButtonSimpleComponent extends CommonInputComponent {
   componentID: String = '';
   @Input()
   shClass: String = '';
+  @Input()
+  shIcon: string | undefined;
+  @Input()
+  emitterData: any;
 
   override ngOnInit(): void {
     super.ngOnInit();
   }
 
   onChangeDetect(event: any) {
-    let data: {[key: string]: any} = {
-      event: event,
-      id: this.componentID
+    let rVal: any;
+    if(this.emitterData) {
+      this.emitterData.event = event;
+      rVal = this.emitterData
+    } else {
+      rVal = {
+        event: event,
+        id: this.componentID
+      }
     }
-    this.onChangeDetected(data);
+    this.onChangeDetected(rVal);
   }
 
 }
