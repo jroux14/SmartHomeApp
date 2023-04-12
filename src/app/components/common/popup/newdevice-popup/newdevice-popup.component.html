@@ -7,3 +7,6 @@
 <div class="loginBtn">
     <button-simple [onChangeEmitter]="confirmNewDeviceEmitter" shClass="login" bLabel="CONFIRM" componentID="loginBtn"></button-simple>
 </div>
+<div class="warningContainer">
+    <label class="warning" *ngIf="fillAllWarning">Please Fill Out Every Field</label>
+</div>

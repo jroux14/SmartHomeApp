@@ -23,3 +23,19 @@
     margin-bottom: 0rem;
     margin-top: -0.1rem;
 }
+
+.warningContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+}
+
+.warning {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: normal;
+    color: rgb(245, 52, 52);
+}

@@ -45,7 +45,7 @@ export class AppComponent extends CommonComponent {
         panelClass: 'baseDialog'
       });
     }));
-    this.addSubscription(this.dataService.confirmNewDeviceEmitter.subscribe(resp => {
+    this.addSubscription(this.dataService.closeDevicePopupEmitter.subscribe(resp => {
       if(this.newDeviceRef) {
         this.newDeviceRef.close()
       }

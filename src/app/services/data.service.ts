@@ -29,6 +29,7 @@ export class DataService {
   @Output() updateSwitchStateEmitter: EventEmitter<any> = new EventEmitter();
   @Output() addDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() closeDevicePopupEmitter: EventEmitter<any> = new EventEmitter();
   @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deviceContainerModified: EventEmitter<any> = new EventEmitter();
   @Output() deleteDeviceEmitter: EventEmitter<any> = new EventEmitter();
