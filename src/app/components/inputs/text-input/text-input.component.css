@@ -13,3 +13,9 @@
     background-color: var(--sh-offwhite);
     font-family: 'Outfit';
 }
+
+.baseInput:focus-visible {
+    outline-style: solid;
+    outline-color: rgb(21, 104, 199);
+    outline-width: 2px
+}

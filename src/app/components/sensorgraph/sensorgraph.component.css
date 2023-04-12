@@ -1,0 +1,15 @@
+.deviceName {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+    font-family: 'Harmattan';
+    font-size: 1.5rem;
+    color: var(--sh-lightgrey);
+}
+
+.graphContainer {
+    position: relative;
+}

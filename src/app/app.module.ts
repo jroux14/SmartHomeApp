@@ -26,6 +26,7 @@ import { NewDevicePopupComponent } from './components/common/popup/newdevice-pop
 import { SelectDropDownInputComponent } from './components/inputs/select-dropdown/select-dropdown.component';
 import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
 import { ToggleComponent } from './components/inputs/sh-toggle/sh-toggle.component';
+import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ToggleComponent } from './components/inputs/sh-toggle/sh-toggle.compone
     NewUserPopupComponent,
     NewDevicePopupComponent,
     SelectDropDownInputComponent,
-    ToggleComponent
+    ToggleComponent,
+    SensorGraphComponent
   ],
   imports: [
     BrowserModule,

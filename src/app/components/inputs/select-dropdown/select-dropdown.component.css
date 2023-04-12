@@ -13,3 +13,22 @@
     background-color: var(--sh-offwhite);
     font-family: 'Outfit';
 }
+
+.baseInput:focus-visible {
+    outline-style: solid;
+    outline-color: rgb(21, 104, 199);
+    outline-width: 2px
+}
+
+option:hover {
+    background-color: var(--sh-offwhite);
+    color: var(--sh-darkgrey);
+}
+
+option:hover {
+    box-shadow: 0 0 10px 100px #a32c2c inset;
+
+    /* background-color: rgb(168, 168, 168);
+    cursor: pointer;
+    color: red; */
+}

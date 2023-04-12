@@ -74,9 +74,6 @@ export class DragDropContainerComponent extends CommonComponent{
         dragHandleClass: 'drag-handler',
         ignoreContent: true
       },
-      resizable: {
-        enabled: true
-      },
       emptyCellDragCallback: this.emptyCellClick.bind(this),
       emptyCellDropCallback: this.emptyCellClick.bind(this)
     };
