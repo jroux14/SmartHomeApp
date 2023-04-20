@@ -1,6 +1,7 @@
 import { GridsterItem } from "angular-gridster2";
 
 export class shDevice {
+    userID!: string;
     deviceType!: any;
     deviceName!: string;
     deviceID!: string;
@@ -9,6 +10,7 @@ export class shDevice {
     posX!: number;
     posY!: number;
     item!: GridsterItem;
+    mqttData!: string;
 
     constructor(deviceType: string, deviceName: string, deviceID: string, displayWidth: number, displayHeight: number, posX: number, posY: number) {
         this.deviceType = deviceType;

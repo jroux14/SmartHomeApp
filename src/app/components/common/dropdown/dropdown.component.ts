@@ -23,7 +23,7 @@ export class DropdownComponent extends CommonComponent {
     super.ngOnInit();
     this.addSubscription(this.dataService.userChangeEmitter.subscribe(resp => {
       if(this.authService.currentUser) {
-        this.userName = this.authService.currentUser.fName;
+        this.userName = this.authService.currentUser.firstName;
       } else {
         this.userName = 'Login';
       }

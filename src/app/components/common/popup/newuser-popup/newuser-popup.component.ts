@@ -41,17 +41,20 @@ export class NewUserPopupComponent extends CommonComponent{
         let newUID: string = uuidv4();
         let newUser: shUser = {
           userID: newUID,
-          fullUserName: this.currentUser,
-          fName: this.fName,
+          username: this.currentUser,
+          firstName: this.fName,
           pwd: this.currentPwd
         };
-        let response: any = this.authService.registerNewUser(newUser, this.confirmPwd);
-        this.pwdMatchWarning = response.pwdMatchWarn;
-        this.fillAllWarning = response.noData;
-        this.userExistsWarning = response.userExists;
-        if(response.success) {
-          this.dataService.closeNewAccountEmitter.emit();
-        }
+
+        this.addSubscription(this.authService.registerNewUser(newUser,this.confirmPwd).subscribe(resp => {
+          if(resp.success) {
+            this.dataService.closeNewAccountEmitter.emit();
+          } else {
+            this.userExistsWarning = resp.userExistsError;
+            this.fillAllWarning = resp.fillAllError;
+            this.pwdMatchWarning = resp.passwordConfirmError;
+          }
+        }));
       }));
   }
 

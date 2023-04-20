@@ -1,6 +1,6 @@
 export interface shUser {
     userID: string;
-    fullUserName: string;
-    fName: string;
+    username: string;
+    firstName: string;
     pwd: string;
 }

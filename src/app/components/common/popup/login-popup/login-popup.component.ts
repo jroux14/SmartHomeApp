@@ -26,15 +26,16 @@ export class LoginPopupComponent extends CommonComponent {
         this.currentPassword = resp.value;
       }));
       this.addSubscription(this.dataService.checkLoginEmitter.subscribe(resp => {
-        let response: any = this.authService.attemptLogin(this.currentUsername, this.currentPassword);
-        if(response) {
-          this.fillAllWarning = response.noData;
-          this.badCredentials = response.invalidCreds;
-          if(response.success) {
+        this.addSubscription(this.authService.attemptLogin(this.currentUsername, this.currentPassword).subscribe(resp => {
+          if(resp.success && resp.user) {
+            this.authService.setCurrentUser(resp.user);
             this.dataService.userChangeEmitter.emit();
             this.dataService.closeLoginEmitter.emit();
+          } else {
+            this.fillAllWarning = resp.fillAllError;
+            this.badCredentials = resp.badCredentialsError;
           }
-        }
+        }));
       }))
   }
 
