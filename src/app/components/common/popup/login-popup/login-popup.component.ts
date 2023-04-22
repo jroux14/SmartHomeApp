@@ -13,20 +13,21 @@ export class LoginPopupComponent extends CommonComponent {
   currentPassword: string = '';
   fillAllWarning: boolean = false;
   badCredentials: boolean = false;
-  newUsernameEmitter: EventEmitter<any> = this.dataService.updateUsernameEmitter;
-  newPasswordEmitter: EventEmitter<any> = this.dataService.updatePasswordEmitter;
-  checkLoginEmitter: EventEmitter<any> = this.dataService.checkLoginEmitter;
+  updateUsernameEmitter: EventEmitter<any> = new EventEmitter();
+  updatePasswordEmitter: EventEmitter<any> = new EventEmitter();
+  checkLoginEmitter: EventEmitter<any> = new EventEmitter();
 
   override ngOnInit(): void {
       super.ngOnInit();
-      this.addSubscription(this.dataService.updateUsernameEmitter.subscribe(resp => {
+      this.addSubscription(this.updateUsernameEmitter.subscribe(resp => {
         this.currentUsername = resp.value;
       }));
-      this.addSubscription(this.dataService.updatePasswordEmitter.subscribe(resp => {
+      this.addSubscription(this.updatePasswordEmitter.subscribe(resp => {
         this.currentPassword = resp.value;
       }));
-      this.addSubscription(this.dataService.checkLoginEmitter.subscribe(resp => {
+      this.addSubscription(this.checkLoginEmitter.subscribe(resp => {
         this.addSubscription(this.authService.attemptLogin(this.currentUsername, this.currentPassword).subscribe(resp => {
+          console.log(resp);
           if(resp.success && resp.user) {
             this.authService.setCurrentUser(resp.user);
             this.dataService.userChangeEmitter.emit();

@@ -13,6 +13,8 @@ export class DropdownComponent extends CommonComponent {
   @Input() 
   showLogin: boolean = false;
   
+  loggedIn: boolean = false;
+  showLogout: boolean = false;
   userName: string = 'Login';
   links: string[] = ['', 'settings'];
   linkText: string[] = ['Dashboard', 'Settings'];
@@ -24,20 +26,33 @@ export class DropdownComponent extends CommonComponent {
     this.addSubscription(this.dataService.userChangeEmitter.subscribe(resp => {
       if(this.authService.currentUser) {
         this.userName = this.authService.currentUser.firstName;
+        this.loggedIn = true
       } else {
         this.userName = 'Login';
+        this.loggedIn = false;
       }
     }));
   }
 
   toggle() {
     this.isOpen = !this.isOpen;
-    if(this.isOpen) {
-      this.dataService.dropdownEmitter.emit();
-    }
+    // if(this.isOpen) {
+    //   this.dataService.dropdownEmitter.emit();
+    // }
   }
 
   onLogin() {
-    this.dataService.openLoginEmitter.emit();
+    if(this.loggedIn) {
+      this.showLogout = !this.showLogout;
+    } else {
+      this.dataService.openLoginEmitter.emit();
+    }
+  }
+
+  logout() {
+    this.showLogout = false;
+    this.loggedIn = false;
+    this.authService.setCurrentUser(undefined);
+    this.dataService.userChangeEmitter.emit();
   }
 }

@@ -12,7 +12,8 @@ export class shDevice {
     item!: GridsterItem;
     mqttData!: string;
 
-    constructor(deviceType: string, deviceName: string, deviceID: string, displayWidth: number, displayHeight: number, posX: number, posY: number) {
+    constructor(userID: string, deviceType: string, deviceName: string, deviceID: string, displayWidth: number, displayHeight: number, posX: number, posY: number) {
+        this.userID = userID;
         this.deviceType = deviceType;
         this.deviceName = deviceName;
         this.deviceID = deviceID;

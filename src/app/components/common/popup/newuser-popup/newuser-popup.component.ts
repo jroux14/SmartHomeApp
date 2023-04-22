@@ -9,11 +9,11 @@ import { shUser } from 'src/app/interfaces/user.interface';
   styleUrls: ['newuser-popup.component.css'],
 })
 export class NewUserPopupComponent extends CommonComponent{
-  fNameEmitter: EventEmitter<any> = this.dataService.fNameEmitter;
-  updateUsernameEmitter: EventEmitter<any> = this.dataService.updateUsernameEmitter;
-  updatePasswordEmitter: EventEmitter<any> = this.dataService.updatePasswordEmitter;
-  confirmPasswordEmitter: EventEmitter<any> = this.dataService.confirmPasswordEmitter;
-  createUserEmitter: EventEmitter<any> = this.dataService.createUserEmitter;
+  fNameEmitter: EventEmitter<any> = new EventEmitter();
+  updateUsernameEmitter: EventEmitter<any> = new EventEmitter();
+  updatePasswordEmitter: EventEmitter<any> = new EventEmitter();
+  confirmPasswordEmitter: EventEmitter<any> = new EventEmitter();
+  createUserEmitter: EventEmitter<any> = new EventEmitter();
 
   fName: string = '';
   currentUser: string = '';
@@ -25,19 +25,19 @@ export class NewUserPopupComponent extends CommonComponent{
   
   override ngOnInit(): void {
       super.ngOnInit();
-      this.addSubscription(this.dataService.fNameEmitter.subscribe(resp => {
+      this.addSubscription(this.fNameEmitter.subscribe(resp => {
         this.fName = resp.value;
       }));
-      this.addSubscription(this.dataService.updateUsernameEmitter.subscribe(resp => {
+      this.addSubscription(this.updateUsernameEmitter.subscribe(resp => {
         this.currentUser = resp.value;
       }));
-      this.addSubscription(this.dataService.updatePasswordEmitter.subscribe(resp => {
+      this.addSubscription(this.updatePasswordEmitter.subscribe(resp => {
         this.currentPwd = resp.value;
       }));
-      this.addSubscription(this.dataService.confirmPasswordEmitter.subscribe(resp => {
+      this.addSubscription(this.confirmPasswordEmitter.subscribe(resp => {
         this.confirmPwd = resp.value;
       }));
-      this.addSubscription(this.dataService.createUserEmitter.subscribe(resp => {
+      this.addSubscription(this.createUserEmitter.subscribe(resp => {
         let newUID: string = uuidv4();
         let newUser: shUser = {
           userID: newUID,

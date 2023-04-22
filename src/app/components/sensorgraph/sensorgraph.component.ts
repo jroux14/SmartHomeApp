@@ -69,7 +69,7 @@ export class SensorGraphComponent extends CommonComponent {
             this.thisChart = chart;
             if(this.thisChart.canvas.parentElement) {
                 console.log('Test');
-                this.thisChart.canvas.parentElement.style.width = '31.25rem';
+                this.thisChart.canvas.parentElement.style.width = '48.5rem';
                 this.thisChart.canvas.parentElement.style.height = '22.5rem';
             }
         }

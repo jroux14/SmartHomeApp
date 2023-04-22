@@ -11,6 +11,7 @@ export class AuthenticationService {
   constructor(public http: HttpClient) {}
 
   public registerNewUser(newUser: shUser, confirmPwd: string) : Observable<any> {
+    let salt: string = "6AA74A3EB3CA4BD80A8A0BC9F058661177787400"
     return this.http.put<any>(MONGO_URL+"user/create/"+confirmPwd, newUser);
   }
 
@@ -18,6 +19,7 @@ export class AuthenticationService {
     if(uname == "" || pwd == "") {
       return this.http.get<any>(MONGO_URL+"user/login");
     } else {
+      let salt: string = "6AA74A3EB3CA4BD80A8A0BC9F058661177787400"
       return this.http.get<any>(MONGO_URL+"user/login/"+uname+"/"+pwd);
     }
   }
@@ -30,7 +32,7 @@ export class AuthenticationService {
     return this.http.get<any>(MONGO_URL+"user/get/username/"+username);
   }
 
-  setCurrentUser(user: shUser) {
+  setCurrentUser(user: shUser | undefined) {
     this.currentUser = user;
   }
 

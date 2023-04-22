@@ -13,7 +13,7 @@ export class DragDropItemComponent extends CommonComponent{
   @Input()
   thisDevice: shDevice | undefined;
   deleteDeviceEmitter: EventEmitter<any> = this.dataService.deleteDeviceEmitter;
-  updateSwitchStateEmitter: EventEmitter<any> = this.dataService.updateSwitchStateEmitter;
+  updateSwitchStateEmitter: EventEmitter<any> = new EventEmitter();
 
   isSwitch: boolean = false;
   isSensor: boolean = false;
@@ -34,7 +34,7 @@ export class DragDropItemComponent extends CommonComponent{
       }
     }
     this.getDeviceType();
-    this.addSubscription(this.dataService.updateSwitchStateEmitter.subscribe(resp => {
+    this.addSubscription(this.updateSwitchStateEmitter.subscribe(resp => {
       /* 
       * Once device service is created we will pass deviceID and state to send
       * to the backend

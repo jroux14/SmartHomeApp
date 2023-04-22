@@ -1,8 +1,8 @@
 <h2 class="loginTitle">WELCOME</h2>
 <hr class="divLine">
 <div class="loginInputs">
-    <sh-text [onChangeEmitter]="newUsernameEmitter" tLabel="USERNAME" componentID="userInput" shPlaceholder="Username"></sh-text><br>
-    <sh-text [onChangeEmitter]="newPasswordEmitter" tLabel="PASSWORD" componentID="pwdInput" shPlaceholder='Password'></sh-text>
+    <sh-text [onChangeEmitter]="updateUsernameEmitter" tLabel="USERNAME" componentID="userInput" shPlaceholder="Username"></sh-text><br>
+    <sh-text [onChangeEmitter]="updatePasswordEmitter" tLabel="PASSWORD" componentID="pwdInput" shPlaceholder='Password'></sh-text>
 </div>
 <div class="loginBtn">
     <button-simple shClass="login" [onChangeEmitter]="checkLoginEmitter" bLabel="LOGIN" componentID="loginBtn"></button-simple>

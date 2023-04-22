@@ -19,13 +19,15 @@ export class NewDevicePopupComponent extends CommonComponent {
       displayName: "Sensor"
     }
   ]
+  loggedIn: boolean = this.authService.currentUser ? true : false;
   deviceName: string = '';
   deviceType: string = '';
   fillAllWarning: boolean = false;
+  logInWarning: boolean = false;
 
   updateDeviceNameEmitter: EventEmitter<any> = new EventEmitter();
   updateDeviceTypeEmitter: EventEmitter<any> = new EventEmitter();
-  confirmNewDeviceEmitter: EventEmitter<any> = this.dataService.confirmNewDeviceEmitter;
+  confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
   override ngOnInit(): void {
       super.ngOnInit();
@@ -38,7 +40,7 @@ export class NewDevicePopupComponent extends CommonComponent {
           this.deviceType = newType;
         }
       }));
-      this.addSubscription(this.dataService.confirmNewDeviceEmitter.subscribe(resp => {
+      this.addSubscription(this.confirmNewDeviceEmitter.subscribe(resp => {
         /* 
         *  This logic will be replaced once backend is working with Mongo...
         *  We will store this data and pull it into dragdrop container, then we will
@@ -46,14 +48,22 @@ export class NewDevicePopupComponent extends CommonComponent {
         *  with that position and a size of 1x1
         */
         if(this.deviceName != '' && this.deviceType != '') {
-          let newUID: string = uuidv4();
-          let device = new shDevice(this.deviceType, this.deviceName, newUID, 1, 1, 0, 0);
-          this.fillAllWarning = false;
-          this.dataService.closeDevicePopupEmitter.emit();
-          this.dataService.forwardNewDeviceEmitter.emit(device);
+          if(this.authService.currentUser) {
+            let newUID: string = uuidv4();
+            let device = new shDevice(this.authService.currentUser.userID, this.deviceType, this.deviceName, newUID, 1, 1, 0, 0);
+            this.fillAllWarning = false;
+            this.logInWarning = false;
+            this.dataService.closeDevicePopupEmitter.emit();
+            this.dataService.forwardNewDeviceEmitter.emit(device);
+          } else {
+            this.logInWarning = true;
+          }
         } else {
           this.fillAllWarning = true;
         }
+      }));
+      this.addSubscription(this.dataService.userChangeEmitter.subscribe(resp => {
+        this.loggedIn = this.authService.currentUser ? true : false;
       }));
   }
 

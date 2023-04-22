@@ -80,10 +80,6 @@ export class DragDropContainerComponent extends CommonComponent{
 
     this.initDash();
 
-    this.addSubscription(this.dataService.addDeviceEmitter.subscribe(resp => {
-      this.addItem();
-    }));
-
     this.addSubscription(this.dataService.forwardNewDeviceEmitter.subscribe(resp => {
       this.newDevice = resp;
       this.options.enableEmptyCellClick = true;
@@ -129,7 +125,7 @@ export class DragDropContainerComponent extends CommonComponent{
       setTimeout(() => {
         if(this.newDevice) {
           if(this.newDevice.deviceType.name == TYPE_SENSOR) {
-            item.cols = 2;
+            item.cols = 3;
             item.rows = 2;
           }
           this.newDevice.item = item;

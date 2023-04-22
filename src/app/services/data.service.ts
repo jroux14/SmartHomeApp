@@ -6,16 +6,10 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class DataService {
   // Menu Emitters
-  @Output() dropdownEmitter: EventEmitter<any> = new EventEmitter();
+  // @Output() dropdownEmitter: EventEmitter<any> = new EventEmitter();
   
   // Auth Emitters
   @Output() userChangeEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() fNameEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() checkLoginEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() createUserEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() updateUsernameEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() updatePasswordEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() confirmPasswordEmitter: EventEmitter<any> = new EventEmitter();
 
   // Popup Emitters
   @Output() openLoginEmitter: EventEmitter<any> = new EventEmitter();
@@ -24,14 +18,9 @@ export class DataService {
   @Output() closeNewAccountEmitter: EventEmitter<any> = new EventEmitter();
 
   // Device Emitters
-  @Output() updateDeviceNameEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() updateDeviceTypeEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() updateSwitchStateEmitter: EventEmitter<any> = new EventEmitter();
   @Output() addDeviceEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() closeDevicePopupEmitter: EventEmitter<any> = new EventEmitter();
   @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() deviceContainerModified: EventEmitter<any> = new EventEmitter();
   @Output() deleteDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public http: HttpClient) {}

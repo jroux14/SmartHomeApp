@@ -9,9 +9,13 @@ import { CommonComponent } from '../common/common/common.component';
 export class NavbarComponent extends CommonComponent {
   @Input() 
   showLogin: boolean = false;
+  loggedIn: boolean = this.authService.currentUser ? true : false;
 
   override ngOnInit(): void {
     super.ngOnInit();
+    this.addSubscription(this.dataService.userChangeEmitter.subscribe(resp => {
+      this.loggedIn = this.authService.currentUser ? true : false;
+    }));
   }
 
   createNewDevice() {
