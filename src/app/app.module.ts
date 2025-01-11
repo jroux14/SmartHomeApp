@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './services/data.service';
+import { PopupService } from './services/popup.service';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing.module';
 import { GridsterModule } from 'angular-gridster2';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/pages/home/home.component';
@@ -27,6 +32,10 @@ import { SelectDropDownInputComponent } from './components/inputs/select-dropdow
 import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
 import { ToggleComponent } from './components/inputs/sh-toggle/sh-toggle.component';
 import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { AuthInterceptor } from './utils/auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -56,11 +65,18 @@ import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.compo
     HttpClientModule,
     DragDropModule,
     GridsterModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSnackBarModule
   ],
   providers: [
     DataService,
-    AuthenticationService
+    AuthenticationService,
+    PopupService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

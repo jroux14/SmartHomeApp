@@ -15,7 +15,6 @@
     border: none;
     padding: 0.75rem;
     font-family: 'Harmattan';
-    font-weight: bold;
     font-size: 1.35rem;
   }
 
@@ -29,7 +28,6 @@
   
   .menu-icon {
     font-size: 2.25rem;
-    font-weight: bold;
   }
 
   .dropdown {
@@ -38,14 +36,13 @@
 
   .dropdown-container {
     background-color: var(--sh-darkgrey);
-    min-height: 100vh;
+    min-height: calc(100vh - 4rem);
     width: 15rem;
   }
   
   .dropdown-content {
     font-size: 1.35rem;
     font-family: 'Harmattan';
-    font-weight: bold;
   }
   
   .dropdown-content a {

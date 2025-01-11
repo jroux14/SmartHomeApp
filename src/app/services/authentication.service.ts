@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { shUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
 import { MONGO_URL } from '../constants/constants.smarthome';
@@ -10,18 +10,24 @@ export class AuthenticationService {
   tempUsers: shUser[] = [];
   constructor(public http: HttpClient) {}
 
-  public registerNewUser(newUser: shUser, confirmPwd: string) : Observable<any> {
-    let salt: string = "6AA74A3EB3CA4BD80A8A0BC9F058661177787400"
-    return this.http.put<any>(MONGO_URL+"user/create/"+confirmPwd, newUser);
+  public registerNewUser(userData: any) : Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if (!userData) {
+      userData = {};
+    }
+    return this.http.post<any>(MONGO_URL+"auth/create", userData, { headers});
   }
 
-  public attemptLogin(uname: string, pwd: string) : Observable<any> {
-    if(uname == "" || pwd == "") {
-      return this.http.get<any>(MONGO_URL+"user/login");
-    } else {
-      let salt: string = "6AA74A3EB3CA4BD80A8A0BC9F058661177787400"
-      return this.http.get<any>(MONGO_URL+"user/login/"+uname+"/"+pwd);
+  public attemptLogin(userData: any) : Observable<any> {
+    const headers = new HttpHeaders({'Content-Type':'application/json',});
+    if (!userData) {
+      userData = {};
     }
+    return this.http.post<any>(MONGO_URL+"auth/login", userData, { headers });
+  }
+
+  public testAuth() : Observable<any> {
+    return this.http.get<any>(MONGO_URL+"user/test");
   }
 
   getUserByUserID(userID: string) : Observable<any> {

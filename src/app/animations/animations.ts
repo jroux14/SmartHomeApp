@@ -26,7 +26,7 @@ export const DropDownAnimation = trigger('dropDown', [
             })
         ]),
         sequence([
-            animate('500ms ease', style({ width: '*' })),
+            animate('500ms ease', style({ width: '*', height: '*'})),
             query('.loginBtn, .dropdown-content', [
                 stagger(50, [
                     animate(
@@ -50,7 +50,7 @@ export const DropDownAnimation = trigger('dropDown', [
                     )
                 ])
             ]),
-            animate("200ms", style({ width: 0 })),
+            animate("200ms", style({ width: 0, height: '*'})),
         ])
     ])
 ])

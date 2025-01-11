@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { CommonComponent } from '../../common/common/common.component';
+import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +12,17 @@ import { CommonComponent } from '../../common/common/common.component';
 export class HomeComponent extends CommonComponent {
   responseData: String = '';
   testLogin: boolean = true;
+  loginDialog: MatDialogRef<LoginPopupComponent> | null = null;
 
   override ngOnInit() {
     super.ngOnInit();
+
+    if (!this.authService.currentUser) {
+      this.popupService.openPopup(LoginPopupComponent, {
+        panelClass: 'loginDialog',
+        disableClose: true
+      });
+    }
   }
 
   testHttp(): void {

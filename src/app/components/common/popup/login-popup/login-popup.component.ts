@@ -1,7 +1,8 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { Component, EventEmitter, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonComponent } from '../../common/common.component';
+import { shUser } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'sh-login',
@@ -9,40 +10,83 @@ import { CommonComponent } from '../../common/common.component';
   styleUrls: ['login-popup.component.css'],
 })
 export class LoginPopupComponent extends CommonComponent {
-  currentUsername: string = '';
-  currentPassword: string = '';
-  fillAllWarning: boolean = false;
-  badCredentials: boolean = false;
-  updateUsernameEmitter: EventEmitter<any> = new EventEmitter();
-  updatePasswordEmitter: EventEmitter<any> = new EventEmitter();
-  checkLoginEmitter: EventEmitter<any> = new EventEmitter();
+  isNewUser: boolean = false;
+  firstName: string = '';
+  email: string = 'test';
+  phoneNum: string = 'test';
+  username: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  authed: boolean = false;
+  tokenTest: string = ''
 
-  override ngOnInit(): void {
-      super.ngOnInit();
-      this.addSubscription(this.updateUsernameEmitter.subscribe(resp => {
-        this.currentUsername = resp.value;
-      }));
-      this.addSubscription(this.updatePasswordEmitter.subscribe(resp => {
-        this.currentPassword = resp.value;
-      }));
-      this.addSubscription(this.checkLoginEmitter.subscribe(resp => {
-        this.addSubscription(this.authService.attemptLogin(this.currentUsername, this.currentPassword).subscribe(resp => {
-          console.log(resp);
-          if(resp.success && resp.user) {
-            this.authService.setCurrentUser(resp.user);
-            this.dataService.userChangeEmitter.emit();
-            this.dataService.closeLoginEmitter.emit();
-          } else {
-            this.fillAllWarning = resp.fillAllError;
-            this.badCredentials = resp.badCredentialsError;
+  attemptLogin() {
+    if (this.areFieldsComplete()) {
+      if (this.isNewUser) {
+        if (this.password != this.confirmPassword) {
+          // Passwords must match
+        } else {
+          let userData = {
+            "username": this.username,
+            "password": this.password,
+            "firstName": this.firstName,
+            "email": this.email,
+            "phone": this.phoneNum
+          };
+
+
+          this.authService.registerNewUser(userData).subscribe(resp => {
+            if(resp.success) {
+              this.isNewUser = false;
+            }
+          });
+        }
+      } else {
+        let userData = {
+          "username": this.username,
+          "password": this.password
+        };
+
+        this.authService.attemptLogin(userData).subscribe(resp => {
+          if (resp.success) {
+            if (resp.token && resp.user) {
+              let user = resp.user;
+              localStorage.setItem("token", resp.token);
+              let newUser: shUser = new shUser(user.userId, user.firstName, user.email, user.phoneNum);
+              this.authService.setCurrentUser(newUser);
+              this.dataService.userChangeEmitter.emit();
+              this.popupService.closePopup();
+            } else {
+              // TODO: failed to get JWT token
+            }
           }
-        }));
-      }))
+        });
+      }
+    } else {
+      // Need all fields to be complete
+    }
   }
 
-  createAcct() {
-    this.dataService.closeLoginEmitter.emit();
-    this.dataService.openNewAccountEmitter.emit();
+  areFieldsComplete(): boolean {
+    if(this.isNewUser) {
+      console.log("hello")
+      if (this.firstName == '' || this.email == '' || this.phoneNum == '' || this.username == '' || this.password == '' || this.confirmPassword == '') {
+        console.log('fail')
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      if (this.username == '' || this.password == '') {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  switchDisplay() {
+    this.isNewUser = !this.isNewUser;
   }
 
 }

@@ -8,7 +8,7 @@ import { CommonComponent } from '../common/common/common.component';
 })
 export class NavbarComponent extends CommonComponent {
   @Input() 
-  showLogin: boolean = false;
+  showUser: boolean = false;
   loggedIn: boolean = this.authService.currentUser ? true : false;
 
   override ngOnInit(): void {

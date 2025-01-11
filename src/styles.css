@@ -10,10 +10,67 @@
     src: url(./assets/Harmattan-Regular.ttf);
 }
 
+.mat-form-field-flex {
+    color: var(--sh-darkgrey);
+    background-color: var(--sh-offwhite);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+    will-change: transform;
+    margin-left: 0.5rem;
+    color: var(--sh-lightgrey);
+}
+
+.mat-form-field-ripple {
+    background-color: var(--sh-offwhite);
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: var(--sh-offwhite);
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #3592ca;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+    color: var(--sh-darkgrey);
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+    transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.001px);
+    width: 133.3333333333%;
+}
+
+.mat-input-element {
+    caret-color: var(--sh-darkgrey);
+}
+
+.mat-raised-button {
+    background-color: var(--sh-darkgrey);
+    color: var(--sh-offwhite);
+}
+
+.mat-snack-bar-container {
+    color: var(--sh-offwhite);
+    background: var(--sh-lightgrey);
+}
+
+.mat-simple-snackbar-action {
+    color: #3592ca;
+}
+
+.sh-snackbar {
+    text-align: center;
+}
+
 body {
     --sh-lightgrey: #363B4B;
     --sh-darkgrey: #151423;
     --sh-offwhite: #D9D9D9;
+    /* overflow-y: hidden; */
     min-height: 100vh;
     margin: 0rem;
     background-color: var(--sh-lightgrey);
@@ -37,10 +94,42 @@ body {
 }
 
 .style-darkgrey {
-    color: #363B4B;
+    color: var(--sh-darkgrey)
 }
 
-.loginDialog > mat-dialog-container {
+.style-lightgrey {
+    color: var(--sh-lightgrey)
+}
+
+.style-offwhite {
+    color: var(--sh-offwhite)
+}
+
+.darkBG {
+    background-color: var(--sh-darkgrey);
+}
+
+.lightBG {
+    background-color: var(--sh-lightgrey);
+}
+
+.whiteBG {
+    background-color: var(--sh-offwhite);
+}
+
+.centerText {
+    text-align: center;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.positionRelative {
+    position: relative;
+}
+
+.loginDialog .mat-dialog-container {
     filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
     border-radius: 1rem;
     padding-bottom: 3rem;
@@ -49,7 +138,7 @@ body {
     color: var(--sh-offwhite);
 }
 
-.newAccountDialog > mat-dialog-container {
+.newAccountDialog .mat-dialog-container {
     filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
     border-radius: 1rem;
     padding-bottom: 3rem;
@@ -58,7 +147,7 @@ body {
     color: var(--sh-offwhite);
 }
 
-.baseDialog > mat-dialog-container {
+.baseDialog .mat-dialog-container {
     filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
     border-radius: 1rem;
     padding-bottom: 3rem;

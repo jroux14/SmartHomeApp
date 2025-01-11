@@ -29,4 +29,8 @@ export class DataService {
     return this.http.get<any>(MONGO_URL+"test");
   }
 
+  public getUserByUsername(username: string): Observable<any> {
+    return this.http.get<any>(MONGO_URL+"user/getUser");
+  }
+
 }
