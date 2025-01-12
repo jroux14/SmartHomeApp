@@ -1,12 +1,13 @@
 import { MONGO_URL } from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Injectable()
 export class DataService {
   // Menu Emitters
-  // @Output() dropdownEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() sideNavEmitter: EventEmitter<any> = new EventEmitter();
   
   // Auth Emitters
   @Output() userChangeEmitter: EventEmitter<any> = new EventEmitter();
@@ -23,7 +24,15 @@ export class DataService {
   @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deleteDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
+  sideNav: MatSidenav | undefined;
+  sideNavSubject = new BehaviorSubject<any>(null);
+
   constructor(public http: HttpClient) {}
+
+  setSideNav(newSideNav: MatSidenav) {
+    this.sideNav = newSideNav;
+    this.sideNavSubject.next(this.sideNav);
+  }
 
   public test(): Observable<any> {
     return this.http.get<any>(MONGO_URL+"test");

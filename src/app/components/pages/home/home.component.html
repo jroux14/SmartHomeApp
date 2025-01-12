@@ -1,2 +1,21 @@
-<sh-navbar [showUser]="false"></sh-navbar>
-<dragdrop-container></dragdrop-container>
+<div>
+    <sh-navbar></sh-navbar>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav #sideNav mode="side" class="sidenav">
+            <div class="navItems">
+                <div *ngFor="let link of links; let i = index" class="sidenav-content">
+                    <a [routerLink]="links[i]" routerLinkActive="active"><i
+                            class="material-symbols-outlined nav-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
+                </div>
+                <div class="sidenav-content bottomItem" (click)="createNewDevice()"><i class="material-symbols-outlined nav-icon" style="padding-left: 0.75rem;">add</i> Add New Device</div>
+            </div>
+            <!-- <div class="sidenav-content">
+                <button (click)="testAuth()">TEST</button>
+            </div> -->
+        </mat-sidenav>
+        <mat-sidenav-content class="drag-drop-container">
+            <dragdrop-container class="drag-drop-container"></dragdrop-container>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+

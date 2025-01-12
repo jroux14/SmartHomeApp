@@ -1,38 +1,53 @@
-.addDeviceBtn {
-    padding-top: 0.75rem;
-    padding-right: 3rem;
-    border: none;
-    padding-left: 3rem;
-    background-color: rgba(0, 0, 0, 0);
-    color: var(--sh-offwhite);
-    font-size: 1.1rem;
-    font-family: 'Outfit';
-    font-weight: bold;
-    cursor: pointer;
-    height: 100%;
+
+.title {
+    flex-shrink: 0;
 }
 
-.addIcon {
-    padding-bottom: 0.5rem;
+.loginBtn {
+    color: var(--sh-offwhite);
+    border: none;
+    padding: 0.75rem;
+    font-family: 'Harmattan';
+    font-size: 1.35rem;
+    flex-shrink: 1;
+}
+
+.loginIcon {
     position: relative;
+    padding-bottom: 0.25rem;
+    padding-right: 0.5rem;
+    font-size: 2rem;
     vertical-align: middle;
-    font-size: 2.25rem;
-    font-weight: bold;
+}
+
+.menuBtn {
+    background-color: #04aa6d00;
+    color: var(--sh-offwhite);
+    padding: 0.75rem;
+    border: none;
+    flex-shrink: 0;
+}
+
+.menuBtn:hover {
+    cursor: pointer;
+    color: var(--sh-offwhite-hover);
+}
+
+.menu-icon {
+    font-size: 2rem;
 }
 
 .navbar {
-    width: 100%;
-    height: 4rem;
     background-color: var(--sh-darkgrey);
     filter: drop-shadow(0px 4px 1.5px rgb(32, 32, 32));
-    position: relative;
-    z-index: 1;
-}
 
-.addDeviceBtn:hover {
-    background-color: var(--sh-lightgrey);
 }
 
 .addIcon:hover {
-    background-color: var(--sh-lightgrey);
+    color: var(--sh-offwhite-hover)
+}
+
+.loginBtn:hover {
+    cursor: pointer;
+    color: var(--sh-offwhite-hover);
 }

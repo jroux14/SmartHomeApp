@@ -1,10 +1,11 @@
 <div class="deviceContainer">
   <div class="topBtns">
-    <div class="drag-handler dragBtn">
-      <button-simple shIcon="drag_handle" shClass="dragBtn"></button-simple>
+    <div class="drag-handler flexGrow thirdWidth floatLeft positionRelative">
+      <i class="material-symbols-outlined dragHandle">drag_handle</i>
     </div>
-    <div class="deleteBtn">
-      <button-simple shIcon="delete" shClass="dragBtn" [onChangeEmitter]="deleteDeviceEmitter" [emitterData]="emitterData"></button-simple>
+    <label *ngIf="!isSwitch" class="centerText thirdWidth floatLeft positionRelative title">{{deviceName}}</label>
+    <div class="thirdWidth floatLeft positionRelative">
+      <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deleteDevice()">delete</button>
     </div>
   </div>
   <div *ngIf="isSwitch && thisDevice" class="switchContents">
@@ -13,7 +14,7 @@
   </div>
   <div *ngIf="isSensor && thisDevice" class="contents">
     <div class="graphContainer">
-      <sensorgraph [device]="thisDevice" [componentID]="thisDevice.deviceID"></sensorgraph>
+      <sensorgraph class="graph" [device]="thisDevice" [componentID]="thisDevice.deviceID"></sensorgraph>
     </div>
   </div>
 </div>

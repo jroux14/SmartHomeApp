@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import {
@@ -16,12 +16,14 @@ import { PopupService } from 'src/app/services/popup.service';
   templateUrl: './common.component.html',
   styleUrls: ['./common.component.css']
 })
-export class CommonComponent implements OnChanges, OnInit, OnDestroy {
+export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
 
   constructor(public dataService: DataService, public authService: AuthenticationService, public popupService: PopupService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {}
 

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {
   DisplayGrid,
   GridsterConfig,
@@ -15,6 +15,8 @@ import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
   styleUrls: ['./dragdrop.container.css'],
 })
 export class DragDropContainerComponent extends CommonComponent{
+  @ViewChild("wrapper") elementRef!: ElementRef;
+  private resizeObserver: ResizeObserver | undefined;
   options: GridsterConfig = {};
   dashboard: GridsterItem[] = [];
   devices: shDevice[] = [];
@@ -22,20 +24,25 @@ export class DragDropContainerComponent extends CommonComponent{
   devicePlaced: boolean = false;
   startingSize: any = {
     minCols: 0,
-    maxCols: 0,
     emptyCellDragMaxCols: 0,
     emptyCellDragMaxRows: 0
   }
 
-  initSize(width: number) {
-    this.startingSize.minCols = (width - 800) / 250;
-    this.startingSize.maxCols = (width - 800) / 250;
-    if (this.startingSize.minCols < 5) {
-      this.startingSize.minCols = (width - 500) / 250;
-      this.startingSize.maxCols = (width - 500) / 250;
-      this.startingSize.emptyCellDragMaxCols = (width - 500) / 250;
-      this.startingSize.emptyCellDragMaxRows = (width - 500) / 250;
-    }
+  initSize(width: number, height: number) {
+    let newColNum = Math.floor((width - 20) / 125);
+    // let newRowNum = Math.floor((height - 20) / 125);
+    this.startingSize.minCols = newColNum;
+    this.startingSize.maxCols = newColNum;
+    // this.startingSize.minRows = newRowNum;
+    // this.startingSize.maxRows = newRowNum;
+    // this.startingSize.minCols = (width - 800) / 250;
+    // this.startingSize.maxCols = (width - 800) / 250;
+    // if (this.startingSize.minCols < 5) {
+    //   this.startingSize.minCols = (width - 500) / 250;
+    //   this.startingSize.maxCols = (width - 500) / 250;
+    //   this.startingSize.emptyCellDragMaxCols = (width - 500) / 250;
+    //   this.startingSize.emptyCellDragMaxRows = (width - 500) / 250;
+    // }
   }
 
   initDash() {
@@ -49,16 +56,13 @@ export class DragDropContainerComponent extends CommonComponent{
   
   override ngOnInit() {
     super.ngOnInit();
-    this.initSize(window.innerWidth);
+    this.initSize(window.innerWidth, window.innerHeight);
     this.options = {
-      gridType: GridType.Fixed,
+      gridType: GridType.ScrollVertical,
       displayGrid: DisplayGrid.None,
-      setGridSize: true,
-      fixedColWidth: 250,
-      fixedRowHeight: 250,
-      margin:30,
-      outerMarginLeft: 250,
-      outerMarginTop: 50,
+      setGridSize: false,
+      margin: 10,
+      outerMarginLeft: 20, 
       swap: true,
       pushItems: false,
       enableEmptyCellDrop: true,
@@ -66,6 +70,8 @@ export class DragDropContainerComponent extends CommonComponent{
       rowHeightRatio: 1,
       maxCols: this.startingSize.maxCols,
       minCols: this.startingSize.minCols,
+      minRows: this.startingSize.minRows,
+      maxRows: this.startingSize.maxRows,
       emptyCellDragMaxCols: this.startingSize.emptyCellDragMaxCols,
       emptyCellDragMaxRows: this.startingSize.emptyCellDragMaxRows,
       emptyCellClickCallback: this.emptyCellClick.bind(this),
@@ -87,32 +93,74 @@ export class DragDropContainerComponent extends CommonComponent{
       this.changedOptions();
     }));
     this.addSubscription(this.dataService.deleteDeviceEmitter.subscribe(resp => {
-      this.removeItem(resp.event, resp.device.item, resp.device);
+      // this.removeItem(resp.event, resp.device.item, resp.device);
+      this.dashboard.splice(this.dashboard.indexOf(resp.device.item), 1);
+      this.devices.splice(this.devices.indexOf(resp.device), 1);
     }));
   }
 
-  @HostListener('window:resize', ['$event'])
-  sizeChange(event: any) {
-    if (event.target.innerWidth && event.target.innerHeight && this.options.api && this.options.api.optionsChanged && this.options.fixedColWidth) {
-      this.options.minCols = (event.target.innerWidth - 800) / this.options.fixedColWidth;
-      this.options.maxCols = (event.target.innerWidth - 800) / this.options.fixedColWidth;
-      if (this.options.minCols < 5) {
-        this.options.minCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-        this.options.maxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-        this.options.emptyCellDragMaxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-        this.options.emptyCellDragMaxRows = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-      }
-      if (this.dashboard) {
-        for (let i = 0; i < this.dashboard.length; i++) {
-          if (this.dashboard[i].x > this.options.maxCols) {
-            this.dashboard[i].x = this.options.maxCols - 1;
-          }
+  override ngAfterViewInit(): void {
+    this.resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+        
+        if (this.options && this.options.api) {
+          console.log('Component size changed:', width, height);
+
+          // Each grid will be 125px*125px and adjusted for 30px margin on each side
+          let newColNum = Math.floor((width - 60) / 125);
+          // let newRowNum = Math.floor((height - 60) / 125);
+          this.options.minCols = newColNum;
+          this.options.maxCols = newColNum;
+          // this.options.minRows = newRowNum;
+          // this.options.maxRows = newRowNum;
+  
+          // if (this.dashboard) {
+          //   for (let i = 0; i < this.dashboard.length; i++) {
+          //     console.log(this.dashboard[i].x + " | " + newColNum);
+          //     if ((this.dashboard[i].x + this.dashboard[i].cols)  > newColNum) {
+          //       console.log("x pos: " + this.dashboard[i].x + " | cols: " + this.dashboard[i].cols);
+          //       console.log("New: " + newColNum);
+          //       // How many columns past our boundary did we go?
+          //       let columnAdjust = (this.dashboard[i].x + this.dashboard[i].cols) - newColNum;
+          //       this.dashboard[i].x = newColNum - columnAdjust;
+          //     }
+          //   }
+          // }
+          this.changedOptions();
+          this.options.api.resize!();
         }
       }
-      this.changedOptions();
-      this.options.api.resize!();
-    }
+    });
+
+    this.resizeObserver.observe(this.elementRef.nativeElement);   
   }
+
+  // @HostListener('window:resize', ['$event'])
+  // sizeChange(event: any) {
+  //   console.log(event);
+  //   if (event.target.innerWidth && event.target.innerHeight && this.options.api && this.options.api.optionsChanged && this.options.fixedColWidth) {
+  //     this.options.minCols = (event.target.innerWidth - 60) / 250;
+  //     this.options.maxCols = (event.target.innerWidth - 60) / 250;
+  //     this.options.minRows = (event.target.innerHeight - 60) / 250;
+  //     this.options.maxRows = (event.target.innerHeight - 60) / 250;
+  //   //   if (this.options.minCols < 5) {
+  //   //     this.options.minCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+  //   //     this.options.maxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+  //   //     this.options.emptyCellDragMaxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+  //   //     this.options.emptyCellDragMaxRows = (event.target.innerWidth - 500) / this.options.fixedColWidth;
+  //   //   }
+  //     if (this.dashboard) {
+  //       for (let i = 0; i < this.dashboard.length; i++) {
+  //         if (this.dashboard[i].x > this.options.maxCols) {
+  //           this.dashboard[i].x = this.options.maxCols - 1;
+  //         }
+  //       }
+  //     }
+  //     this.changedOptions();
+  //     this.options.api.resize!();
+  //   }
+  // }
 
   changedOptions(): void {
     if(this.options.api && this.options.api.optionsChanged) {
@@ -125,7 +173,10 @@ export class DragDropContainerComponent extends CommonComponent{
       setTimeout(() => {
         if(this.newDevice) {
           if(this.newDevice.deviceType.name == TYPE_SENSOR) {
-            item.cols = 3;
+            item.cols = 5;
+            item.rows = 3;
+          } else {
+            item.cols = 2;
             item.rows = 2;
           }
           this.newDevice.item = item;
@@ -137,12 +188,12 @@ export class DragDropContainerComponent extends CommonComponent{
     });
   }
 
-  removeItem($event: MouseEvent | TouchEvent, item: GridsterItem, device: shDevice): void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
-    this.devices.splice(this.devices.indexOf(device), 1);
-  }
+  // removeItem($event: MouseEvent | TouchEvent, item: GridsterItem, device: shDevice): void {
+  //   $event.preventDefault();
+  //   $event.stopPropagation();
+  //   this.dashboard.splice(this.dashboard.indexOf(item), 1);
+  //   this.devices.splice(this.devices.indexOf(device), 1);
+  // }
 
   addItem(): void {
     this.dashboard.push({ x: 0, y: 0, cols: 1, rows: 1 });

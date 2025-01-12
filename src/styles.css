@@ -10,6 +10,12 @@
     src: url(./assets/Harmattan-Regular.ttf);
 }
 
+/* Angular Material Styles */
+
+.mat-toolbar {
+    background: var(--sh-darkgrey);
+}
+
 .mat-form-field-flex {
     color: var(--sh-darkgrey);
     background-color: var(--sh-offwhite);
@@ -62,14 +68,19 @@
     color: #3592ca;
 }
 
-.sh-snackbar {
+/* .sh-snackbar {
     text-align: center;
+} */
+
+html {
+    height: 100%;
 }
 
 body {
     --sh-lightgrey: #363B4B;
     --sh-darkgrey: #151423;
     --sh-offwhite: #D9D9D9;
+    --sh-offwhite-hover: #b8b6b6;
     /* overflow-y: hidden; */
     min-height: 100vh;
     margin: 0rem;
@@ -78,55 +89,71 @@ body {
 }
 
 .font-harmattan {
-    font-family: 'Harmattan';
+    font-family: 'Harmattan' !important;
 }
 
-.float-left {
-    float: left;
+.floatLeft {
+    float: left !important;
 }
 
-.float-right {
-    float: right;
+.floatRight {
+    float: right !important;
 }
 
-.inline-block {
-    display: inline-block;
+.inlineBlock {
+    display: inline-block !important;
 }
 
 .style-darkgrey {
-    color: var(--sh-darkgrey)
+    color: var(--sh-darkgrey) !important;
 }
 
 .style-lightgrey {
-    color: var(--sh-lightgrey)
+    color: var(--sh-lightgrey) !important;
 }
 
 .style-offwhite {
-    color: var(--sh-offwhite)
+    color: var(--sh-offwhite) !important;
 }
 
 .darkBG {
-    background-color: var(--sh-darkgrey);
+    background-color: var(--sh-darkgrey) !important;
 }
 
 .lightBG {
-    background-color: var(--sh-lightgrey);
+    background-color: var(--sh-lightgrey) !important;
 }
 
 .whiteBG {
-    background-color: var(--sh-offwhite);
+    background-color: var(--sh-offwhite) !important;
 }
 
 .centerText {
-    text-align: center;
+    text-align: center !important;
+}
+
+.rightText {
+    text-align: right !important;
+}
+
+.leftText {
+    text-align: left !important;
 }
 
 .fullWidth {
-    width: 100%;
+    width: 100% !important;
+}
+
+.thirdWidth {
+    width: calc(100% / 3) !important;
+}
+
+.flexGrow {
+    flex-grow: 1 !important;
 }
 
 .positionRelative {
-    position: relative;
+    position: relative !important;
 }
 
 .loginDialog .mat-dialog-container {

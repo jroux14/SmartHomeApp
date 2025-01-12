@@ -1,4 +1,9 @@
-<div class="navbar font-harmattan">
-    <button *ngIf="loggedIn" type="button" class="float-right addDeviceBtn" (click)="createNewDevice()"><i class="material-symbols-outlined addIcon">add</i> Add New Device</button>
-    <sh-dropdown [showUser]="showUser" class="float-left"></sh-dropdown>
-</div>
+<mat-toolbar class="navbar">   
+    <button (click)="toggleSideNav()" class="floatLeft positionRelative thirdWidth menuBtn"><i class="material-symbols-outlined floatLeft pos menu-icon">menu</i></button>
+    <div class="positionRelative floatLeft thirdWidth centerText style-offwhite title" style="padding: 0.75rem;">Smart Home</div>
+    <div *ngIf="loggedIn" class="loginBtn thirdWidth positionRelative floatRight rightText">
+            <i class="material-symbols-rounded loginIcon">account_circle</i>{{userName}}
+        <!-- Use menu material to drop down logout button -->
+        <!-- <button class="loginBtn" (click)="logout()">Logout</button> -->
+    </div>
+</mat-toolbar>

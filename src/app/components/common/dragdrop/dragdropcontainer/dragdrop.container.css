@@ -1,5 +1,9 @@
+.wrapper {
+  min-height: inherit;
+}
+
 .grid {
-  height: 100vh;
+  min-height: inherit;
   width: 100%;
   background-color: var(--sh-lightgray);
   display: block;

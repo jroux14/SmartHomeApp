@@ -44,7 +44,9 @@ export class DragDropItemComponent extends CommonComponent{
     }));
   }
 
-
+  deleteDevice() {
+    this.dataService.deleteDeviceEmitter.emit(this.emitterData);
+  }
 
   getDeviceType() {
     if(this.thisDevice) {
