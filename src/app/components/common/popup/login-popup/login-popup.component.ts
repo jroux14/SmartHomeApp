@@ -21,10 +21,13 @@ export class LoginPopupComponent extends CommonComponent {
   tokenTest: string = ''
 
   attemptLogin() {
+    let snackBarMsg: any | null = null;
+
     if (this.areFieldsComplete()) {
       if (this.isNewUser) {
         if (this.password != this.confirmPassword) {
           // Passwords must match
+          snackBarMsg = {msg: 'Passwords must match', action: 'Try Again'};
         } else {
           let userData = {
             "username": this.username,
@@ -58,12 +61,24 @@ export class LoginPopupComponent extends CommonComponent {
               this.popupService.closePopup();
             } else {
               // TODO: failed to get JWT token
+              snackBarMsg = {msg: 'Server error', action: 'Try Again'};
             }
           }
         });
       }
     } else {
+      snackBarMsg = {msg: 'Fill in all fields', action: 'Try Again'};
       // Need all fields to be complete
+    }
+
+    if (snackBarMsg) {
+      this.popupService.closePopup();
+      let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
+      ref.onAction().subscribe(() => {
+        this.popupService.openPopup(LoginPopupComponent, {
+          panelClass: 'baseDialog'
+        });    
+      });
     }
   }
 

@@ -30,19 +30,9 @@ export class DragDropContainerComponent extends CommonComponent{
 
   initSize(width: number, height: number) {
     let newColNum = Math.floor((width - 20) / 125);
-    // let newRowNum = Math.floor((height - 20) / 125);
+
     this.startingSize.minCols = newColNum;
     this.startingSize.maxCols = newColNum;
-    // this.startingSize.minRows = newRowNum;
-    // this.startingSize.maxRows = newRowNum;
-    // this.startingSize.minCols = (width - 800) / 250;
-    // this.startingSize.maxCols = (width - 800) / 250;
-    // if (this.startingSize.minCols < 5) {
-    //   this.startingSize.minCols = (width - 500) / 250;
-    //   this.startingSize.maxCols = (width - 500) / 250;
-    //   this.startingSize.emptyCellDragMaxCols = (width - 500) / 250;
-    //   this.startingSize.emptyCellDragMaxRows = (width - 500) / 250;
-    // }
   }
 
   initDash() {
@@ -87,13 +77,13 @@ export class DragDropContainerComponent extends CommonComponent{
     this.initDash();
 
     this.addSubscription(this.dataService.forwardNewDeviceEmitter.subscribe(resp => {
+      console.log(resp);
       this.newDevice = resp;
       this.options.enableEmptyCellClick = true;
       this.options.displayGrid = DisplayGrid.Always;
       this.changedOptions();
     }));
     this.addSubscription(this.dataService.deleteDeviceEmitter.subscribe(resp => {
-      // this.removeItem(resp.event, resp.device.item, resp.device);
       this.dashboard.splice(this.dashboard.indexOf(resp.device.item), 1);
       this.devices.splice(this.devices.indexOf(resp.device), 1);
     }));
@@ -105,28 +95,12 @@ export class DragDropContainerComponent extends CommonComponent{
         const { width, height } = entry.contentRect;
         
         if (this.options && this.options.api) {
-          console.log('Component size changed:', width, height);
-
-          // Each grid will be 125px*125px and adjusted for 30px margin on each side
+          // Each grid will be 125px*125px and adjusted for 30px margins on sides
           let newColNum = Math.floor((width - 60) / 125);
-          // let newRowNum = Math.floor((height - 60) / 125);
+
           this.options.minCols = newColNum;
           this.options.maxCols = newColNum;
-          // this.options.minRows = newRowNum;
-          // this.options.maxRows = newRowNum;
-  
-          // if (this.dashboard) {
-          //   for (let i = 0; i < this.dashboard.length; i++) {
-          //     console.log(this.dashboard[i].x + " | " + newColNum);
-          //     if ((this.dashboard[i].x + this.dashboard[i].cols)  > newColNum) {
-          //       console.log("x pos: " + this.dashboard[i].x + " | cols: " + this.dashboard[i].cols);
-          //       console.log("New: " + newColNum);
-          //       // How many columns past our boundary did we go?
-          //       let columnAdjust = (this.dashboard[i].x + this.dashboard[i].cols) - newColNum;
-          //       this.dashboard[i].x = newColNum - columnAdjust;
-          //     }
-          //   }
-          // }
+
           this.changedOptions();
           this.options.api.resize!();
         }
@@ -135,32 +109,6 @@ export class DragDropContainerComponent extends CommonComponent{
 
     this.resizeObserver.observe(this.elementRef.nativeElement);   
   }
-
-  // @HostListener('window:resize', ['$event'])
-  // sizeChange(event: any) {
-  //   console.log(event);
-  //   if (event.target.innerWidth && event.target.innerHeight && this.options.api && this.options.api.optionsChanged && this.options.fixedColWidth) {
-  //     this.options.minCols = (event.target.innerWidth - 60) / 250;
-  //     this.options.maxCols = (event.target.innerWidth - 60) / 250;
-  //     this.options.minRows = (event.target.innerHeight - 60) / 250;
-  //     this.options.maxRows = (event.target.innerHeight - 60) / 250;
-  //   //   if (this.options.minCols < 5) {
-  //   //     this.options.minCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-  //   //     this.options.maxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-  //   //     this.options.emptyCellDragMaxCols = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-  //   //     this.options.emptyCellDragMaxRows = (event.target.innerWidth - 500) / this.options.fixedColWidth;
-  //   //   }
-  //     if (this.dashboard) {
-  //       for (let i = 0; i < this.dashboard.length; i++) {
-  //         if (this.dashboard[i].x > this.options.maxCols) {
-  //           this.dashboard[i].x = this.options.maxCols - 1;
-  //         }
-  //       }
-  //     }
-  //     this.changedOptions();
-  //     this.options.api.resize!();
-  //   }
-  // }
 
   changedOptions(): void {
     if(this.options.api && this.options.api.optionsChanged) {
@@ -172,7 +120,7 @@ export class DragDropContainerComponent extends CommonComponent{
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => {
         if(this.newDevice) {
-          if(this.newDevice.deviceType.name == TYPE_SENSOR) {
+          if(this.newDevice.deviceType == TYPE_SENSOR) {
             item.cols = 5;
             item.rows = 3;
           } else {
@@ -187,13 +135,6 @@ export class DragDropContainerComponent extends CommonComponent{
       this.placeNewDevice();
     });
   }
-
-  // removeItem($event: MouseEvent | TouchEvent, item: GridsterItem, device: shDevice): void {
-  //   $event.preventDefault();
-  //   $event.stopPropagation();
-  //   this.dashboard.splice(this.dashboard.indexOf(item), 1);
-  //   this.devices.splice(this.devices.indexOf(device), 1);
-  // }
 
   addItem(): void {
     this.dashboard.push({ x: 0, y: 0, cols: 1, rows: 1 });

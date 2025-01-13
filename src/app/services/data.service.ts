@@ -34,6 +34,10 @@ export class DataService {
     this.sideNavSubject.next(this.sideNav);
   }
 
+  getSideNav(): MatSidenav | undefined {
+    return this.sideNav;
+  }
+
   public test(): Observable<any> {
     return this.http.get<any>(MONGO_URL+"test");
   }

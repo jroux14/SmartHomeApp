@@ -4,9 +4,14 @@
 }
 
 .loginBtn {
-    color: var(--sh-offwhite);
+    background-color: var(--sh-darkgrey);
     border: none;
+    color: var(--sh-offwhite);
     padding: 0.75rem;
+}
+
+.userText {
+    color: var(--sh-offwhite);
     font-family: 'Harmattan';
     font-size: 1.35rem;
     flex-shrink: 1;
@@ -20,17 +25,15 @@
     vertical-align: middle;
 }
 
+.menuContainer {
+    flex-shrink: 0;
+    padding: 0.75rem;
+}
+
 .menuBtn {
     background-color: #04aa6d00;
     color: var(--sh-offwhite);
-    padding: 0.75rem;
     border: none;
-    flex-shrink: 0;
-}
-
-.menuBtn:hover {
-    cursor: pointer;
-    color: var(--sh-offwhite-hover);
 }
 
 .menu-icon {
@@ -40,7 +43,17 @@
 .navbar {
     background-color: var(--sh-darkgrey);
     filter: drop-shadow(0px 4px 1.5px rgb(32, 32, 32));
+    z-index: 2;
+}
 
+.logout {
+    color: var(--sh-offwhite);
+    text-align: center;
+}
+
+.menu-icon:hover {
+    cursor: pointer;
+    color: var(--sh-lightblue);
 }
 
 .addIcon:hover {
@@ -49,5 +62,9 @@
 
 .loginBtn:hover {
     cursor: pointer;
-    color: var(--sh-offwhite-hover);
+    color: var(--sh-lightblue);
+}
+
+.logout:hover {
+    color: var(--sh-lightblue);
 }

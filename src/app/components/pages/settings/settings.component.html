@@ -1,6 +1,18 @@
-<mat-sidenav-container>
+<div>
     <sh-navbar></sh-navbar>
-    <mat-sidenav-content>
-        <p>settings works!</p>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav #sideNav mode="side" class="sidenav">
+            <div class="navItems">
+                <div *ngFor="let link of links; let i = index" class="sidenav-content">
+                    <a [routerLink]="links[i]" routerLinkActive="active"><i
+                            class="material-symbols-outlined nav-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
+                </div>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content class="drag-drop-container">
+            <!-- TODO -->
+            <h3>Settings Page</h3>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+

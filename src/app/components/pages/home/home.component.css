@@ -1,6 +1,7 @@
 
 .drag-drop-container {
     min-height: inherit;
+    height: 100%;
 }
 
 .nav-icon {
@@ -26,11 +27,13 @@
 .sidenav {
     background-color: var(--sh-darkgrey);
     width: 15rem;
+    filter: drop-shadow(rgb(32, 32, 32) 3px 0px 1.5px);
 }
 
 .sidenav-container {
     background-color: var(--sh-lightgrey);
     min-height: calc(100vh - 4rem);
+    z-index: auto !important;
 }
 
 .sidenav-content {
@@ -47,6 +50,6 @@
     text-decoration: none;
 }
 
-.sidenav-content a:hover {background-color: var(--sh-lightgrey);}
+.sidenav-content a:hover {color: var(--sh-lightblue);}
 
-.sidenav-content:hover {background-color: var(--sh-lightgrey); cursor: pointer;}
+.sidenav-content:hover {color: var(--sh-lightblue); cursor: pointer;}

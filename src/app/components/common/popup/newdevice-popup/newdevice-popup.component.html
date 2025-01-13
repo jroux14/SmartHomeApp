@@ -1,14 +1,26 @@
-<h2 class="popupTitle">NEW DEVICE</h2>
-<hr class="divLine">
 <div class="textInputs">
-    <sh-text tLabel="DEVICE NAME" [onChangeEmitter]="updateDeviceNameEmitter" componentID="deviceName" shPlaceholder="Device Name"></sh-text><br>
-    <sh-select tLabel="DEVICE TYPE" [onChangeEmitter]="updateDeviceTypeEmitter" componentID="deviceType" shPlaceholder="Device Type" [shOptions]="getDropdownOptions()"></sh-select><br>
+    <form class="fullWidth floatLeft positionRelative">
+        <mat-form-field class="fullWidth floatLeft positionRelative">
+          <input matInput name="deviceName" [(ngModel)]="deviceName" placeholder="Device Name">
+        </mat-form-field>
+        <mat-form-field class="fullWidth floatLeft positionRelative">
+          <mat-label>Device Type</mat-label>
+          <mat-select name="deviceType" [(ngModel)]="deviceType">
+            <mat-option *ngFor="let deviceType of deviceTypes" [value]="deviceType.name">
+              {{deviceType.displayName}}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+    </form>
+    <!-- <sh-text tLabel="DEVICE NAME" [onChangeEmitter]="updateDeviceNameEmitter" componentID="deviceName" shPlaceholder="Device Name"></sh-text><br> -->
+
+    <!-- <sh-select tLabel="DEVICE TYPE" [onChangeEmitter]="updateDeviceTypeEmitter" componentID="deviceType" shPlaceholder="Device Type" [shOptions]="getDropdownOptions()"></sh-select><br> -->
 </div>
 <div class="loginBtn">
-    <button-simple [onChangeEmitter]="confirmNewDeviceEmitter" shClass="login" bLabel="CONFIRM" componentID="loginBtn"></button-simple>
+    <button matInput mat-raised-button (click)="confirmNewDevice()" class="fullWidth floatLeft positionRelative">Register</button>
+    <!-- <button-simple [onChangeEmitter]="confirmNewDeviceEmitter" shClass="login" bLabel="CONFIRM" componentID="loginBtn"></button-simple> -->
 </div>
-<div class="warningContainer">
+<!-- <div class="warningContainer">
     <label class="warning" *ngIf="fillAllWarning">Please Fill Out Every Field</label>
     <label class="warning" *ngIf="logInWarning">You Must Be Logged In to Add a Device</label>
-
-</div>
+</div> -->

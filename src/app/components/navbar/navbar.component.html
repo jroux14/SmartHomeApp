@@ -1,9 +1,14 @@
-<mat-toolbar class="navbar">   
-    <button (click)="toggleSideNav()" class="floatLeft positionRelative thirdWidth menuBtn"><i class="material-symbols-outlined floatLeft pos menu-icon">menu</i></button>
+<mat-toolbar class="navbar positionRelative">
+    <div class="floatLeft positionRelative thirdWidth menuContainer">
+        <button (click)="toggleSideNav()" class="menuBtn floatLeft positionRelative"><i class="material-symbols-outlined floatLeft pos menu-icon">menu</i></button>
+    </div>
     <div class="positionRelative floatLeft thirdWidth centerText style-offwhite title" style="padding: 0.75rem;">Smart Home</div>
-    <div *ngIf="loggedIn" class="loginBtn thirdWidth positionRelative floatRight rightText">
-            <i class="material-symbols-rounded loginIcon">account_circle</i>{{userName}}
+    <div *ngIf="loggedIn" class="userText style-offwhite thirdWidth positionRelative floatRight rightText">
+        {{userName}}<button [matMenuTriggerFor]="menu" class="loginBtn"><i class="material-symbols-rounded loginIcon">account_circle</i></button>
         <!-- Use menu material to drop down logout button -->
+        <mat-menu #menu="matMenu" class="logoutBG">
+            <button mat-menu-item class="logout" (click)="logout()">Logout</button>
+        </mat-menu>
         <!-- <button class="loginBtn" (click)="logout()">Logout</button> -->
     </div>
 </mat-toolbar>

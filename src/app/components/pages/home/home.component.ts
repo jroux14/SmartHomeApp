@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { BehaviorSubject } from 'rxjs';
 import { CommonComponent } from '../../common/common/common.component';
 import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
+import { NewDevicePopupComponent } from '../../common/popup/newdevice-popup/newdevice-popup.component';
 
 @Component({
   selector: 'app-home',
@@ -55,6 +55,8 @@ export class HomeComponent extends CommonComponent{
     if (this.sideNav) {
       this.sideNav.toggle();
     }
-    this.dataService.addDeviceEmitter.emit();
+    this.popupService.openPopup(NewDevicePopupComponent, {
+      panelClass: 'baseDialog'
+    });
   }
 }

@@ -1,5 +1,0 @@
-<label class="inputLabel" for="thisInput">{{tLabel}}</label><br>
-<select name="thisInput" class="baseInput" [id]="componentID" [disabled]="shDisabled" (change)='onChangeDetect($event.target)'>
-    <option value="" hidden>{{shPlaceholder}}</option>
-    <option *ngFor="let option of shOptions; let i = index" [value]="option">{{option}}</option>
-</select>

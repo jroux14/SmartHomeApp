@@ -1,16 +1,13 @@
 <div *ngIf="!isNewUser">
     <form class="fullWidth floatLeft positionRelative">
         <mat-form-field color="primary" class="fullWidth floatLeft positionRelative">
-            <input matInput [(ngModel)]="username" name="user" placeholder="Username">
+            <input matInput name="username" [(ngModel)]="username" placeholder="Username">
         </mat-form-field>
         <mat-form-field class="fullWidth floatLeft positionRelative">
-            <input matInput [(ngModel)]="password" name="pwd" placeholder="Password">
+            <input matInput name="password" [(ngModel)]="password" placeholder="Password">
         </mat-form-field>
         <button matInput mat-raised-button (click)="attemptLogin()" class="fullWidth floatLeft positionRelative">Login</button>
     </form>
-
-    <!-- <h3 class="warning" *ngIf="fillAllWarning">Please Fill Out Every Field</h3>
-    <h3 class="warning" *ngIf="badCredentials">Invalid Credentials</h3> -->
     <h3 class="or">or</h3>
     <h3 class="switchView" (click)="switchDisplay()">Create An Account</h3>
 </div>
@@ -20,28 +17,16 @@
             <input matInput [(ngModel)]="firstName" name="firstName" placeholder="First Name">
         </mat-form-field>
         <mat-form-field color="primary" class="fullWidth floatLeft positionRelative">
-            <input matInput [(ngModel)]="username" name="user" placeholder="Username">
+            <input matInput [(ngModel)]="username" name="newUsername" placeholder="Username">
         </mat-form-field>
         <mat-form-field class="fullWidth floatLeft positionRelative">
-            <input matInput [(ngModel)]="password" name="pwd" placeholder="Password">
+            <input matInput [(ngModel)]="password" name="newPassword" placeholder="Password">
         </mat-form-field>
         <mat-form-field class="fullWidth floatLeft positionRelative">
-            <input matInput [(ngModel)]="confirmPassword" name="confirmPwd" placeholder="Confirm Password">
+            <input matInput [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
         </mat-form-field>
         <button matInput mat-raised-button (click)="attemptLogin()" class="fullWidth floatLeft positionRelative">Register</button>
     </form>
-    <!-- <div class="textInputs">
-        <sh-text [onChangeEmitter]="fNameEmitter" tLabel="FIRST NAME" componentID="fName"></sh-text><br>
-        <sh-text [onChangeEmitter]="updateUsernameEmitter" tLabel="USERNAME" componentID="userInput"></sh-text><br>
-        <sh-text [onChangeEmitter]="updatePasswordEmitter" [isPwd]="true" tLabel="PASSWORD" componentID="pwdInput"></sh-text><br>
-        <sh-text [onChangeEmitter]="confirmPasswordEmitter" [isPwd]="true" tLabel="CONFIRM PASSWORD" componentID="confirmPwdInput"></sh-text>
-    </div> -->
-    <!-- <div class="loginBtn">
-        <button-simple shClass="login" [onChangeEmitter]="createUserEmitter" bLabel="CREATE ACCOUNT" componentID="loginBtn"></button-simple>
-    </div> -->
-    <!-- <h3 class="warning" *ngIf="pwdMatchWarning">Passwords Do Not Match</h3>
-    <h3 class="warning" *ngIf="fillAllWarning">Please Fill Out Every Field</h3>
-    <h3 class="warning" *ngIf="userExistsWarning">A User With This Username Already Exists</h3> -->
     <div class="fullWidth floatLeft positionRelative centerText" style="margin-top: 1rem;">
         <div>Already Have an Account?</div>
         <div (click)="switchDisplay()" class="switchView">Login</div>

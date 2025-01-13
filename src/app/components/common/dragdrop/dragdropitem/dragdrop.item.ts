@@ -26,14 +26,18 @@ export class DragDropItemComponent extends CommonComponent{
     super.ngOnInit();
     if(this.thisDevice) {
       this.deviceName = this.thisDevice.deviceName;
-      this.deviceType = this.thisDevice.deviceType.name;
+      this.deviceType = this.thisDevice.deviceType;
       this.componentID = this.thisDevice.deviceID;
       this.emitterData = {
         device: this.thisDevice,
         event: ''
       }
     }
-    this.getDeviceType();
+    if (this.deviceType == TYPE_SENSOR) {
+      this.isSensor = true;
+    } else {
+      this.isSwitch = true;
+    }
     this.addSubscription(this.updateSwitchStateEmitter.subscribe(resp => {
       /* 
       * Once device service is created we will pass deviceID and state to send
@@ -47,16 +51,4 @@ export class DragDropItemComponent extends CommonComponent{
   deleteDevice() {
     this.dataService.deleteDeviceEmitter.emit(this.emitterData);
   }
-
-  getDeviceType() {
-    if(this.thisDevice) {
-      if(this.deviceType == TYPE_SENSOR) {
-        this.isSensor = true;
-      }
-      if(this.deviceType == TYPE_SWITCH) {
-        this.isSwitch = true;
-      }
-    }
-  }
-
 }

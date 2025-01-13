@@ -16,9 +16,14 @@ export class NavbarComponent extends CommonComponent {
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this.addSubscription(this.dataService.userChangeEmitter.subscribe(resp => {
-      this.loggedIn = this.authService.currentUser ? true : false;
-    }));
+
+    if(this.dataService.getSideNav()) {
+      this.sideNav = this.dataService.getSideNav();
+    }
+    if(this.authService.currentUser) {
+      this.userName = this.authService.currentUser.firstName;
+      this.loggedIn = true;
+    }
     this.addSubscription(this.dataService.userChangeEmitter.subscribe(data => {
       if(this.authService.currentUser) {
         this.userName = this.authService.currentUser.firstName;
