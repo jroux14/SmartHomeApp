@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import {
   MatDialog, 
+  MatDialogConfig, 
   MatDialogRef
 } from '@angular/material/dialog';
 import { LoginPopupComponent } from '../popup/login-popup/login-popup.component';
@@ -10,6 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { TYPE_SWITCH, TYPE_SENSOR, MONGO_URL } from 'src/app/constants/constants.smarthome';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { PopupService } from 'src/app/services/popup.service';
+import { ComponentType } from '@angular/cdk/portal';
 
 @Component({
   selector: 'common',
@@ -43,7 +45,23 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     const config: MatSnackBarConfig = {
       panelClass: ['sh-snackbar'] 
     };
-    
     return this.snackBar.open(message, action, config)
+  }
+
+  resolvePopupSnackBar(message: string, action: string, popup: ComponentType<unknown>, popupConfig?: MatDialogConfig<any>) {
+    this.popupService.closePopup();
+    console.log(message);
+    let ref = this.openSnackBar(message, action);
+    if (popupConfig) {
+      ref.onAction().subscribe(() => {
+        this.popupService.openPopup(popup, popupConfig);    
+      });
+    } else {
+      ref.onAction().subscribe(() => {
+        this.popupService.openPopup(popup, {
+          panelClass: 'baseDialog'
+        });    
+      });
+    }
   }
 }

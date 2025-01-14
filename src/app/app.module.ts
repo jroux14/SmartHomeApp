@@ -35,7 +35,6 @@ import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.compo
 
 import { AuthInterceptor } from './utils/auth.interceptor';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +72,7 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     DataService,
     AuthenticationService,
     PopupService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

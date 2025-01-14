@@ -26,7 +26,6 @@ export class LoginPopupComponent extends CommonComponent {
     if (this.areFieldsComplete()) {
       if (this.isNewUser) {
         if (this.password != this.confirmPassword) {
-          // Passwords must match
           snackBarMsg = {msg: 'Passwords must match', action: 'Try Again'};
         } else {
           let userData = {
@@ -37,10 +36,13 @@ export class LoginPopupComponent extends CommonComponent {
             "phone": this.phoneNum
           };
 
-
           this.authService.registerNewUser(userData).subscribe(resp => {
             if(resp.success) {
               this.isNewUser = false;
+            } else {
+              if (resp.error) {
+                snackBarMsg = {msg: resp.error, action: 'Try Again'}
+              }
             }
           });
         }
@@ -52,33 +54,31 @@ export class LoginPopupComponent extends CommonComponent {
 
         this.authService.attemptLogin(userData).subscribe(resp => {
           if (resp.success) {
-            if (resp.token && resp.user) {
+            if (resp.token && resp.refreshToken && resp.user) {
               let user = resp.user;
-              localStorage.setItem("token", resp.token);
               let newUser: shUser = new shUser(user.userId, user.firstName, user.email, user.phoneNum);
-              this.authService.setCurrentUser(newUser);
-              this.dataService.userChangeEmitter.emit();
+              this.authService.setCurrentUser(newUser, resp.token, resp.refreshToken);
               this.popupService.closePopup();
             } else {
-              // TODO: failed to get JWT token
               snackBarMsg = {msg: 'Server error', action: 'Try Again'};
             }
+          } else {
+            if (resp.error) {
+              snackBarMsg = {msg: resp.error, action: 'Try Again'}
+            }
+          }
+          
+          if (snackBarMsg) {
+            this.resolvePopupSnackBar(snackBarMsg.msg, snackBarMsg.action, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
           }
         });
       }
     } else {
       snackBarMsg = {msg: 'Fill in all fields', action: 'Try Again'};
-      // Need all fields to be complete
     }
 
     if (snackBarMsg) {
-      this.popupService.closePopup();
-      let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
-      ref.onAction().subscribe(() => {
-        this.popupService.openPopup(LoginPopupComponent, {
-          panelClass: 'baseDialog'
-        });    
-      });
+      this.resolvePopupSnackBar(snackBarMsg.msg, snackBarMsg.action, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
     }
   }
 
@@ -103,5 +103,4 @@ export class LoginPopupComponent extends CommonComponent {
   switchDisplay() {
     this.isNewUser = !this.isNewUser;
   }
-
 }

@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { shUser } from 'src/app/interfaces/user.interface';
 import { CommonComponent } from '../../common/common/common.component';
 import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
 import { NewDevicePopupComponent } from '../../common/popup/newdevice-popup/newdevice-popup.component';
@@ -22,7 +23,16 @@ export class HomeComponent extends CommonComponent{
 
   override ngOnInit() {
     super.ngOnInit();
-    if (!this.authService.currentUser) {
+    if (this.authService.checkToken()) {
+      this.authService.getUserInfo().subscribe(resp => {
+        console.log(resp);
+        let user = resp.user;
+        if (resp.success && user) {
+          let newUser: shUser = new shUser(user.userId, user.firstName, user.email, user.phoneNum);
+          this.authService.setCurrentUser(user)
+        }
+      });
+    } else {
       this.popupService.openPopup(LoginPopupComponent, {
         panelClass: 'loginDialog',
         disableClose: true

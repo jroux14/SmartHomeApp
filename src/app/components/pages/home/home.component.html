@@ -7,6 +7,7 @@
                     <a [routerLink]="links[i]" routerLinkActive="active"><i
                             class="material-symbols-outlined nav-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
                 </div>
+                <button type="button" (click)="testAuth()">test</button>
                 <div class="sidenav-content bottomItem" (click)="createNewDevice()"><i class="material-symbols-outlined nav-icon" style="padding-left: 0.75rem;">add</i> Add New Device</div>
             </div>
         </mat-sidenav>

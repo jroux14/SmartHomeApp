@@ -1,12 +1,12 @@
 export class shUser {
-    userID: string = '';
+    userId: string = '';
     firstName: string = '';
     email: string = '';
     phoneNum: string = '';
 
-    constructor(userID?: string, firstName?: string, email?: string, phoneNum?: string) {
-        if (userID) {
-            this.userID = userID;
+    constructor(userId?: string, firstName?: string, email?: string, phoneNum?: string) {
+        if (userId) {
+            this.userId = userId;
         }
         if (firstName) {
             this.firstName = firstName;

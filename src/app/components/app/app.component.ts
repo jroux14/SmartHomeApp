@@ -13,8 +13,6 @@ export class AppComponent extends CommonComponent {
   title(title: any) {
     throw new Error('Method not implemented.');
   }
-  // createUserRef: MatDialogRef<any> | undefined;
-  newDeviceRef: MatDialogRef<any> | undefined;
 
   override ngOnInit() {
     super.ngOnInit();

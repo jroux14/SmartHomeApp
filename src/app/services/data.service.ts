@@ -8,19 +8,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class DataService {
   // Menu Emitters
   @Output() sideNavEmitter: EventEmitter<any> = new EventEmitter();
-  
-  // Auth Emitters
-  @Output() userChangeEmitter: EventEmitter<any> = new EventEmitter();
-
-  // Popup Emitters
-  @Output() openLoginEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() closeLoginEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() openNewAccountEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() closeNewAccountEmitter: EventEmitter<any> = new EventEmitter();
 
   // Device Emitters
-  @Output() addDeviceEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() closeDevicePopupEmitter: EventEmitter<any> = new EventEmitter();
   @Output() forwardNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deleteDeviceEmitter: EventEmitter<any> = new EventEmitter();
 

@@ -24,7 +24,7 @@ export class NavbarComponent extends CommonComponent {
       this.userName = this.authService.currentUser.firstName;
       this.loggedIn = true;
     }
-    this.addSubscription(this.dataService.userChangeEmitter.subscribe(data => {
+    this.addSubscription(this.authService.userChangeEmitter.subscribe(data => {
       if(this.authService.currentUser) {
         this.userName = this.authService.currentUser.firstName;
         this.loggedIn = true;
@@ -55,7 +55,6 @@ export class NavbarComponent extends CommonComponent {
 
   logout() {
     this.loggedIn = false;
-    this.authService.setCurrentUser(undefined);
-    this.dataService.userChangeEmitter.emit();
+    this.authService.clearCurrentUser();
   }
 }
