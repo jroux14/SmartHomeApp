@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { shUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
-import { MONGO_URL } from '../constants/constants.smarthome';
+import { AUTH_ENDPOINT, ROOT_URL, USER_ENDPOINT } from '../constants/constants.smarthome';
 
 @Injectable()
 export class AuthenticationService {
@@ -19,7 +19,7 @@ export class AuthenticationService {
     if (!userData) {
       userData = {};
     }
-    return this.http.post<any>(MONGO_URL+"auth/create", userData, { headers});
+    return this.http.post<any>(ROOT_URL+"auth/create", userData, { headers});
   }
 
   public attemptLogin(userData: any) : Observable<any> {
@@ -27,23 +27,15 @@ export class AuthenticationService {
     if (!userData) {
       userData = {};
     }
-    return this.http.post<any>(MONGO_URL+"auth/login", userData, { headers });
+    return this.http.post<any>(ROOT_URL + AUTH_ENDPOINT + "login", userData, { headers });
   }
 
   public testAuth() : Observable<any> {
-    return this.http.get<any>(MONGO_URL+"user/test");
-  }
-
-  getUserByUserID(userID: string) : Observable<any> {
-    return this.http.get<any>(MONGO_URL+"user/get/id/"+userID);
-  }
-
-  getUserByUsername(username: string) : Observable<any> {
-    return this.http.get<any>(MONGO_URL+"user/get/username/"+username);
+    return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "test");
   }
 
   getUserInfo() : Observable<any> {
-    return this.http.get<any>(MONGO_URL+"user/get")
+    return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "get")
   }
 
   setCurrentUser(user: shUser, token?: string, refreshToken?: string) {

@@ -20,28 +20,11 @@ export class NewDevicePopupComponent extends CommonComponent {
       displayName: "Sensor"
     }
   ]
-  loggedIn: boolean = this.authService.currentUser ? true : false;
   deviceName: string = '';
   deviceType: any | undefined;
 
-  updateDeviceNameEmitter: EventEmitter<any> = new EventEmitter();
-  updateDeviceTypeEmitter: EventEmitter<any> = new EventEmitter();
-  confirmNewDeviceEmitter: EventEmitter<any> = new EventEmitter();
-
   override ngOnInit(): void {
       super.ngOnInit();
-      this.addSubscription(this.updateDeviceNameEmitter.subscribe(resp => {
-        this.deviceName = resp.value;
-      }));
-      this.addSubscription(this.updateDeviceTypeEmitter.subscribe(resp => {
-        let newType: any = this.getDeviceType(resp);
-        if(newType) {
-          this.deviceType = newType;
-        }
-      }));
-      this.addSubscription(this.authService.userChangeEmitter.subscribe(resp => {
-        this.loggedIn = this.authService.currentUser ? true : false;
-      }));
   }
 
   confirmNewDevice() {
@@ -51,48 +34,22 @@ export class NewDevicePopupComponent extends CommonComponent {
       if(this.authService.currentUser) {
         let newUID: string = uuidv4();
         let device = new shDevice(this.authService.currentUser.userId, this.deviceType, this.deviceName, newUID, 1, 1, 0, 0);
-        this.dataService.forwardNewDeviceEmitter.emit(device);
-        this.popupService.closePopup();
+        this.deviceService.addDeviceEmitter.emit(device);
       } else {
         snackBarMsg = {msg: 'Must be logged in', action: 'Try Again'};
+      }
+
+      if (snackBarMsg) {
+        let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
+        this.popupService.resolvePopupSnackBar(ref, NewDevicePopupComponent, { panelClass: "baseDialog", disableClose: false })
       }
     } else {
       snackBarMsg = {msg: 'Fill in all fields', action: 'Try Again'};
     }
 
     if (snackBarMsg) {
-      this.popupService.closePopup();
       let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
-      ref.onAction().subscribe(() => {
-        this.popupService.openPopup(NewDevicePopupComponent, {
-          panelClass: 'baseDialog'
-        });    
-      });
+      this.popupService.resolvePopupSnackBar(ref, NewDevicePopupComponent, { panelClass: "baseDialog", disableClose: false })
     }
   }
-
-  getDropdownOptions() : string[] {
-    let rVal: string[] = [];
-
-    this.deviceTypes.forEach((type) => {
-      rVal.push(type.displayName);
-    });
-
-    return rVal;
-  }
-
-  getDeviceType(typeDisplayName: string) {
-    let foundMatch: any;
-    this.deviceTypes.forEach((type) => {
-      if(type.displayName == typeDisplayName) {
-        foundMatch = type;
-      }
-    });
-    if(foundMatch) {
-      return foundMatch;
-    } else {
-      return;
-    }
-  }
-
 }

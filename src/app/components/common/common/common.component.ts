@@ -1,17 +1,10 @@
-import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
-import {
-  MatDialog, 
-  MatDialogConfig, 
-  MatDialogRef
-} from '@angular/material/dialog';
-import { LoginPopupComponent } from '../popup/login-popup/login-popup.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { TYPE_SWITCH, TYPE_SENSOR, MONGO_URL } from 'src/app/constants/constants.smarthome';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { PopupService } from 'src/app/services/popup.service';
-import { ComponentType } from '@angular/cdk/portal';
+import { DeviceService } from 'src/app/services/device.service';
 
 @Component({
   selector: 'common',
@@ -21,7 +14,7 @@ import { ComponentType } from '@angular/cdk/portal';
 export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
 
-  constructor(public dataService: DataService, public authService: AuthenticationService, public popupService: PopupService, public snackBar: MatSnackBar) {}
+  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {}
 
@@ -46,22 +39,5 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
       panelClass: ['sh-snackbar'] 
     };
     return this.snackBar.open(message, action, config)
-  }
-
-  resolvePopupSnackBar(message: string, action: string, popup: ComponentType<unknown>, popupConfig?: MatDialogConfig<any>) {
-    this.popupService.closePopup();
-    console.log(message);
-    let ref = this.openSnackBar(message, action);
-    if (popupConfig) {
-      ref.onAction().subscribe(() => {
-        this.popupService.openPopup(popup, popupConfig);    
-      });
-    } else {
-      ref.onAction().subscribe(() => {
-        this.popupService.openPopup(popup, {
-          panelClass: 'baseDialog'
-        });    
-      });
-    }
   }
 }

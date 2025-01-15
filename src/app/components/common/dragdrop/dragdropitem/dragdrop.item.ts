@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from '@angular/core';
-import {GridsterComponent, GridsterItemComponent} from 'angular-gridster2';
+import {GridsterComponent, GridsterItem, GridsterItemComponent, GridsterItemComponentInterface} from 'angular-gridster2';
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR, TYPE_SWITCH } from 'src/app/constants/constants.smarthome';
@@ -11,27 +11,23 @@ import { TYPE_SENSOR, TYPE_SWITCH } from 'src/app/constants/constants.smarthome'
 })
 export class DragDropItemComponent extends CommonComponent{
   @Input()
-  thisDevice: shDevice | undefined;
-  deleteDeviceEmitter: EventEmitter<any> = this.dataService.deleteDeviceEmitter;
+  device: shDevice | undefined;
+
+  private observer: MutationObserver | undefined;
+
   updateSwitchStateEmitter: EventEmitter<any> = new EventEmitter();
 
   isSwitch: boolean = false;
   isSensor: boolean = false;
   deviceName: string = '';
   deviceType: string = '';
-  componentID: string = '';
-  emitterData: any;
 
   override ngOnInit() {
     super.ngOnInit();
-    if(this.thisDevice) {
-      this.deviceName = this.thisDevice.deviceName;
-      this.deviceType = this.thisDevice.deviceType;
-      this.componentID = this.thisDevice.deviceID;
-      this.emitterData = {
-        device: this.thisDevice,
-        event: ''
-      }
+
+    if(this.device) {
+      this.deviceName = this.device.deviceName;
+      this.deviceType = this.device.deviceType;
     }
     if (this.deviceType == TYPE_SENSOR) {
       this.isSensor = true;
@@ -43,12 +39,11 @@ export class DragDropItemComponent extends CommonComponent{
       * Once device service is created we will pass deviceID and state to send
       * to the backend
       */
-      console.log(this.thisDevice);
       console.log(resp);
     }));
   }
 
   deleteDevice() {
-    this.dataService.deleteDeviceEmitter.emit(this.emitterData);
+    this.deviceService.deleteDeviceEmitter.emit(this.device);
   }
 }

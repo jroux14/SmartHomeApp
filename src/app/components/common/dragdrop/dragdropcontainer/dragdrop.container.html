@@ -2,7 +2,7 @@
 <div #wrapper class="wrapper">
   <gridster *ngIf="options" class="grid" [options]="options">
     <gridster-item [item]="device.item" *ngFor="let device of devices; let i = index">
-      <dragdrop-item [thisDevice]="device"></dragdrop-item>
+      <dragdrop-item [device]="device"></dragdrop-item>
     </gridster-item>
   </gridster>
 </div>

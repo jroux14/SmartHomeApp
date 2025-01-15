@@ -8,14 +8,14 @@
       <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deleteDevice()">delete</button>
     </div>
   </div>
-  <div *ngIf="isSwitch && thisDevice" class="switchContents">
+  <div *ngIf="isSwitch && device" class="switchContents">
     <label class="switchLabel">{{deviceName}}</label>
     <mat-slide-toggle class="switchToggle"></mat-slide-toggle>
     <!-- <sh-toggle [onChangeEmitter]="updateSwitchStateEmitter" [componentID]="componentID"></sh-toggle> -->
   </div>
-  <div *ngIf="isSensor && thisDevice" class="contents">
+  <div *ngIf="isSensor && device" class="contents">
     <div class="graphContainer">
-      <sensorgraph class="graph" [device]="thisDevice" [componentID]="thisDevice.deviceID"></sensorgraph>
+      <sensorgraph class="graph" [device]="device" [componentID]="device.deviceID"></sensorgraph>
     </div>
   </div>
 </div>

@@ -21,23 +21,5 @@ export class shDevice {
         this.displayHeight = displayHeight;
         this.posX = posX;
         this.posY = posY;
-        this.updateItem();
-    }
-
-    deviceUpdated(update: any) {
-        this.displayWidth = update.cols;
-        this.displayHeight = update.rows;
-        this.posX = update.x;
-        this.posY = update.y;
-        this.updateItem();
-    }
-
-    updateItem() {
-        this.item = {
-            cols: this.displayWidth, 
-            rows: this.displayHeight, 
-            x: this.posX, 
-            y: this.posY
-        };
     }
 }

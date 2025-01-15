@@ -69,7 +69,8 @@ export class LoginPopupComponent extends CommonComponent {
           }
           
           if (snackBarMsg) {
-            this.resolvePopupSnackBar(snackBarMsg.msg, snackBarMsg.action, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
+            let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
+            this.popupService.resolvePopupSnackBar(ref, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
           }
         });
       }
@@ -78,7 +79,8 @@ export class LoginPopupComponent extends CommonComponent {
     }
 
     if (snackBarMsg) {
-      this.resolvePopupSnackBar(snackBarMsg.msg, snackBarMsg.action, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
+      let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
+      this.popupService.resolvePopupSnackBar(ref, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
     }
   }
 

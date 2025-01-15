@@ -16,10 +16,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
+import { StorageModule } from '@ngx-pwa/local-storage';
 
 import { DataService } from './services/data.service';
 import { PopupService } from './services/popup.service';
 import { AuthenticationService } from './services/authentication.service'
+import { DeviceService } from './services/device.service'
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/pages/home/home.component';
@@ -66,12 +68,14 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     MatSidenavModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatMenuModule
+    MatMenuModule,
+    StorageModule
   ],
   providers: [
     DataService,
     AuthenticationService,
     PopupService,
+    DeviceService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]

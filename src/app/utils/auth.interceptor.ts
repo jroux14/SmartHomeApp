@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse, HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, EMPTY, Observable, of, switchMap } from 'rxjs';
-import { MONGO_URL } from '../constants/constants.smarthome';
+import { catchError, of } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
