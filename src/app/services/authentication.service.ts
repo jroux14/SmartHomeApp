@@ -10,8 +10,8 @@ export class AuthenticationService {
   // Auth Emitters
   @Output() userChangeEmitter: EventEmitter<any> = new EventEmitter();
 
-  currentUser: shUser | undefined;
-  tempUsers: shUser[] = [];
+  private currentUser: shUser | undefined;
+
   constructor(public http: HttpClient) {}
 
   public registerNewUser(userData: any) : Observable<any> {
@@ -47,6 +47,26 @@ export class AuthenticationService {
       localStorage.setItem("refreshToken", refreshToken);
     }
     this.userChangeEmitter.emit();
+  }
+
+  getCurrentUser(): shUser | undefined {
+    return this.currentUser;
+  }
+
+  getCurrentUserName(): string {
+    if (this.currentUser) {
+      return this.currentUser.firstName
+    } else {
+      return '';
+    }
+  }
+
+  getCurrentUserId(): string {
+    if (this.currentUser) {
+      return this.currentUser.userId;
+    } else {
+      return '';
+    }
   }
   
   clearCurrentUser() {

@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
-import {GridsterComponent, GridsterItem, GridsterItemComponent, GridsterItemComponentInterface} from 'angular-gridster2';
+import {Component, EventEmitter, Input} from '@angular/core';
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR, TYPE_SWITCH } from 'src/app/constants/constants.smarthome';
@@ -12,9 +11,7 @@ import { TYPE_SENSOR, TYPE_SWITCH } from 'src/app/constants/constants.smarthome'
 export class DragDropItemComponent extends CommonComponent{
   @Input()
   device: shDevice | undefined;
-
-  private observer: MutationObserver | undefined;
-
+  
   updateSwitchStateEmitter: EventEmitter<any> = new EventEmitter();
 
   isSwitch: boolean = false;

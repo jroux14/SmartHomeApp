@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {
   DisplayGrid,
   GridsterConfig,
@@ -8,10 +8,10 @@ import {
 } from "angular-gridster2";
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
-import { ROOT_URL, TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
+import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
 import { NewDevicePopupComponent } from '../../popup/newdevice-popup/newdevice-popup.component';
-import { DragDropItemComponent } from '../dragdropitem/dragdrop.item';
-import { HttpClient } from '@angular/common/http';
+import { DeviceService } from 'src/app/services/device.service';
+import { isEqual } from 'lodash'
 
 @Component({
   selector: 'dragdrop-container',
@@ -30,8 +30,42 @@ export class DragDropContainerComponent extends CommonComponent{
     emptyCellDragMaxCols: 0,
     emptyCellDragMaxRows: 0
   }
+  movedDevice: shDevice | undefined;
 
-  initSize(width: number, height: number) {
+  static eventStart(
+    item: GridsterItem,
+    itemComponent: GridsterItemComponentInterface,
+    event: MouseEvent
+  ): void {
+    const thisContainer = DragDropContainerComponent.injector.get(DragDropContainerComponent);
+
+    thisContainer.devices.forEach((device) => {
+      if (isEqual(device.item, itemComponent.$item)) {
+        thisContainer.movedDevice = device;
+      }
+    });
+  }
+
+  static eventStop(
+    item: GridsterItem,
+    itemComponent: GridsterItemComponentInterface,
+    event: MouseEvent
+  ): void {
+    const thisContainer = DragDropContainerComponent.injector.get(DragDropContainerComponent);
+    const deviceService = DragDropContainerComponent.injector.get(DeviceService);
+   
+    if (thisContainer.movedDevice) {
+      /* 
+        this works but doesn't capture other device positions
+        if they get pushed while dragging, we should update the
+        entire grid instead. Have they been
+        updated at this point? 
+      */
+      deviceService.updateDeviceGridItem(thisContainer.movedDevice.deviceID, itemComponent.$item).subscribe();
+    }
+  }
+
+  initSize(width: number) {
     let newColNum = Math.floor((width - 20) / 125);
 
     this.startingSize.minCols = newColNum;
@@ -41,7 +75,7 @@ export class DragDropContainerComponent extends CommonComponent{
   override ngOnInit() {
     super.ngOnInit();
 
-    this.initSize(window.innerWidth, window.innerHeight);
+    this.initSize(window.innerWidth);
 
     this.options = {
       gridType: GridType.ScrollVertical,
@@ -65,6 +99,8 @@ export class DragDropContainerComponent extends CommonComponent{
         enabled: true,
         dragHandleClass: 'drag-handler',
         ignoreContent: true,
+        start: DragDropContainerComponent.eventStart,
+        stop: DragDropContainerComponent.eventStop
       },
       emptyCellDragCallback: this.emptyCellClick.bind(this),
       emptyCellDropCallback: this.emptyCellClick.bind(this)

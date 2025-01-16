@@ -31,9 +31,9 @@ export class NewDevicePopupComponent extends CommonComponent {
     let snackBarMsg: any | null = null;
 
     if(this.deviceName != '' && this.deviceType) {
-      if(this.authService.currentUser) {
+      if(this.authService.getCurrentUser()) {
         let newUID: string = uuidv4();
-        let device = new shDevice(this.authService.currentUser.userId, this.deviceType, this.deviceName, newUID, 1, 1, 0, 0);
+        let device = new shDevice(this.authService.getCurrentUserId(), this.deviceType, this.deviceName, newUID, 1, 1, 0, 0);
         this.deviceService.addDeviceEmitter.emit(device);
       } else {
         snackBarMsg = {msg: 'Must be logged in', action: 'Try Again'};

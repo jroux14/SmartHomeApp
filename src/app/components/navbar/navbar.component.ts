@@ -12,7 +12,7 @@ export class NavbarComponent extends CommonComponent {
   sideNav: MatSidenav | undefined;
 
   userName: string = '';
-  loggedIn: boolean = this.authService.currentUser ? true : false;
+  loggedIn: boolean = this.authService.getCurrentUser() ? true : false;
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -20,13 +20,13 @@ export class NavbarComponent extends CommonComponent {
     if(this.dataService.getSideNav()) {
       this.sideNav = this.dataService.getSideNav();
     }
-    if(this.authService.currentUser) {
-      this.userName = this.authService.currentUser.firstName;
+    if(this.authService.getCurrentUser()) {
+      this.userName = this.authService.getCurrentUserName();
       this.loggedIn = true;
     }
     this.addSubscription(this.authService.userChangeEmitter.subscribe(data => {
-      if(this.authService.currentUser) {
-        this.userName = this.authService.currentUser.firstName;
+      if(this.authService.getCurrentUser()) {
+        this.userName = this.authService.getCurrentUserName();
         this.loggedIn = true;
       } else {
         this.userName = '';

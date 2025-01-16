@@ -1,8 +1,7 @@
 import { DEVICE_ENDPOINT, ROOT_URL, USER_ENDPOINT } from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { MatSidenav } from '@angular/material/sidenav';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { shDevice } from '../interfaces/device.interface';
 import { GridsterItem } from 'angular-gridster2';
 

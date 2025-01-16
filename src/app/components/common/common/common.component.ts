@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Injector, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -12,9 +12,13 @@ import { DeviceService } from 'src/app/services/device.service';
   styleUrls: ['./common.component.css']
 })
 export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit {
+  static injector: Injector;
+  
   subscriptions: Subscription[] = [];
 
-  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public snackBar: MatSnackBar) {}
+  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public snackBar: MatSnackBar, public injector: Injector) {
+    CommonComponent.injector = injector
+  }
 
   ngOnInit(): void {}
 
