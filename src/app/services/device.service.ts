@@ -9,32 +9,35 @@ import { GridsterItem } from 'angular-gridster2';
 export class DeviceService {
 
   // Device Emitters
-  @Output() addDeviceEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() updateDeviceEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() newDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
-  @Output() deleteDeviceEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() userDeviceEmitter: EventEmitter<any> = new EventEmitter();
+  private devices: shDevice[] = [];
 
   constructor(public http: HttpClient) {}
 
-  public test(): Observable<any> {
-    return this.http.get<any>(ROOT_URL+"test");
+  public clearDevices() {
+    this.devices = [];
   }
 
-  public getUserByUsername(username: string): Observable<any> {
-    return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "getUser");
+  public getDevices(): shDevice[] {
+    return this.devices;
+  }
+
+  public addDevice(device: shDevice) {
+    this.devices.push(device);
+  }
+
+  public deleteDevice(device: shDevice): Observable<any> {
+    this.devices.splice(this.devices.indexOf(device), 1);
+    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "delete", device);
   }
 
   public registerDevice(device: shDevice): Observable<any> {
     return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "register", device);
   }
 
-  public updateDeviceGridItem(deviceId: String, item: GridsterItem): Observable<any> {
-    let body = {
-        deviceId: deviceId,
-        item: item
-    };
-    return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "updateItem", body);
+  public updateDevicePosition(device: shDevice): Observable<any> {
+    return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "update/position", device);
   }
 
 }

@@ -55,6 +55,7 @@ export class NavbarComponent extends CommonComponent {
 
   logout() {
     this.loggedIn = false;
+    this.deviceService.clearDevices();
     this.authService.clearCurrentUser();
   }
 }

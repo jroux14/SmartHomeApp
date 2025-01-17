@@ -24,18 +24,16 @@ export class HomeComponent extends CommonComponent{
   override ngOnInit() {
     super.ngOnInit();
     if (this.authService.checkToken()) {
-      this.authService.getUserInfo().subscribe(resp => {
-        let user = resp.user;
+      this.authService.verifyUserToken().subscribe(resp => {
         let devices: any[] = resp.devices;
         
         if (resp.success) {
-          if (user) {
-            let newUser: shUser = new shUser(user.userId, user.firstName, user.email, user.phoneNum);
-            this.authService.setCurrentUser(user)
+          if (resp.user) {
+            this.authService.setCurrentUser(resp.user)
           }
           if (devices) {
             devices.forEach((device) => {
-              this.deviceService.userDeviceEmitter.emit(device);
+              this.deviceService.addDevice(device);
             })
           }
         }
@@ -59,14 +57,6 @@ export class HomeComponent extends CommonComponent{
     this.authService.testAuth().subscribe(resp => {
       console.log(resp);
     });
-  }
-
-  testHttp(): void {
-    var env = this;
-    this.addSubscription(this.deviceService.test().subscribe(resp => {
-      console.log(resp.test);
-      env.responseData = resp.test;
-    }));
   }
 
   createNewDevice() {

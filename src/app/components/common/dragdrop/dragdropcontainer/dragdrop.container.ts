@@ -3,8 +3,7 @@ import {
   DisplayGrid,
   GridsterConfig,
   GridsterItem,
-  GridsterItemComponentInterface,
-  GridType,
+  GridType
 } from "angular-gridster2";
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
@@ -22,47 +21,12 @@ export class DragDropContainerComponent extends CommonComponent{
   @ViewChild("wrapper") elementRef!: ElementRef;
   private resizeObserver: ResizeObserver | undefined;
   options: GridsterConfig = {};
-  devices: shDevice[] = [];
   newDevice: shDevice | undefined;
   devicePlaced: boolean = false;
   startingSize: any = {
     minCols: 0,
     emptyCellDragMaxCols: 0,
     emptyCellDragMaxRows: 0
-  }
-  movedDevice: shDevice | undefined;
-
-  static eventStart(
-    item: GridsterItem,
-    itemComponent: GridsterItemComponentInterface,
-    event: MouseEvent
-  ): void {
-    const thisContainer = DragDropContainerComponent.injector.get(DragDropContainerComponent);
-
-    thisContainer.devices.forEach((device) => {
-      if (isEqual(device.item, itemComponent.$item)) {
-        thisContainer.movedDevice = device;
-      }
-    });
-  }
-
-  static eventStop(
-    item: GridsterItem,
-    itemComponent: GridsterItemComponentInterface,
-    event: MouseEvent
-  ): void {
-    const thisContainer = DragDropContainerComponent.injector.get(DragDropContainerComponent);
-    const deviceService = DragDropContainerComponent.injector.get(DeviceService);
-   
-    if (thisContainer.movedDevice) {
-      /* 
-        this works but doesn't capture other device positions
-        if they get pushed while dragging, we should update the
-        entire grid instead. Have they been
-        updated at this point? 
-      */
-      deviceService.updateDeviceGridItem(thisContainer.movedDevice.deviceID, itemComponent.$item).subscribe();
-    }
   }
 
   initSize(width: number) {
@@ -94,33 +58,24 @@ export class DragDropContainerComponent extends CommonComponent{
       maxRows: this.startingSize.maxRows,
       emptyCellDragMaxCols: this.startingSize.emptyCellDragMaxCols,
       emptyCellDragMaxRows: this.startingSize.emptyCellDragMaxRows,
+      itemChangeCallback: (item: GridsterItem) => this.onItemChange(item),
       emptyCellClickCallback: this.emptyCellClick.bind(this),
       draggable: {
         enabled: true,
         dragHandleClass: 'drag-handler',
-        ignoreContent: true,
-        start: DragDropContainerComponent.eventStart,
-        stop: DragDropContainerComponent.eventStop
+        ignoreContent: true
       },
       emptyCellDragCallback: this.emptyCellClick.bind(this),
       emptyCellDropCallback: this.emptyCellClick.bind(this)
     };
 
-
-    this.addSubscription(this.deviceService.addDeviceEmitter.subscribe(resp => {
+    this.addSubscription(this.deviceService.newDeviceEmitter.subscribe(resp => {
       this.popupService.closePopup();
       this.newDevice = resp;
       this.options.enableEmptyCellClick = true;
       this.options.displayGrid = DisplayGrid.Always;
       this.changedOptions();
     }));
-    this.addSubscription(this.deviceService.deleteDeviceEmitter.subscribe(resp => {
-      this.devices.splice(this.devices.indexOf(resp.device), 1);
-    }));
-    this.addSubscription(this.deviceService.userDeviceEmitter.subscribe(resp => {
-      this.devices.push(resp);
-    }));
-
   }
 
   override ngAfterViewInit(): void {
@@ -142,6 +97,14 @@ export class DragDropContainerComponent extends CommonComponent{
     });
 
     this.resizeObserver.observe(this.elementRef.nativeElement);   
+  }
+
+  onItemChange(item: GridsterItem): void {
+    this.deviceService.getDevices().forEach(device => {
+      if (isEqual(device.item, item)) {
+        this.deviceService.updateDevicePosition(device).subscribe();
+      }
+    })
   }
 
   changedOptions(): void {
@@ -174,7 +137,7 @@ export class DragDropContainerComponent extends CommonComponent{
     if(this.newDevice) {
       this.deviceService.registerDevice(this.newDevice).subscribe(resp => {
         if (resp.success && this.newDevice) {
-          this.devices.push(this.newDevice);
+          this.deviceService.addDevice(this.newDevice);
           this.options.enableEmptyCellClick = false;
           this.options.displayGrid = DisplayGrid.None;
           this.changedOptions();

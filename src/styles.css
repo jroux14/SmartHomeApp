@@ -10,6 +10,24 @@
     src: url(./assets/Harmattan-Regular.ttf);
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background-color: var(--sh-offwhite);
+    box-shadow: inset 1px 1px 3px var(--sh-lightgrey);
+    border-radius: 5px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--sh-darkgrey);
+    border-radius: 5px;
+  }
+
 /* Angular Material Styles */
 
 .mat-toolbar {
@@ -59,26 +77,30 @@
     color: var(--sh-offwhite);
 }
 
+.mat-slide-toggle {
+    height: 55px !important;
+}
+
 .mat-slide-toggle-bar {
     flex-grow: 1 !important;
-    width: 25px !important;
-    height: 25px !important;
-    border-radius: 15px !important;
+    width: 50px !important;
+    height: 45px !important;
+    border-radius: 25px !important;
 }
 
 .mat-slide-toggle-thumb-container {
-    width: 30px !important;
-    height: 30px !important;
+    width: 50px !important;
+    height: 50px !important;
     left: -3px !important;
 }
 
 .mat-slide-toggle-thumb {
-    height: 30px !important;
-    width: 30px !important;
+    height: 50px !important;
+    width: 50px !important;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
-    transform: translate3d(32px, 0, 0) !important;
+    transform: translate3d(52px, 0, 0) !important;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
@@ -87,6 +109,7 @@
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
     background-color: var(--sh-lightblue);
+    box-shadow: inset 0 0 0.5rem var(--sh-lightgrey);
 }
 
 .mat-snack-bar-container {

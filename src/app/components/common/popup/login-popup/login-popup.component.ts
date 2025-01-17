@@ -54,10 +54,16 @@ export class LoginPopupComponent extends CommonComponent {
 
         this.authService.attemptLogin(userData).subscribe(resp => {
           if (resp.success) {
+            let devices: any[] = resp.devices;
             if (resp.token && resp.refreshToken && resp.user) {
-              let user = resp.user;
-              let newUser: shUser = new shUser(user.userId, user.firstName, user.email, user.phoneNum);
-              this.authService.setCurrentUser(newUser, resp.token, resp.refreshToken);
+              if (resp.user) {
+                this.authService.setCurrentUser(resp.user, resp.token, resp.refreshToken);
+              }
+              if (devices) {
+                devices.forEach((device) => {
+                  this.deviceService.addDevice(device);
+                })
+              }
               this.popupService.closePopup();
             } else {
               snackBarMsg = {msg: 'Server error', action: 'Try Again'};

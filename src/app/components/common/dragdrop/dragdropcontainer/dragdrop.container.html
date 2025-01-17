@@ -1,7 +1,7 @@
 <!-- <div *ngIf="options.enableEmptyCellDrop" draggable="true" (dragstart)="dragStartHandler($event)">Drag me!</div> -->
 <div #wrapper class="wrapper">
   <gridster *ngIf="options" class="grid" [options]="options">
-    <gridster-item [item]="device.item" *ngFor="let device of devices; let i = index">
+    <gridster-item [item]="device.item" *ngFor="let device of deviceService.getDevices(); let i = index">
       <dragdrop-item [device]="device"></dragdrop-item>
     </gridster-item>
   </gridster>

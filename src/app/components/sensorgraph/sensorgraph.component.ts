@@ -28,12 +28,10 @@ export class SensorGraphComponent extends CommonComponent {
   }
 
   initGraph() {
-    console.log(this.device);
     if(this.componentID != '') {
         this.graphCtx = document.getElementById(this.componentID);
     }
     if(this.graphCtx) {
-        console.log('Create Graph')
         let chart = new Chart(this.graphCtx, {
             type: 'line',
             data: {

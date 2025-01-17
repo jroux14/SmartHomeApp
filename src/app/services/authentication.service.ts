@@ -34,8 +34,8 @@ export class AuthenticationService {
     return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "test");
   }
 
-  getUserInfo() : Observable<any> {
-    return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "get")
+  verifyUserToken() : Observable<any> {
+    return this.http.get<any>(ROOT_URL + AUTH_ENDPOINT + "verify")
   }
 
   setCurrentUser(user: shUser, token?: string, refreshToken?: string) {
