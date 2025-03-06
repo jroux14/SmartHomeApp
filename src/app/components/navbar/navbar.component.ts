@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonComponent } from '../common/common/common.component';
 import { LoginPopupComponent } from '../common/popup/login-popup/login-popup.component';
@@ -12,7 +12,7 @@ export class NavbarComponent extends CommonComponent {
   sideNav: MatSidenav | undefined;
 
   userName: string = '';
-  loggedIn: boolean = this.authService.getCurrentUser() ? true : false;
+  loggedIn: boolean = !!this.authService.getCurrentUser();
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -31,7 +31,7 @@ export class NavbarComponent extends CommonComponent {
       } else {
         this.userName = '';
         this.loggedIn = false;
-        this.popupService.openPopup(LoginPopupComponent, {         
+        this.popupService.openPopup(LoginPopupComponent, {
           panelClass: 'loginDialog',
           disableClose: true})
         }
@@ -54,6 +54,9 @@ export class NavbarComponent extends CommonComponent {
   }
 
   logout() {
+    if (this.sideNav && this.sideNav.opened) {
+      this.toggleSideNav();
+    }
     this.loggedIn = false;
     this.deviceService.clearDevices();
     this.authService.clearCurrentUser();

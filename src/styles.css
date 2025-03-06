@@ -14,21 +14,50 @@
 ::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   /* Track */
   ::-webkit-scrollbar-track {
     background-color: var(--sh-offwhite);
     box-shadow: inset 1px 1px 3px var(--sh-lightgrey);
-    border-radius: 5px;
+    /* border-radius: 5px; */
   }
-  
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: var(--sh-darkgrey);
-    border-radius: 5px;
+    /* border-radius: 5px; */
   }
 
 /* Angular Material Styles */
+
+.mat-list-base .mat-list-option {
+  color: white;
+}
+
+.mat-list-base .mat-list-item {
+  color: white;
+}
+
+.mat-list-single-selected-option, .mat-list-single-selected-option:hover, .mat-list-single-selected-option:focus {
+  background: var(--sh-lightblue);
+  border-radius: 0.2rem;
+}
+
+.mat-step-header:hover:not([aria-disabled]) {
+  background-color: var(--sh-lightgrey);
+}
+
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+  background-color: var(--sh-lightblue);
+}
+
+.mat-stepper-horizontal, .mat-stepper-vertical {
+  background-color: var(--sh-lightgrey);
+}
+
+.mat-step-header .mat-step-label.mat-step-label-active {
+  color: var(--sh-offwhite);
+}
 
 .mat-toolbar {
     background: var(--sh-darkgrey);
@@ -36,9 +65,13 @@
 
 .mat-form-field-flex {
     color: var(--sh-darkgrey);
-    background-color: var(--sh-offwhite);
+    background-color: rgb(232, 240, 254);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375rem .5rem;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
@@ -66,6 +99,11 @@
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
     transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.001px);
     width: 133.3333333333%;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-form-field-autofill-control:-webkit-autofill+.mat-form-field-label-wrapper .mat-form-field-label {
+    transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.00101px);
+    width: 133.3333433333%;
 }
 
 .mat-input-element {
@@ -128,15 +166,17 @@
 .mat-menu-panel {
     background: var(--sh-darkgrey) !important;
 }
-/* .sh-snackbar {
-    text-align: center;
-} */
+
+.input:-internal-autofill-selected {
+    background-color: var(--sh-offwhite) !important;
+}
 
 html {
     height: 100%;
 }
 
 body {
+    --sh-red: #df2720;
     --sh-lightblue: #3592ca;
     --sh-lightgrey: #363B4B;
     --sh-darkgrey: #151423;
@@ -218,7 +258,7 @@ body {
 }
 
 .loginDialog .mat-dialog-container {
-    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
+    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
     border-radius: 1rem;
     padding-bottom: 3rem;
     width: 20rem;
@@ -227,7 +267,7 @@ body {
 }
 
 .newAccountDialog .mat-dialog-container {
-    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
+    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
     border-radius: 1rem;
     padding-bottom: 3rem;
     width: 20rem;
@@ -236,7 +276,7 @@ body {
 }
 
 .baseDialog .mat-dialog-container {
-    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));    
+    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
     border-radius: 1rem;
     padding-bottom: 3rem;
     width: 20rem;

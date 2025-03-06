@@ -1,0 +1,4 @@
+<div *ngIf="device && device.deviceNameFriendly">
+  <label class="switchLabel">{{device.deviceNameFriendly}}</label>
+  <mat-slide-toggle class="switchToggle" (change)="onSlideToggleChange($event)"></mat-slide-toggle>
+</div>

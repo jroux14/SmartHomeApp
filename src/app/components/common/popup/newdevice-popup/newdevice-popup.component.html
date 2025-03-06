@@ -1,20 +1,29 @@
-<div class="textInputs">
-    <form class="fullWidth floatLeft positionRelative">
-        <mat-form-field class="fullWidth floatLeft positionRelative">
-          <input matInput name="deviceName" [(ngModel)]="deviceName" placeholder="Device Name">
-        </mat-form-field>
-        <mat-form-field class="fullWidth floatLeft positionRelative">
-          <mat-label>Device Type</mat-label>
-          <mat-select name="deviceType" [(ngModel)]="deviceType">
-            <mat-option *ngFor="let deviceType of deviceTypes" [value]="deviceType.name">
-              {{deviceType.displayName}}
-            </mat-option>
-        </mat-select>
-        </mat-form-field>
+<mat-stepper orientation="vertical" [linear]="true">
+  <mat-step [stepControl]="selectionListControl" [completed]="!!device">
+    <ng-template matStepperIcon="edit">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+    <ng-template matStepLabel>Select your device</ng-template>
+    <form [formGroup]="selectDeviceGroup">
+      <mat-selection-list [multiple]="false" [formControl]="selectionListControl" *ngFor="let device of devices" required>
+        <mat-list-option [value]="device">{{ device.deviceName }}</mat-list-option>
+      </mat-selection-list>
+      <div>
+        <button mat-raised-button matStepperNext [disabled]="selectionListControl.invalid" class="nextButton" (click)="selectDevice(selectionListControl.value ? selectionListControl.value[0] : null)">Next</button>
+      </div>
     </form>
-</div>
-<div class="loginBtn">
-    <button matInput mat-raised-button (click)="confirmNewDevice()" class="fullWidth floatLeft positionRelative">Register</button>
-    <!-- <button-simple [onChangeEmitter]="confirmNewDeviceEmitter" shClass="login" bLabel="CONFIRM" componentID="loginBtn"></button-simple> -->
-</div>
-
+  </mat-step>
+  <mat-step [stepControl]="deviceNameControl">
+    <ng-template matStepLabel>Name your device</ng-template>
+    <div class="textInputs">
+      <form [formGroup]="deviceNameGroup" class="fullWidth floatLeft positionRelative">
+        <mat-form-field class="fullWidth floatLeft positionRelative">
+          <input matInput name="deviceName" [formControl]="deviceNameControl" placeholder="Device Name" required>
+        </mat-form-field>
+      </form>
+      <div class="registerBtn">
+        <button mat-raised-button (click)="confirmNewDevice()" class="fullWidth floatLeft positionRelative">Register</button>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

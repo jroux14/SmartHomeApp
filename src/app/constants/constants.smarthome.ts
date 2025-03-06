@@ -6,4 +6,4 @@ export const DEVICE_ENDPOINT: string = "device/";
 export const USER_ENDPOINT: string = "user/";
 
 export const TYPE_SENSOR: string = "TYPE_SENSOR";
-export const TYPE_SWITCH: string = "TYPE_SWITCH";
+export const TYPE_OUTLET: string = "TYPE_OUTLET";

@@ -1,0 +1,6 @@
+<div class="contents">
+  <div *ngIf="device && device.id" class="graphContainer">
+    <sensorgraph class="graph" [device]="device" [componentID]="device.id"></sensorgraph>
+  </div>
+</div>
+  

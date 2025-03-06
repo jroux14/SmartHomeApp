@@ -5,10 +5,14 @@
 .grid {
   min-height: inherit;
   width: 100%;
-  background-color: var(--sh-lightgray);
+  background-color: var(--sh-lightgrey);
   display: block;
   overflow: visible;
   position: relative;
   z-index: 0;
 }
-  
+
+.custom-gridster-item {
+  border-radius: 0.4rem !important;
+  box-shadow: 1px 2px 7.5px black !important;
+}

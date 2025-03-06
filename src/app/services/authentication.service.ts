@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { shUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
 import { AUTH_ENDPOINT, ROOT_URL, USER_ENDPOINT } from '../constants/constants.smarthome';
@@ -68,7 +68,7 @@ export class AuthenticationService {
       return '';
     }
   }
-  
+
   clearCurrentUser() {
     this.currentUser = undefined;
     localStorage.removeItem("bearerToken");
@@ -77,11 +77,7 @@ export class AuthenticationService {
   }
 
   checkToken() {
-    if (localStorage.getItem("bearerToken") && localStorage.getItem("refreshToken")) {
-      return true;
-    } else {
-      return false;
-    }
+    return !!(localStorage.getItem("bearerToken") && localStorage.getItem("refreshToken"));
   }
 
 }

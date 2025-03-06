@@ -9,7 +9,6 @@ import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
 import { NewDevicePopupComponent } from '../../popup/newdevice-popup/newdevice-popup.component';
-import { DeviceService } from 'src/app/services/device.service';
 import { isEqual } from 'lodash'
 
 @Component({
@@ -22,7 +21,6 @@ export class DragDropContainerComponent extends CommonComponent{
   private resizeObserver: ResizeObserver | undefined;
   options: GridsterConfig = {};
   newDevice: shDevice | undefined;
-  devicePlaced: boolean = false;
   startingSize: any = {
     minCols: 0,
     emptyCellDragMaxCols: 0,
@@ -35,7 +33,7 @@ export class DragDropContainerComponent extends CommonComponent{
     this.startingSize.minCols = newColNum;
     this.startingSize.maxCols = newColNum;
   }
-  
+
   override ngOnInit() {
     super.ngOnInit();
 
@@ -46,7 +44,7 @@ export class DragDropContainerComponent extends CommonComponent{
       displayGrid: DisplayGrid.None,
       setGridSize: false,
       margin: 10,
-      outerMarginLeft: 20, 
+      outerMarginLeft: 20,
       swap: true,
       pushItems: false,
       enableEmptyCellDrop: true,
@@ -81,8 +79,8 @@ export class DragDropContainerComponent extends CommonComponent{
   override ngAfterViewInit(): void {
     this.resizeObserver = new ResizeObserver(entries => {
       for (let entry of entries) {
-        const { width, height } = entry.contentRect;
-        
+        const { width } = entry.contentRect;
+
         if (this.options && this.options.api) {
           // Each grid will be 125px*125px and adjusted for 30px margins on sides
           let newColNum = Math.floor((width - 60) / 125);
@@ -96,7 +94,7 @@ export class DragDropContainerComponent extends CommonComponent{
       }
     });
 
-    this.resizeObserver.observe(this.elementRef.nativeElement);   
+    this.resizeObserver.observe(this.elementRef.nativeElement);
   }
 
   onItemChange(item: GridsterItem): void {
@@ -136,7 +134,9 @@ export class DragDropContainerComponent extends CommonComponent{
   placeNewDevice() {
     if(this.newDevice) {
       this.deviceService.registerDevice(this.newDevice).subscribe(resp => {
-        if (resp.success && this.newDevice) {
+        console.log(resp);
+        if (resp.success && resp.id && this.newDevice) {
+          this.newDevice.id = resp.id;
           this.deviceService.addDevice(this.newDevice);
           this.options.enableEmptyCellClick = false;
           this.options.displayGrid = DisplayGrid.None;

@@ -1,19 +1,23 @@
 <div>
-    <sh-navbar></sh-navbar>
-    <mat-sidenav-container class="sidenav-container">
-        <mat-sidenav #sideNav mode="side" class="sidenav">
-            <div class="navItems">
-                <div *ngFor="let link of links; let i = index" class="sidenav-content">
-                    <a [routerLink]="links[i]" routerLinkActive="active"><i
-                            class="material-symbols-outlined nav-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
-                </div>
-                <button type="button" (click)="testAuth()">test</button>
-                <div class="sidenav-content bottomItem" (click)="createNewDevice()"><i class="material-symbols-outlined nav-icon" style="padding-left: 0.75rem;">add</i> Add New Device</div>
-            </div>
-        </mat-sidenav>
-        <mat-sidenav-content class="drag-drop-container">
-            <dragdrop-container class="drag-drop-container"></dragdrop-container>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+  <sh-navbar></sh-navbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sideNav mode="side" class="sidenav">
+      <div class="navItems">
+        <div *ngFor="let link of links; let i = index" class="sidenav-content">
+            <a [routerLink]="links[i]" routerLinkActive="active"><i
+                    class="material-symbols-outlined nav-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
+        </div>
+        <button type="button" (click)="testAuth()">test auth</button>
+        <button type="button" (click)="testSub()">test sub</button>
+        <button type="button" (click)="testPub()">test pub</button>
+<!--        <button type="button" (click)="getAvailableDevices()">get available devices</button>-->
+
+        <div class="sidenav-content bottomItem" (click)="createNewDevice()"><i class="material-symbols-outlined nav-icon" style="padding-left: 0.75rem;">add</i> Add New Device</div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="drag-drop-container">
+        <dragdrop-container class="drag-drop-container"></dragdrop-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
 

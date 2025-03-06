@@ -1,0 +1,16 @@
+
+
+.graphContainer {
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    padding-top: 0.5rem;
+}
+
+.graph {
+    display: inherit;
+    width: 90%;
+    height: 90%;
+    padding: 1rem;
+    padding-top: 0;
+}

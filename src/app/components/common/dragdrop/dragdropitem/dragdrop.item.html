@@ -3,20 +3,17 @@
     <div class="drag-handler flexGrow thirdWidth floatLeft positionRelative">
       <i class="material-symbols-outlined dragHandle">drag_handle</i>
     </div>
-    <label *ngIf="!isSwitch" class="centerText thirdWidth floatLeft positionRelative title">{{deviceName}}</label>
+    <label *ngIf="(deviceType == typeList.sensor) && device" class="centerText thirdWidth floatLeft positionRelative title">{{device.deviceNameFriendly}}</label>
     <div class="thirdWidth floatLeft positionRelative">
       <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deleteDevice()">delete</button>
     </div>
   </div>
-  <div *ngIf="isSwitch && device" class="switchContents">
-    <label class="switchLabel">{{deviceName}}</label>
-    <mat-slide-toggle class="switchToggle"></mat-slide-toggle>
-    <!-- <sh-toggle [onChangeEmitter]="updateSwitchStateEmitter" [componentID]="componentID"></sh-toggle> -->
-  </div>
-  <div *ngIf="isSensor && device" class="contents">
-    <div class="graphContainer">
-      <sensorgraph class="graph" [device]="device" [componentID]="device.deviceID"></sensorgraph>
+  <div [ngSwitch]="deviceType">
+    <div *ngSwitchCase="typeList.outlet" class="switchContents">
+      <switch [device]="device"></switch>
+    </div>
+    <div *ngSwitchCase="typeList.sensor" class="contents">
+      <sensor [device]="device"></sensor>
     </div>
   </div>
 </div>
-  

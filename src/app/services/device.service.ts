@@ -1,9 +1,8 @@
-import { DEVICE_ENDPOINT, ROOT_URL, USER_ENDPOINT } from '../constants/constants.smarthome'
+import { DEVICE_ENDPOINT, ROOT_URL } from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { shDevice } from '../interfaces/device.interface';
-import { GridsterItem } from 'angular-gridster2';
 
 @Injectable()
 export class DeviceService {
@@ -19,12 +18,39 @@ export class DeviceService {
     this.devices = [];
   }
 
+  public getDevice(device: shDevice): shDevice | undefined {
+    return this.devices.find((device) => device);
+  }
+
   public getDevices(): shDevice[] {
     return this.devices;
   }
 
   public addDevice(device: shDevice) {
-    this.devices.push(device);
+    if (!this.devices.includes(device)) {
+      this.devices.push(device);
+    }
+  }
+
+  public testSub() : Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    let messageData = {
+      topic: "d-00001/control/toggle",
+    }
+    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "add/topic", messageData, { headers });
+  }
+
+  public testPub() : Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    let messageData = {
+      topic: "d-00001/control/toggle",
+      payload: ""
+    }
+    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "send/message", messageData, { headers });
+  }
+
+  public getAvailableDevices() {
+    return this.http.get<any>(ROOT_URL + DEVICE_ENDPOINT + "get/available");
   }
 
   public deleteDevice(device: shDevice): Observable<any> {

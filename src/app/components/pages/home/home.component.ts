@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { shUser } from 'src/app/interfaces/user.interface';
+import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../../common/common/common.component';
 import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
 import { NewDevicePopupComponent } from '../../common/popup/newdevice-popup/newdevice-popup.component';
@@ -13,7 +13,7 @@ import { NewDevicePopupComponent } from '../../common/popup/newdevice-popup/newd
 })
 export class HomeComponent extends CommonComponent{
   @ViewChild("sideNav") sideNav: MatSidenav | undefined;
-  
+
   links: string[] = ['', 'settings'];
   linkText: string[] = ['Dashboard', 'Settings'];
   linkIcons: string[] = ['dashboard', 'settings'];
@@ -25,15 +25,15 @@ export class HomeComponent extends CommonComponent{
     super.ngOnInit();
     if (this.authService.checkToken()) {
       this.authService.verifyUserToken().subscribe(resp => {
-        let devices: any[] = resp.devices;
-        
+        let devices: shDevice[] = resp.devices;
+
         if (resp.success) {
           if (resp.user) {
             this.authService.setCurrentUser(resp.user)
           }
-          if (devices) {
+          if (devices && this.deviceService.getDevices().length == 0) {
             devices.forEach((device) => {
-              this.deviceService.addDevice(device);
+                this.deviceService.addDevice(device);
             })
           }
         }
@@ -52,9 +52,21 @@ export class HomeComponent extends CommonComponent{
       this.dataService.setSideNav(this.sideNav);
     }
   }
-  
+
   testAuth() {
     this.authService.testAuth().subscribe(resp => {
+      console.log(resp);
+    });
+  }
+
+  testSub() {
+    this.deviceService.testSub().subscribe(resp => {
+      console.log(resp);
+    });
+  }
+
+  testPub() {
+    this.deviceService.testPub().subscribe(resp => {
       console.log(resp);
     });
   }
