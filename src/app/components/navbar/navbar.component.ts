@@ -57,8 +57,9 @@ export class NavbarComponent extends CommonComponent {
     if (this.sideNav && this.sideNav.opened) {
       this.toggleSideNav();
     }
+    this.authService.logout().subscribe();
     this.loggedIn = false;
-    this.deviceService.clearDevices();
     this.authService.clearCurrentUser();
+    this.deviceService.clearDevices();
   }
 }

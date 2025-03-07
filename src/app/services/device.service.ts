@@ -32,6 +32,11 @@ export class DeviceService {
     }
   }
 
+  public getDeviceData(device: shDevice) : Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data/" + device.deviceName, { headers });
+  }
+
   public testSub() : Observable<any> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     let messageData = {
@@ -44,6 +49,15 @@ export class DeviceService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     let messageData = {
       topic: "d-00001/control/toggle",
+      payload: ""
+    }
+    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "send/message", messageData, { headers });
+  }
+
+  public toggleSwitch(deviceName: string) : Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    let messageData = {
+      topic: deviceName + "/control/toggle",
       payload: ""
     }
     return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "send/message", messageData, { headers });

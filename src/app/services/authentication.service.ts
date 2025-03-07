@@ -30,6 +30,10 @@ export class AuthenticationService {
     return this.http.post<any>(ROOT_URL + AUTH_ENDPOINT + "login", userData, { headers });
   }
 
+  public logout() : Observable<any> {
+    return this.http.get<any>(ROOT_URL + AUTH_ENDPOINT + "logout");
+  }
+
   public testAuth() : Observable<any> {
     return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "test");
   }
