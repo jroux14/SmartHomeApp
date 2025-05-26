@@ -3,11 +3,12 @@
     <div class="drag-handler flexGrow thirdWidth floatLeft positionRelative">
       <i class="material-symbols-outlined dragHandle">drag_handle</i>
     </div>
-    <label *ngIf="(deviceType == typeList.sensor) && device" class="centerText thirdWidth floatLeft positionRelative title">{{device.deviceNameFriendly}}</label>
+    <label *ngIf="device" class="centerText thirdWidth floatLeft positionRelative title">{{device.deviceNameFriendly}}</label>
     <div class="thirdWidth floatLeft positionRelative">
       <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deleteDevice()">delete</button>
     </div>
   </div>
+  <hr style="margin-bottom: 0">
   <div [ngSwitch]="deviceType">
     <div *ngSwitchCase="typeList.outlet" class="switchContents">
       <switch [device]="device"></switch>

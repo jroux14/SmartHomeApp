@@ -1,18 +1,24 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../../common/common.component';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'sh-newdevice',
-  templateUrl: 'newdevice-popup.component.html',
-  styleUrls: ['newdevice-popup.component.css'],
+  templateUrl: 'newpanel-popup.component.html',
+  styleUrls: ['newpanel-popup.component.css'],
 })
-export class NewDevicePopupComponent extends CommonComponent {
-  @Input()
-  deviceList: shDevice[] | null = null;
+export class NewPanelPopupComponent extends CommonComponent {
 
-  test = true;
+  panelTypes: any = [
+    { display: "Statistics Panel", value: "STATS_PANEL" },
+    { display: "New Device", value: "DEVICE_PANEL" }
+  ];
+  panelType: string = '';
+
+  panelName: string = '';
+  deviceForStats: string = '';
+  statType: string = '';
 
   device: shDevice | undefined;
 
@@ -25,10 +31,23 @@ export class NewDevicePopupComponent extends CommonComponent {
   deviceNameGroup: FormGroup = new FormGroup({});
   deviceNameControl = new FormControl('', Validators.required);
 
+  panelTypeControl: FormControl<string | null> = new FormControl(null);
+
   override ngOnInit(): void {
       super.ngOnInit();
 
       this.getAvailableDevices();
+  }
+
+  test() {
+    console.log(this.device);
+  }
+
+  selectPanelType(): void {
+    if (this.panelTypeControl.value) {
+      this.panelType = this.panelTypeControl.value[0];
+      console.log(this.panelType);
+    }
   }
 
   selectDevice(device: shDevice | null): void {
@@ -57,7 +76,7 @@ export class NewDevicePopupComponent extends CommonComponent {
 
       if (snackBarMsg) {
         let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
-        this.popupService.resolvePopupSnackBar(ref, NewDevicePopupComponent, { panelClass: "baseDialog", disableClose: false })
+        this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: "baseDialog", disableClose: false })
       }
     } else {
       snackBarMsg = {msg: 'Fill in all fields', action: 'Try Again'};
@@ -65,7 +84,7 @@ export class NewDevicePopupComponent extends CommonComponent {
 
     if (snackBarMsg) {
       let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
-      this.popupService.resolvePopupSnackBar(ref, NewDevicePopupComponent, { panelClass: "baseDialog", disableClose: false })
+      this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: "baseDialog", disableClose: false })
     }
   }
 }

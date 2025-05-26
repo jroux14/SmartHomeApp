@@ -8,7 +8,7 @@ import {
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
-import { NewDevicePopupComponent } from '../../popup/newdevice-popup/newdevice-popup.component';
+import { NewPanelPopupComponent } from '../../popup/newpanel-popup/newpanel-popup.component';
 import { isEqual } from 'lodash'
 
 @Component({
@@ -112,7 +112,7 @@ export class DragDropContainerComponent extends CommonComponent{
   }
 
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
-    let promise = new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       setTimeout(() => {
         if(this.newDevice) {
           if(this.newDevice.deviceType == TYPE_SENSOR) {
@@ -120,7 +120,7 @@ export class DragDropContainerComponent extends CommonComponent{
             item.rows = 3;
           } else {
             item.cols = 2;
-            item.rows = 2;
+            item.rows = 1;
           }
           this.newDevice.item = item;
           resolve("done");
@@ -144,13 +144,17 @@ export class DragDropContainerComponent extends CommonComponent{
         } else {
           if (resp.error) {
             let ref = this.openSnackBar(resp.error, "Try Again");
-            this.popupService.resolvePopupSnackBar(ref, NewDevicePopupComponent, { panelClass: 'baseDialog', disableClose: false });
+            this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: 'baseDialog', disableClose: false });
           }
         }
       })
     } else {
       let ref = this.openSnackBar("Failed to register device", "Try again");
-      this.popupService.resolvePopupSnackBar(ref, NewDevicePopupComponent, { panelClass: 'baseDialog', disableClose: false});
+      this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: 'baseDialog', disableClose: false});
     }
+  }
+
+  trackByDeviceId(index: number, device: shDevice): string | undefined {
+    return device.id;
   }
 }

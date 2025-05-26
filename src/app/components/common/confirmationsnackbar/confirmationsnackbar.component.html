@@ -1,0 +1,8 @@
+<div class="confirmation-snackbar">
+  <p>{{ data.message }}</p>
+  <div class="actions">
+    <button mat-button *ngFor="let action of data.actions" style="color: var(--sh-lightblue);" (click)="performAction(action)">
+      {{ action.label }}
+    </button>
+  </div>
+</div>

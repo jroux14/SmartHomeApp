@@ -4,7 +4,7 @@
     </div>
     <div class="positionRelative floatLeft thirdWidth centerText style-offwhite title" style="padding: 0.75rem;">Smart Home</div>
     <div *ngIf="loggedIn" class="userText style-offwhite thirdWidth positionRelative floatRight rightText">
-        {{userName}}<button [matMenuTriggerFor]="menu" class="loginBtn"><i class="material-symbols-rounded loginIcon">account_circle</i></button>
+      {{userName}}<button [matMenuTriggerFor]="menu" class="loginBtn"><i class="material-symbols-outlined loginIcon">account_circle</i></button>
         <!-- Use menu material to drop down logout button -->
         <mat-menu #menu="matMenu" class="logoutBG">
             <button mat-menu-item class="logout" (click)="logout()">Logout</button>

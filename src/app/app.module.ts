@@ -21,6 +21,7 @@ import { StorageModule } from '@ngx-pwa/local-storage';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from '@angular/material/icon';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 import { DataService } from './services/data.service';
 import { PopupService } from './services/popup.service';
@@ -35,11 +36,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { DragDropContainerComponent } from './components/common/dragdrop/dragdropcontainer/dragdrop.container';
 import { LoginPopupComponent } from './components/common/popup/login-popup/login-popup.component';
 import { CommonInputComponent } from './components/inputs/common-input/common-input.component';
-import { NewDevicePopupComponent } from './components/common/popup/newdevice-popup/newdevice-popup.component';
+import { NewPanelPopupComponent } from './components/common/popup/newpanel-popup/newpanel-popup.component';
 import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
 import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.component';
 import { SwitchComponent } from './components/common/dragdrop/dragdropitem/types/switch/switch.component';
 import { SensorComponent } from './components/common/dragdrop/dragdropitem/types/sensor/sensor.component';
+import { ConfirmationSnackbarComponent } from './components/common/confirmationsnackbar/confirmationsnackbar.component'
 
 import { AuthInterceptor } from './utils/auth.interceptor';
 
@@ -54,10 +56,11 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     DragDropItemComponent,
     LoginPopupComponent,
     CommonInputComponent,
-    NewDevicePopupComponent,
+    NewPanelPopupComponent,
     SensorGraphComponent,
     SwitchComponent,
-    SensorComponent
+    SensorComponent,
+    ConfirmationSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     MatStepperModule,
     ReactiveFormsModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatBottomSheetModule
   ],
   providers: [
     DataService,

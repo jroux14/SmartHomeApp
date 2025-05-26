@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { Component } from '@angular/core';
 import { CommonComponent } from '../common/common/common.component';
-import { LoginPopupComponent } from '../common/popup/login-popup/login-popup.component';
-import { NewDevicePopupComponent } from '../common/popup/newdevice-popup/newdevice-popup.component';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +7,9 @@ import { NewDevicePopupComponent } from '../common/popup/newdevice-popup/newdevi
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent extends CommonComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
+  // title(title: any) {
+  //   throw new Error('Method not implemented.');
+  // }
 
   override ngOnInit() {
     super.ngOnInit();

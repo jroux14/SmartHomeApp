@@ -1,7 +1,7 @@
 import { DEVICE_ENDPOINT, ROOT_URL } from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { interval, map, Observable, of, switchMap } from 'rxjs';
 import { shDevice } from '../interfaces/device.interface';
 
 @Injectable()
@@ -12,7 +12,36 @@ export class DeviceService {
 
   private devices: shDevice[] = [];
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {
+    interval(5000)
+      .pipe(
+        switchMap(() => {
+          if (this.devices.length != 0) {
+            return this.getAllDeviceData();
+          } else {
+            return of(null);
+          }
+        })
+      ).subscribe((res) => {
+        if (res.success && res.data) {
+          this.devices = this.devices.map(device => {
+            const deviceId = device.id;
+            const updatedData = deviceId ? res.data[deviceId] : null;
+
+            if (!updatedData) return device;
+
+            const currentDataStr = JSON.stringify(device.data);
+            const newDataStr = JSON.stringify(updatedData);
+
+            if (currentDataStr !== newDataStr) {
+              return { ...device, data: updatedData }; // only overwrite if different
+            }
+
+            return device; // unchanged
+          });
+        }
+      });
+  }
 
   public clearDevices() {
     this.devices = [];
@@ -32,26 +61,35 @@ export class DeviceService {
     }
   }
 
-  public getDeviceData(device: shDevice) : Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data/" + device.deviceName, { headers });
+  public updateDeviceData(device: shDevice): Observable<shDevice> {
+    if (!device.id || !this.devices.includes(device)) {
+      return of(device); // Return current state if nothing to do
+    }
+
+    return this.getDeviceDataById(device.id).pipe(
+      map(resp => {
+        if (resp.data && resp.success) {
+          const updatedDevice = { ...device, data: resp.data }; // immutable update
+          const index = this.devices.findIndex(d => d.id === device.id);
+          if (index !== -1) {
+            this.devices[index] = updatedDevice;
+            console.log(this.devices[index]);
+          }
+          return updatedDevice;
+        }
+        return device; // fallback to original if fetch fails
+      })
+    );
   }
 
-  public testSub() : Observable<any> {
+  public getDeviceDataById(deviceId: String) : Observable<any> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    let messageData = {
-      topic: "d-00001/control/toggle",
-    }
-    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "add/topic", messageData, { headers });
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data/" + deviceId, { headers });
   }
 
-  public testPub() : Observable<any> {
+  public getAllDeviceData() : Observable<any> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    let messageData = {
-      topic: "d-00001/control/toggle",
-      payload: ""
-    }
-    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "send/message", messageData, { headers });
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data", { headers });
   }
 
   public toggleSwitch(deviceName: string) : Observable<any> {

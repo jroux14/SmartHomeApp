@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { shUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
-import { AUTH_ENDPOINT, ROOT_URL, USER_ENDPOINT } from '../constants/constants.smarthome';
+import { AUTH_ENDPOINT, ROOT_URL } from '../constants/constants.smarthome';
 
 @Injectable()
 export class AuthenticationService {
@@ -32,10 +32,6 @@ export class AuthenticationService {
 
   public logout() : Observable<any> {
     return this.http.get<any>(ROOT_URL + AUTH_ENDPOINT + "logout");
-  }
-
-  public testAuth() : Observable<any> {
-    return this.http.get<any>(ROOT_URL + USER_ENDPOINT + "test");
   }
 
   verifyUserToken() : Observable<any> {

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { ChartItem } from 'chart.js/dist/types/index';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../common/common/common.component';
 
@@ -14,7 +13,7 @@ export class SensorGraphComponent extends CommonComponent {
   device: shDevice | undefined;
   @Input()
   componentID: string = '';
-  
+
   graphCtx: any;
   thisChart: Chart | undefined
 

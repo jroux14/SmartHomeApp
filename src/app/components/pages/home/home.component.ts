@@ -4,7 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../../common/common/common.component';
 import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
-import { NewDevicePopupComponent } from '../../common/popup/newdevice-popup/newdevice-popup.component';
+import { NewPanelPopupComponent } from '../../common/popup/newpanel-popup/newpanel-popup.component';
 
 @Component({
   selector: 'app-home',
@@ -53,29 +53,11 @@ export class HomeComponent extends CommonComponent{
     }
   }
 
-  testAuth() {
-    this.authService.testAuth().subscribe(resp => {
-      console.log(resp);
-    });
-  }
-
-  testSub() {
-    this.deviceService.testSub().subscribe(resp => {
-      console.log(resp);
-    });
-  }
-
-  testPub() {
-    this.deviceService.testPub().subscribe(resp => {
-      console.log(resp);
-    });
-  }
-
-  createNewDevice() {
+  createNewPanel() {
     if (this.sideNav) {
       this.sideNav.toggle();
     }
-    this.popupService.openPopup(NewDevicePopupComponent, {
+    this.popupService.openPopup(NewPanelPopupComponent, {
       panelClass: 'baseDialog'
     });
   }

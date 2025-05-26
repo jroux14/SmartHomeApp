@@ -8,12 +8,13 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { PopupService } from 'src/app/services/popup.service';
 import { DeviceService } from 'src/app/services/device.service';
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
 
 @Component({
   selector: 'common',
@@ -23,9 +24,10 @@ import { DeviceService } from 'src/app/services/device.service';
 export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit {
   static injector: Injector;
 
+  destroy$ = new Subject<void>();
   subscriptions: Subscription[] = [];
 
-  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public snackBar: MatSnackBar, public differs: KeyValueDiffers, public injector: Injector) {
+  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public bottomSheet: MatBottomSheet, public snackBar: MatSnackBar, public differs: KeyValueDiffers, public injector: Injector) {
     CommonComponent.injector = injector;
   }
 
@@ -41,6 +43,8 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         subscription.unsubscribe();
       } catch(e){}
     });
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   addSubscription(sub: Subscription) {

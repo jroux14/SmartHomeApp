@@ -1,0 +1,11 @@
+.confirmation-snackbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.actions {
+  display: flex;
+}
+.actions button {
+  margin-left: 0.5rem;
+}

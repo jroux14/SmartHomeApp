@@ -1,0 +1,61 @@
+<div *ngIf="panelType == ''">
+  <mat-selection-list [multiple]="false" [formControl]="panelTypeControl" *ngFor="let type of panelTypes">
+    <mat-list-option [disabled]="panelTypeControl.value != null && panelTypeControl.value[0] != type.value" [value]="type.value">{{ type.display }}</mat-list-option>
+  </mat-selection-list>
+  <div>
+    <button mat-raised-button class="typeButton" (click)="selectPanelType()">Next</button>
+  </div>
+</div>
+
+<div [ngSwitch]="panelType">
+  <div *ngSwitchCase="panelTypes[0].value" class="textInputs">
+    <mat-form-field class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
+      <input matInput name="panelName" [ngModel]="panelName" placeholder="Panel Name">
+    </mat-form-field>
+    <mat-form-field class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
+      <mat-label>Device to Monitor</mat-label>
+      <mat-select [(ngModel)]="device" name="deviceSelector">
+        <mat-option *ngFor="let device of deviceService.getDevices()" [value]="device">{{device.deviceNameFriendly}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
+      <mat-label>Statistic to Monitor</mat-label>
+      <mat-select [(ngModel)]="statType">
+        <mat-option *ngFor="let sensor of device?.data.sensors | keyvalue" [value]="sensor.key">{{sensor.key}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
+      <button mat-raised-button class="typeButton" (click)="test()">Next</button>
+    </div>
+  </div>
+  <mat-stepper *ngSwitchCase="panelTypes[1].value" orientation="vertical" [linear]="true">
+    <mat-step [stepControl]="selectionListControl" [completed]="!!device">
+      <ng-template matStepperIcon="edit">
+        <mat-icon>done</mat-icon>
+      </ng-template>
+      <ng-template matStepLabel>Select your device</ng-template>
+      <form [formGroup]="selectDeviceGroup">
+        <mat-selection-list [multiple]="false" [formControl]="selectionListControl" *ngFor="let device of devices" required>
+          <mat-list-option [disabled]="selectionListControl.value != null && selectionListControl.value[0] != device" [value]="device">{{ device.deviceName }}</mat-list-option>
+        </mat-selection-list>
+        <div>
+          <button mat-raised-button matStepperNext [disabled]="selectionListControl.invalid" class="nextButton" (click)="selectDevice(selectionListControl.value ? selectionListControl.value[0] : null)">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="deviceNameControl">
+      <ng-template matStepLabel>Name your device</ng-template>
+      <div class="textInputs">
+        <form [formGroup]="deviceNameGroup" class="fullWidth floatLeft positionRelative">
+          <mat-form-field class="fullWidth floatLeft positionRelative">
+            <input matInput name="deviceName" [formControl]="deviceNameControl" placeholder="Device Name" required>
+          </mat-form-field>
+        </form>
+        <div class="registerBtn">
+          <button mat-raised-button (click)="confirmNewDevice()" class="fullWidth floatLeft positionRelative">Register</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
+
