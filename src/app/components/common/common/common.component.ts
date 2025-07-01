@@ -27,6 +27,10 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
   destroy$ = new Subject<void>();
   subscriptions: Subscription[] = [];
 
+  links: string[] = ['', '/devices', '/settings'];
+  linkText: string[] = ['Dashboard', 'Devices', 'Settings'];
+  linkIcons: string[] = ['dashboard', 'device_hub', 'settings'];
+
   constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public bottomSheet: MatBottomSheet, public snackBar: MatSnackBar, public differs: KeyValueDiffers, public injector: Injector) {
     CommonComponent.injector = injector;
   }

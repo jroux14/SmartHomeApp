@@ -1,0 +1,11 @@
+<div *ngIf="device && device.deviceNameFriendly">
+  <div class="fullWidth displayFlex switchContainer">
+    <div class="thirdWidth displayFlex flexAlignCenter justifyCenter plugIcon">
+      <i class="material-symbols-outlined power" [ngClass]="{ 'powerOn': switchState, 'powerOff': !switchState }" style="font-size: 60px">power</i>
+    </div>
+    <div class="thirdWidth displayFlex flexAlignCenter justifyCenter">{{switchStateText}}</div>
+    <div class="quarterWidth displayFlex flexAlignCenter justifyLeft">
+      <mat-slide-toggle [(ngModel)]="switchState" (change)="onSlideToggleChange($event)"></mat-slide-toggle>
+    </div>
+  </div>
+</div>

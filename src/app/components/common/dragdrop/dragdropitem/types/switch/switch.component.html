@@ -1,7 +1,0 @@
-<div *ngIf="device && device.deviceNameFriendly">
-  <div class="fullWidth floatLeft positionRelative plugIcon">
-    <i class="material-symbols-outlined power" [ngClass]="{ 'powerOn': switchState, 'powerOff': !switchState }" style="font-size: 45px">power</i>
-  </div>
-  <div class="quarterWidth stateText">{{switchStateText}}</div>
-  <mat-slide-toggle class="switchToggle" [(ngModel)]="switchState" (change)="onSlideToggleChange($event)"></mat-slide-toggle>
-</div>

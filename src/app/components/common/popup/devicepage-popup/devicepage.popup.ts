@@ -4,21 +4,19 @@ import { CommonComponent } from '../../common/common.component';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'sh-newdevice',
-  templateUrl: 'newpanel-popup.component.html',
-  styleUrls: ['newpanel-popup.component.css'],
+  selector: 'devicepage-popup',
+  templateUrl: 'devicepage.popup.html',
+  styleUrls: ['devicepage.popup.css'],
 })
-export class NewPanelPopupComponent extends CommonComponent {
+export class DevicePagePopup extends CommonComponent {
 
   panelTypes: any = [
-    { display: "Statistics Panel", value: "STATS_PANEL" },
-    { display: "New Device", value: "DEVICE_PANEL" }
+    { display: "Add Room", value: "ROOM_PANEL" },
+    { display: "Add Device", value: "DEVICE_PANEL" }
   ];
   panelType: string = '';
 
-  panelName: string = '';
-  deviceForStats: string = '';
-  statType: string = '';
+  roomNameControl = new FormControl('');
 
   device: shDevice | undefined;
 
@@ -31,16 +29,27 @@ export class NewPanelPopupComponent extends CommonComponent {
   deviceNameGroup: FormGroup = new FormGroup({});
   deviceNameControl = new FormControl('', Validators.required);
 
+  deviceAssignmentGroup: FormGroup = new FormGroup({});
+  deviceAssignmentControl = new FormControl('', Validators.required);
+
   panelTypeControl: FormControl<string | null> = new FormControl(null);
 
   override ngOnInit(): void {
       super.ngOnInit();
 
-      this.getAvailableDevices();
+      this.addSubscription(this.deviceService.getAvailableDevices().subscribe(resp => {
+        this.devices = resp.devices;
+      }));
   }
 
-  test() {
-    console.log(this.device);
+  addRoom() {
+    let roomName: string | null = this.roomNameControl.value;
+    if (roomName && roomName != '') {
+      this.authService.newRoomEmitter.emit(roomName);
+      // this.addSubscription(this.authService.createRoom(roomName).subscribe(resp => {
+      //   console.log(resp);
+      // }))
+    }
   }
 
   selectPanelType(): void {
@@ -56,27 +65,22 @@ export class NewPanelPopupComponent extends CommonComponent {
     }
   }
 
-  getAvailableDevices() {
-    this.deviceService.getAvailableDevices().subscribe(resp => {
-      this.devices = resp.devices;
-    })
-  }
-
   confirmNewDevice() {
     let snackBarMsg: any | null = null;
     let deviceNameFriendly = this.deviceNameControl.value;
+    let roomAssignment: string | null = this.deviceAssignmentControl.value;
 
-    if(deviceNameFriendly && deviceNameFriendly != '' && this.device) {
+    if(deviceNameFriendly && deviceNameFriendly != '' && roomAssignment && roomAssignment != '' && this.device) {
       if(this.authService.getCurrentUser()) {
-        let namedDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, this.device.item, this.device.data);
-        this.deviceService.newDeviceEmitter.emit(namedDevice);
+        let newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.item, this.device.data);
+        this.deviceService.newDeviceEmitter.emit(newDevice);
       } else {
         snackBarMsg = {msg: 'Must be logged in', action: 'Try Again'};
       }
 
       if (snackBarMsg) {
         let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
-        this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: "baseDialog", disableClose: false })
+        this.popupService.resolvePopupSnackBar(ref, DevicePagePopup, { panelClass: "baseDialog", disableClose: false })
       }
     } else {
       snackBarMsg = {msg: 'Fill in all fields', action: 'Try Again'};
@@ -84,7 +88,7 @@ export class NewPanelPopupComponent extends CommonComponent {
 
     if (snackBarMsg) {
       let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
-      this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: "baseDialog", disableClose: false })
+      this.popupService.resolvePopupSnackBar(ref, DevicePagePopup, { panelClass: "baseDialog", disableClose: false })
     }
   }
 }

@@ -30,18 +30,20 @@ import { DeviceService } from './services/device.service'
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/pages/home/home.component';
+import { DevicesComponent } from "./components/pages/devices/devices.component";
 import { SettingsComponent } from './components/pages/settings/settings.component';
 import { CommonComponent } from './components/common/common/common.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DragDropContainerComponent } from './components/common/dragdrop/dragdropcontainer/dragdrop.container';
 import { LoginPopupComponent } from './components/common/popup/login-popup/login-popup.component';
 import { CommonInputComponent } from './components/inputs/common-input/common-input.component';
-import { NewPanelPopupComponent } from './components/common/popup/newpanel-popup/newpanel-popup.component';
+import { DevicePagePopup } from './components/common/popup/devicepage-popup/devicepage.popup';
 import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
 import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.component';
-import { SwitchComponent } from './components/common/dragdrop/dragdropitem/types/switch/switch.component';
-import { SensorComponent } from './components/common/dragdrop/dragdropitem/types/sensor/sensor.component';
+import { SwitchComponent } from './components/common/device/types/switch/switch.component';
+import { SensorComponent } from './components/common/device/types/sensor/sensor.component';
 import { ConfirmationSnackbarComponent } from './components/common/confirmationsnackbar/confirmationsnackbar.component'
+import { DeviceComponent } from "./components/common/device/device.component";
 
 import { AuthInterceptor } from './utils/auth.interceptor';
 
@@ -50,13 +52,15 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     AppComponent,
     CommonComponent,
     HomeComponent,
+    DevicesComponent,
+    DeviceComponent,
     SettingsComponent,
     NavbarComponent,
     DragDropContainerComponent,
     DragDropItemComponent,
     LoginPopupComponent,
     CommonInputComponent,
-    NewPanelPopupComponent,
+    DevicePagePopup,
     SensorGraphComponent,
     SwitchComponent,
     SensorComponent,

@@ -10,10 +10,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class SettingsComponent extends CommonComponent {
   @ViewChild("sideNav") sideNav: MatSidenav | undefined;
 
-  links: string[] = ['', 'settings'];
-  linkText: string[] = ['Dashboard', 'Settings'];
-  linkIcons: string[] = ['dashboard', 'settings'];
-  
   override ngOnInit(): void {
     super.ngOnInit();
   }

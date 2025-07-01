@@ -1,0 +1,42 @@
+<div>
+  <sh-navbar></sh-navbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sideNav mode="side" class="sidenav">
+      <div class="navItems">
+        <div *ngFor="let link of links; let i = index" class="sidenav-content">
+            <a [routerLink]="links[i]" routerLinkActive="active"><i
+                    class="material-symbols-outlined nav-icon">{{linkIcons[i]}}</i>{{linkText[i]}}</a>
+        </div>
+<!--        <div class="sidenav-content bottomItem" (click)="createNewPanel()"><i class="material-symbols-outlined nav-icon" style="padding-left: 0.75rem;">add</i> Add New Panel</div>-->
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="devices-page-container">
+      <div class="addButton">
+        <button mat-fab class="buttonStyle" (click)="createNewDeviceOrRoom()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div class="fullWidth floatLeft positionRelative deviceCarousel">
+        <div class="rowTitle">ALL DEVICES:</div>
+        <mat-divider class="divider"></mat-divider>
+        <div class="displayFlex devicesContainer">
+          <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+            <sh-device [device]="device"></sh-device>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let room of authService.getRooms()" class="fullWidth floatLeft positionRelative deviceCarousel">
+        <div  class="rowTitle">{{room.roomName.toUpperCase()}}:</div>
+        <mat-divider class="divider"></mat-divider>
+        <div class="displayFlex devicesContainer">
+<!--          TODO: Add a function to populate devices by room            -->
+<!--          <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">-->
+<!--            <sh-device [device]="device"></sh-device>-->
+<!--          </div>-->
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

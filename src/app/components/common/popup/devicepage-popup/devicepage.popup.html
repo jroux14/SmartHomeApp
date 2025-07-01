@@ -10,22 +10,10 @@
 <div [ngSwitch]="panelType">
   <div *ngSwitchCase="panelTypes[0].value" class="textInputs">
     <mat-form-field class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
-      <input matInput name="panelName" [ngModel]="panelName" placeholder="Panel Name">
-    </mat-form-field>
-    <mat-form-field class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
-      <mat-label>Device to Monitor</mat-label>
-      <mat-select [(ngModel)]="device" name="deviceSelector">
-        <mat-option *ngFor="let device of deviceService.getDevices()" [value]="device">{{device.deviceNameFriendly}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
-      <mat-label>Statistic to Monitor</mat-label>
-      <mat-select [(ngModel)]="statType">
-        <mat-option *ngFor="let sensor of device?.data.sensors | keyvalue" [value]="sensor.key">{{sensor.key}}</mat-option>
-      </mat-select>
+      <input matInput name="roomName" [formControl]="roomNameControl" placeholder="Room Name">
     </mat-form-field>
     <div class="fullWidth floatLeft positionRelative" style="margin-left: 0.75rem;">
-      <button mat-raised-button class="typeButton" (click)="test()">Next</button>
+      <button mat-raised-button class="typeButton" (click)="addRoom()">Confirm</button>
     </div>
   </div>
   <mat-stepper *ngSwitchCase="panelTypes[1].value" orientation="vertical" [linear]="true">
@@ -52,7 +40,20 @@
           </mat-form-field>
         </form>
         <div class="registerBtn">
-          <button mat-raised-button (click)="confirmNewDevice()" class="fullWidth floatLeft positionRelative">Register</button>
+          <button mat-raised-button matStepperNext [disabled]="deviceNameControl.invalid" class="fullWidth floatLeft positionRelative">Next</button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step [stepControl]="deviceAssignmentControl">
+      <ng-template matStepLabel>Where is your device?</ng-template>
+      <div class="textInputs">
+        <form [formGroup]="deviceAssignmentGroup" class="fullWidth floatLeft positionRelative">
+          <mat-form-field class="fullWidth floatLeft positionRelative">
+            <input matInput name="deviceRoom" [formControl]="deviceAssignmentControl" placeholder="Room Name" required>
+          </mat-form-field>
+        </form>
+        <div class="registerBtn">
+          <button mat-raised-button [disabled]="deviceAssignmentControl.invalid" (click)="confirmNewDevice()" class="fullWidth floatLeft positionRelative">Register</button>
         </div>
       </div>
     </mat-step>

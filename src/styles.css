@@ -39,6 +39,15 @@
     /* border-radius: 5px; */
   }
 
+/* Google Font Icon Style */
+.material-symbols-outlined {
+    font-variation-settings:
+     'FILL' 0,
+     'wght' 100,
+     'GRAD' 0,
+     'opsz' 24
+}
+
 /* Angular Material Styles */
 
 .mat-bottom-sheet-container {
@@ -254,15 +263,31 @@ body {
 }
 
 .fullWidth {
-    width: 100% !important;
+  width: calc(100% - 3%) !important
 }
 
 .quarterWidth {
-  width: calc(100% / 4) !important;
+  width: calc((100% - 3%) / 4) !important;
 }
 
 .thirdWidth {
-    width: calc(100% / 3) !important;
+    width: calc((100% - 3%) / 3) !important;
+}
+
+.justifyCenter {
+  justify-content: center !important;
+}
+
+.justifyLeft {
+  justify-content: left !important;
+}
+
+.displayFlex {
+  display: flex !important;
+}
+
+.flexAlignCenter {
+  align-items: center !important;
 }
 
 .flexGrow {

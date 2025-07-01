@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DragDropItemComponent } from '../../dragdrop.item';
+import { DragDropItemComponent } from '../../../dragdrop/dragdropitem/dragdrop.item';
 
 @Component({
   selector: 'sensor',

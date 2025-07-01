@@ -8,7 +8,7 @@ import {
 import { CommonComponent } from '../../common/common.component';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
-import { NewPanelPopupComponent } from '../../popup/newpanel-popup/newpanel-popup.component';
+import { DevicePagePopup } from '../../popup/devicepage-popup/devicepage.popup';
 import { isEqual } from 'lodash'
 
 @Component({
@@ -67,13 +67,13 @@ export class DragDropContainerComponent extends CommonComponent{
       emptyCellDropCallback: this.emptyCellClick.bind(this)
     };
 
-    this.addSubscription(this.deviceService.newDeviceEmitter.subscribe(resp => {
-      this.popupService.closePopup();
-      this.newDevice = resp;
-      this.options.enableEmptyCellClick = true;
-      this.options.displayGrid = DisplayGrid.Always;
-      this.changedOptions();
-    }));
+    // this.addSubscription(this.deviceService.newDeviceEmitter.subscribe(resp => {
+    //   this.popupService.closePopup();
+    //   this.newDevice = resp;
+    //   this.options.enableEmptyCellClick = true;
+    //   this.options.displayGrid = DisplayGrid.Always;
+    //   this.changedOptions();
+    // }));
   }
 
   override ngAfterViewInit(): void {
@@ -144,13 +144,13 @@ export class DragDropContainerComponent extends CommonComponent{
         } else {
           if (resp.error) {
             let ref = this.openSnackBar(resp.error, "Try Again");
-            this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: 'baseDialog', disableClose: false });
+            this.popupService.resolvePopupSnackBar(ref, DevicePagePopup, { panelClass: 'baseDialog', disableClose: false });
           }
         }
       })
     } else {
       let ref = this.openSnackBar("Failed to register device", "Try again");
-      this.popupService.resolvePopupSnackBar(ref, NewPanelPopupComponent, { panelClass: 'baseDialog', disableClose: false});
+      this.popupService.resolvePopupSnackBar(ref, DevicePagePopup, { panelClass: 'baseDialog', disableClose: false});
     }
   }
 

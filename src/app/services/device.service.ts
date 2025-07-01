@@ -23,7 +23,7 @@ export class DeviceService {
           }
         })
       ).subscribe((res) => {
-        if (res.success && res.data) {
+        if (res && res.success && res.data) {
           this.devices = this.devices.map(device => {
             const deviceId = device.id;
             const updatedData = deviceId ? res.data[deviceId] : null;

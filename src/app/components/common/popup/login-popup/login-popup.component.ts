@@ -52,7 +52,7 @@ export class LoginPopupComponent extends CommonComponent {
           "password": this.password
         };
 
-        this.authService.attemptLogin(userData).subscribe(resp => {
+        this.addSubscription(this.authService.attemptLogin(userData).subscribe(resp => {
           if (resp.success) {
             let devices: any[] = resp.devices;
             if (resp.token && resp.refreshToken && resp.user) {
@@ -73,12 +73,12 @@ export class LoginPopupComponent extends CommonComponent {
               snackBarMsg = {msg: resp.error, action: 'Try Again'}
             }
           }
-          
+
           if (snackBarMsg) {
             let ref = this.openSnackBar(snackBarMsg.msg, snackBarMsg.action);
             this.popupService.resolvePopupSnackBar(ref, LoginPopupComponent, { panelClass: "baseDialog", disableClose: true });
           }
-        });
+        }));
       }
     } else {
       snackBarMsg = {msg: 'Fill in all fields', action: 'Try Again'};

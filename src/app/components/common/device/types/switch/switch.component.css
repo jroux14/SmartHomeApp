@@ -1,0 +1,17 @@
+
+.switchContainer {
+  padding: 0.5rem 0;
+}
+
+.powerOn {
+  color: var(--sh-lightblue);
+}
+
+.powerOff {
+  color: var(--sh-offwhite-hover);
+}
+
+.plugIcon {
+  padding-left: 4%;
+  color: var(--sh-offwhite-hover);
+}

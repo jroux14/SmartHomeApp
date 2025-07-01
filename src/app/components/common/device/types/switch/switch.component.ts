@@ -1,6 +1,6 @@
 import {Component, SimpleChanges} from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { DragDropItemComponent } from '../../dragdrop.item';
+import { DragDropItemComponent } from '../../../dragdrop/dragdropitem/dragdrop.item';
 import {isEqual} from "lodash";
 
 @Component({
@@ -42,7 +42,7 @@ export class SwitchComponent extends DragDropItemComponent {
 
   onSlideToggleChange(event: MatSlideToggleChange) {
     if (this.device) {
-      this.deviceService.toggleSwitch(this.device.deviceName).subscribe();
+      this.addSubscription(this.deviceService.toggleSwitch(this.device.deviceName).subscribe());
       this.switchStateText = this.switchState ? 'ON' : 'OFF';
     }
   }
