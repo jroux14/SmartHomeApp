@@ -1,9 +1,9 @@
 .wrapper {
-  min-height: inherit;
+  height: calc(100% - 7%);
 }
 
 .grid {
-  min-height: inherit;
+  height: 100%;
   width: 100%;
   background-color: var(--sh-lightgrey);
   display: block;
@@ -13,6 +13,7 @@
 }
 
 .custom-gridster-item {
+  background: var(--sh-lightgrey) !important;
   border-radius: 0.4rem !important;
   box-shadow: 0 4px 6.5px black !important;
 }

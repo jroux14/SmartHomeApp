@@ -1,4 +1,15 @@
 
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  max-height: 3rem;
+  max-width: 8rem;
+}
+
 .title {
     flex-shrink: 0;
     font-size: 1.75rem;
@@ -6,7 +17,7 @@
 }
 
 .loginBtn {
-    background-color: var(--sh-darkgrey);
+    background-color: transparent;
     border: none;
     color: var(--sh-offwhite);
     padding: 0.75rem;

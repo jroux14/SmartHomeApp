@@ -17,29 +17,7 @@ export class AppComponent extends CommonComponent {
   override ngOnInit() {
     super.ngOnInit();
 
-    if (this.authService.checkToken()) {
-      this.addSubscription(this.authService.verifyUserToken().subscribe(resp => {
-        console.log(resp);
-        let devices: shDevice[] = resp.devices;
-        let rooms: shRoom[] = resp.user.rooms;
-
-        if (resp.success) {
-          if (resp.user) {
-            this.authService.setCurrentUser(resp.user);
-            if (rooms) {
-              rooms.forEach((room: shRoom) => {
-                this.authService.addRoom(room);
-              })
-            }
-          }
-          if (devices && this.deviceService.getDevices().length == 0) {
-            devices.forEach((device) => {
-              this.deviceService.addDevice(device);
-            })
-          }
-        }
-      }));
-    } else {
+    if (!this.authService.getCurrentUser()) {
       this.popupService.openPopup(LoginPopupComponent, {
         panelClass: 'loginDialog',
         disableClose: true

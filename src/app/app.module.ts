@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -22,6 +22,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from '@angular/material/icon';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { DataService } from './services/data.service';
 import { PopupService } from './services/popup.service';
@@ -38,14 +39,21 @@ import { DragDropContainerComponent } from './components/common/dragdrop/dragdro
 import { LoginPopupComponent } from './components/common/popup/login-popup/login-popup.component';
 import { CommonInputComponent } from './components/inputs/common-input/common-input.component';
 import { DevicePagePopup } from './components/common/popup/devicepage-popup/devicepage.popup';
+import { AddPanelPopup } from "./components/common/popup/addpanel-popup/addpanel.popup";
 import { DragDropItemComponent } from './components/common/dragdrop/dragdropitem/dragdrop.item';
 import { SensorGraphComponent } from './components/sensorgraph/sensorgraph.component';
 import { SwitchComponent } from './components/common/device/types/switch/switch.component';
 import { SensorComponent } from './components/common/device/types/sensor/sensor.component';
 import { ConfirmationSnackbarComponent } from './components/common/confirmationsnackbar/confirmationsnackbar.component'
 import { DeviceComponent } from "./components/common/device/device.component";
+import { PanelComponent } from "./components/common/panel/panel.component";
 
 import { AuthInterceptor } from './utils/auth.interceptor';
+import { AppInitializerService } from "./services/appinitializer.service";
+
+export function appInitializerFactory(appInitService: AppInitializerService) {
+  return () => appInitService.init();
+}
 
 @NgModule({
   declarations: [
@@ -54,6 +62,7 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     HomeComponent,
     DevicesComponent,
     DeviceComponent,
+    PanelComponent,
     SettingsComponent,
     NavbarComponent,
     DragDropContainerComponent,
@@ -61,6 +70,7 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     LoginPopupComponent,
     CommonInputComponent,
     DevicePagePopup,
+    AddPanelPopup,
     SensorGraphComponent,
     SwitchComponent,
     SensorComponent,
@@ -89,14 +99,16 @@ import { AuthInterceptor } from './utils/auth.interceptor';
     ReactiveFormsModule,
     MatListModule,
     MatIconModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatExpansionModule
   ],
   providers: [
     DataService,
     AuthenticationService,
     PopupService,
     DeviceService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: APP_INITIALIZER, useFactory: appInitializerFactory, deps: [AppInitializerService], multi: true }
   ],
   bootstrap: [AppComponent]
 })

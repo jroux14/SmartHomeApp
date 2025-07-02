@@ -1,0 +1,60 @@
+.dragHandle {
+    cursor: move;
+    margin: 1rem;
+    margin-top: 0.35rem;
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+
+.deleteButton {
+    background-color: transparent;
+    border: 0;
+    margin: 1rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    cursor: pointer;
+    /*flex-grow: 1;*/
+}
+
+.deleteButton:hover {
+    color: var(--sh-red);
+}
+
+.divider {
+  border-radius: 20px;
+  box-shadow: 0 1px 2px 0 var(--sh-darkgrey); /* Shadow effect */
+}
+
+.form-field {
+  height: 3.5rem;
+}
+
+.topBar {
+  width: calc(100% - 1rem);
+  margin: 1rem 0 0.15rem 0;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.selectLabel {
+  margin: 1rem 0.5rem;
+  color: var(--sh-offwhite);
+  font-family: var(--primary-font);
+}
+
+.devicePanel {
+  padding: 1rem;
+}
+
+.devicesContainer {
+  min-height: 10rem;
+  max-height: 10rem;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;      /* Prevent wrapping */
+  gap: 1rem;                /* Optional spacing between items */
+  padding: 0.5rem;
+  scroll-behavior: smooth;  /* Optional for nicer scrolling */
+}
+
+

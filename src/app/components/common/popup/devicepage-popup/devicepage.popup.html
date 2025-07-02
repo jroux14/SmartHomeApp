@@ -22,7 +22,7 @@
         <mat-icon>done</mat-icon>
       </ng-template>
       <ng-template matStepLabel>Select your device</ng-template>
-      <form [formGroup]="selectDeviceGroup">
+      <form>
         <mat-selection-list [multiple]="false" [formControl]="selectionListControl" *ngFor="let device of devices" required>
           <mat-list-option [disabled]="selectionListControl.value != null && selectionListControl.value[0] != device" [value]="device">{{ device.deviceName }}</mat-list-option>
         </mat-selection-list>
@@ -34,7 +34,7 @@
     <mat-step [stepControl]="deviceNameControl">
       <ng-template matStepLabel>Name your device</ng-template>
       <div class="textInputs">
-        <form [formGroup]="deviceNameGroup" class="fullWidth floatLeft positionRelative">
+        <form class="fullWidth floatLeft positionRelative">
           <mat-form-field class="fullWidth floatLeft positionRelative">
             <input matInput name="deviceName" [formControl]="deviceNameControl" placeholder="Device Name" required>
           </mat-form-field>
@@ -47,9 +47,11 @@
     <mat-step [stepControl]="deviceAssignmentControl">
       <ng-template matStepLabel>Where is your device?</ng-template>
       <div class="textInputs">
-        <form [formGroup]="deviceAssignmentGroup" class="fullWidth floatLeft positionRelative">
+        <form class="fullWidth floatLeft positionRelative">
           <mat-form-field class="fullWidth floatLeft positionRelative">
-            <input matInput name="deviceRoom" [formControl]="deviceAssignmentControl" placeholder="Room Name" required>
+            <mat-select [formControl]="deviceAssignmentControl" required>
+              <mat-option *ngFor="let room of authService.getRooms()" [value]="room.roomId" >{{room.roomName}}</mat-option>
+            </mat-select>
           </mat-form-field>
         </form>
         <div class="registerBtn">

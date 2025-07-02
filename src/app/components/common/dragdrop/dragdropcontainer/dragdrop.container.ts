@@ -10,6 +10,8 @@ import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
 import { DevicePagePopup } from '../../popup/devicepage-popup/devicepage.popup';
 import { isEqual } from 'lodash'
+import {shPanel} from "../../../../interfaces/panel.interface";
+import {AddPanelPopup} from "../../popup/addpanel-popup/addpanel.popup";
 
 @Component({
   selector: 'dragdrop-container',
@@ -20,7 +22,7 @@ export class DragDropContainerComponent extends CommonComponent{
   @ViewChild("wrapper") elementRef!: ElementRef;
   private resizeObserver: ResizeObserver | undefined;
   options: GridsterConfig = {};
-  newDevice: shDevice | undefined;
+  newPanel: shPanel | undefined;
   startingSize: any = {
     minCols: 0,
     emptyCellDragMaxCols: 0,
@@ -67,13 +69,13 @@ export class DragDropContainerComponent extends CommonComponent{
       emptyCellDropCallback: this.emptyCellClick.bind(this)
     };
 
-    // this.addSubscription(this.deviceService.newDeviceEmitter.subscribe(resp => {
-    //   this.popupService.closePopup();
-    //   this.newDevice = resp;
-    //   this.options.enableEmptyCellClick = true;
-    //   this.options.displayGrid = DisplayGrid.Always;
-    //   this.changedOptions();
-    // }));
+    this.addSubscription(this.dataService.newPanelEmitter.subscribe(resp => {
+      this.popupService.closePopup();
+      this.newPanel = resp;
+      this.options.enableEmptyCellClick = true;
+      this.options.displayGrid = DisplayGrid.Always;
+      this.changedOptions();
+    }));
   }
 
   override ngAfterViewInit(): void {
@@ -98,9 +100,10 @@ export class DragDropContainerComponent extends CommonComponent{
   }
 
   onItemChange(item: GridsterItem): void {
-    this.deviceService.getDevices().forEach(device => {
-      if (isEqual(device.item, item)) {
-        this.deviceService.updateDevicePosition(device).subscribe();
+    this.authService.getDashboardPanels().forEach(panel => {
+      if (isEqual(panel.item, item)) {
+        // TODO: Port this over to auth service and create Spring Boot endpoint
+        // this.deviceService.updateDevicePosition(panel).subscribe();
       }
     })
   }
@@ -114,47 +117,43 @@ export class DragDropContainerComponent extends CommonComponent{
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
     new Promise((resolve) => {
       setTimeout(() => {
-        if(this.newDevice) {
-          if(this.newDevice.deviceType == TYPE_SENSOR) {
-            item.cols = 5;
-            item.rows = 3;
-          } else {
-            item.cols = 2;
-            item.rows = 1;
-          }
-          this.newDevice.item = item;
+        if(this.newPanel) {
+          item.cols = this.options.maxCols? this.options.maxCols : 1;
+          item.rows = 2;
+
+          this.newPanel.item = item;
           resolve("done");
         }
       }, 100);
     }).finally(() => {
-      this.placeNewDevice();
+      this.placeNewPanel();
     });
   }
 
-  placeNewDevice() {
-    if(this.newDevice) {
-      this.deviceService.registerDevice(this.newDevice).subscribe(resp => {
+  placeNewPanel() {
+    if(this.newPanel) {
+      this.authService.registerNewPanel(this.newPanel).subscribe(resp => {
         console.log(resp);
-        if (resp.success && resp.id && this.newDevice) {
-          this.newDevice.id = resp.id;
-          this.deviceService.addDevice(this.newDevice);
+        if (resp.success && this.newPanel) {
+          this.newPanel.panelId = resp.id;
+          this.authService.addPanel(this.newPanel);
           this.options.enableEmptyCellClick = false;
           this.options.displayGrid = DisplayGrid.None;
           this.changedOptions();
         } else {
           if (resp.error) {
             let ref = this.openSnackBar(resp.error, "Try Again");
-            this.popupService.resolvePopupSnackBar(ref, DevicePagePopup, { panelClass: 'baseDialog', disableClose: false });
+            this.popupService.resolvePopupSnackBar(ref, AddPanelPopup, { panelClass: 'baseDialog', disableClose: false });
           }
         }
       })
     } else {
-      let ref = this.openSnackBar("Failed to register device", "Try again");
-      this.popupService.resolvePopupSnackBar(ref, DevicePagePopup, { panelClass: 'baseDialog', disableClose: false});
+      let ref = this.openSnackBar("Failed to add panel", "Try again");
+      this.popupService.resolvePopupSnackBar(ref, AddPanelPopup, { panelClass: 'baseDialog', disableClose: false});
     }
   }
 
-  trackByDeviceId(index: number, device: shDevice): string | undefined {
-    return device.id;
+  trackByPanelId(index: number, panel: shPanel): string | undefined {
+    return panel.panelId;
   }
 }

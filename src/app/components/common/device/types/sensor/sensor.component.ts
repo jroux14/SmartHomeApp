@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { DragDropItemComponent } from '../../../dragdrop/dragdropitem/dragdrop.item';
+import {shDevice} from "../../../../../interfaces/device.interface";
 
 @Component({
   selector: 'sensor',
@@ -7,6 +8,10 @@ import { DragDropItemComponent } from '../../../dragdrop/dragdropitem/dragdrop.i
   styleUrls: ['./sensor.component.css'],
 })
 export class SensorComponent extends DragDropItemComponent {
+
+  @Input()
+  device: shDevice | undefined;
+
   private differ = this.differs.find({}).create();
 
   override ngOnInit(): void {

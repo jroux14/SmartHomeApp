@@ -3,8 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { shUser } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
 import { AUTH_ENDPOINT, ROOT_URL } from '../constants/constants.smarthome';
-import {shDevice} from "../interfaces/device.interface";
 import {shRoom} from "../interfaces/room.interface";
+import {shDashboard} from "../interfaces/dashboard.interface";
+import {shPanel} from "../interfaces/panel.interface";
 
 @Injectable()
 export class AuthenticationService {
@@ -17,10 +18,30 @@ export class AuthenticationService {
 
   private roomList: shRoom[] = [];
 
+  private dashboard: shDashboard | undefined;
+
   constructor(public http: HttpClient) {}
 
   public clearRooms() {
     this.roomList = [];
+  }
+
+  public setDashboard(dashboard: shDashboard) {
+    this.dashboard = dashboard;
+  }
+
+  public addPanel(panel: shPanel) {
+    if (this.dashboard) {
+      this.dashboard.panels.push(panel);
+    }
+  }
+
+  public getDashboardPanels(): shPanel[] {
+    if (this.dashboard) {
+      return this.dashboard.panels;
+    } else {
+      return [];
+    }
   }
 
   public getRoom(room: shRoom): shRoom | undefined {
@@ -35,6 +56,14 @@ export class AuthenticationService {
     if (!this.roomList.includes(room)) {
       this.roomList.push(room);
     }
+  }
+
+  public registerNewPanel(newPanel: shPanel): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if (!newPanel) {
+      newPanel = new shPanel('', '');
+    }
+    return this.http.post(ROOT_URL + AUTH_ENDPOINT + 'private/add/panel', newPanel, { headers});
   }
 
   public registerNewUser(userData: any) : Observable<any> {

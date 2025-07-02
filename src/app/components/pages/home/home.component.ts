@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { CommonComponent } from '../../common/common/common.component';
-import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
+import {AddPanelPopup} from "../../common/popup/addpanel-popup/addpanel.popup";
 
 @Component({
   selector: 'app-home',
@@ -12,33 +11,10 @@ import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.
 export class HomeComponent extends CommonComponent{
   @ViewChild("sideNav") sideNav: MatSidenav | undefined;
 
-  responseData: String = '';
-  testLogin: boolean = true;
-  loginDialog: MatDialogRef<LoginPopupComponent> | null = null;
+  editMode: boolean = false;
 
   override ngOnInit() {
-    // super.ngOnInit();
-    // if (this.authService.checkToken()) {
-    //   this.authService.verifyUserToken().subscribe(resp => {
-    //     let devices: shDevice[] = resp.devices;
-    //
-    //     if (resp.success) {
-    //       if (resp.user) {
-    //         this.authService.setCurrentUser(resp.user)
-    //       }
-    //       if (devices && this.deviceService.getDevices().length == 0) {
-    //         devices.forEach((device) => {
-    //             this.deviceService.addDevice(device);
-    //         })
-    //       }
-    //     }
-    //   });
-    // } else {
-    //   this.popupService.openPopup(LoginPopupComponent, {
-    //     panelClass: 'loginDialog',
-    //     disableClose: true
-    //   });
-    // }
+    super.ngOnInit();
   }
 
   override ngAfterViewInit() {
@@ -48,12 +24,16 @@ export class HomeComponent extends CommonComponent{
     }
   }
 
-  // createNewPanel() {
-  //   if (this.sideNav) {
-  //     this.sideNav.toggle();
-  //   }
-  //   this.popupService.openPopup(NewDevicePopup, {
-  //     panelClass: 'baseDialog'
-  //   });
-  // }
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+  }
+
+  addPanel() {
+    if (this.sideNav && this.sideNav.opened) {
+      this.sideNav.toggle();
+    }
+    this.popupService.openPopup(AddPanelPopup, {
+      panelClass: 'baseDialog'
+    });
+  }
 }

@@ -2,7 +2,10 @@
     <div class="floatLeft positionRelative thirdWidth menuContainer">
         <button (click)="toggleSideNav()" class="menuBtn floatLeft positionRelative"><i class="material-symbols-outlined floatLeft pos menu-icon">menu</i></button>
     </div>
-    <div class="positionRelative floatLeft thirdWidth centerText style-offwhite title" style="padding: 0.75rem;">Smart Home</div>
+<!--    <div class="positionRelative floatLeft thirdWidth centerText style-offwhite title" style="padding: 0.75rem;">Smart Home</div>-->
+    <div class="positionRelative floatLeft thirdWidth logoContainer">
+      <img src="assets/images/Nestify.png" alt="Nestify" class="logo" />
+    </div>
     <div *ngIf="loggedIn" class="userText style-offwhite thirdWidth positionRelative floatRight rightText">
       {{userName}}<button [matMenuTriggerFor]="menu" class="loginBtn"><i class="material-symbols-outlined loginIcon">account_circle</i></button>
         <!-- Use menu material to drop down logout button -->

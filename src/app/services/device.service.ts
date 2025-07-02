@@ -10,10 +10,14 @@ export class DeviceService {
   // Device Emitters
   @Output() newDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
+
   private devices: shDevice[] = [];
 
+  public testSwitchCount: number = 0;
+  public testSensorCount: number = 0;
+
   constructor(public http: HttpClient) {
-    interval(5000)
+    interval(1000)
       .pipe(
         switchMap(() => {
           if (this.devices.length != 0) {
@@ -43,6 +47,22 @@ export class DeviceService {
       });
   }
 
+  public getTestSwitchCount(): number {
+    return this.testSwitchCount;
+  }
+
+  public getTestSensorCount(): number {
+    return this.testSensorCount;
+  }
+
+  public addTestSwitch() {
+    this.testSwitchCount += 1;
+  }
+
+  public addTestSensor() {
+    this.testSensorCount += 1;
+  }
+
   public clearDevices() {
     this.devices = [];
   }
@@ -53,6 +73,14 @@ export class DeviceService {
 
   public getDevices(): shDevice[] {
     return this.devices;
+  }
+
+  public getDevicesByRoomId(roomId: string): shDevice[] {
+    return this.devices.filter(device => device.roomId === roomId);
+  }
+
+  public getDevicesByType(type: string): shDevice[] {
+    return this.devices.filter(device => device.deviceType === type);
   }
 
   public addDevice(device: shDevice) {

@@ -21,13 +21,13 @@
 .sidenav {
     background-color: var(--sh-darkgrey);
     width: 15rem;
-    filter: drop-shadow(rgb(32, 32, 32) 3px 0px 1.5px);
+    filter: drop-shadow(var(--sh-darkgrey) 3px 0px 1.5px);
 }
 
 .sidenav-container {
-    background-color: var(--sh-lightgrey);
-    min-height: calc(100vh - 4rem);
-    z-index: auto;
+  background-color: var(--sh-lightgrey);
+  height: calc(100% - 64px);
+  z-index: auto !important;
 }
 
 .sidenav-content {

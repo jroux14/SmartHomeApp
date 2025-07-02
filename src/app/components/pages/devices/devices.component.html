@@ -1,4 +1,4 @@
-<div>
+<div class="pageContent">
   <sh-navbar></sh-navbar>
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sideNav mode="side" class="sidenav">
@@ -17,24 +17,59 @@
         </button>
       </div>
 
-      <div class="fullWidth floatLeft positionRelative deviceCarousel">
-        <div class="rowTitle">ALL DEVICES:</div>
-        <mat-divider class="divider"></mat-divider>
-        <div class="displayFlex devicesContainer">
-          <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">
-            <sh-device [device]="device"></sh-device>
-          </div>
-        </div>
+      <div class="fullWidth positionRelative deviceAccordion">
+        <mat-accordion class="fullWidth positionRelative">
+          <mat-expansion-panel class="positionRelative deviceExpansionPanel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="panelTitle">All Devices</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="displayFlex devicesContainer">
+              <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+                <sh-device [device]="device"></sh-device>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
-      <div *ngFor="let room of authService.getRooms()" class="fullWidth floatLeft positionRelative deviceCarousel">
-        <div  class="rowTitle">{{room.roomName.toUpperCase()}}:</div>
-        <mat-divider class="divider"></mat-divider>
-        <div class="displayFlex devicesContainer">
-<!--          TODO: Add a function to populate devices by room            -->
-<!--          <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">-->
-<!--            <sh-device [device]="device"></sh-device>-->
-<!--          </div>-->
-        </div>
+
+      <div class="fullWidth positionRelative floatLeft filterBreak">
+        <div class="fullWidth positionRelative floatLeft rowTitle">ROOMS</div>
+        <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
+      </div>
+      <div class="fullWidth positionRelative deviceAccordion">
+        <mat-accordion class="fullWidth positionRelative">
+          <mat-expansion-panel *ngFor="let room of authService.getRooms()" class="positionRelative deviceExpansionPanel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="panelTitle">{{room.roomName}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="displayFlex devicesContainer">
+              <!--          TODO: Add a function to populate devices by room            -->
+              <div *ngFor="let device of deviceService.getDevicesByRoomId(room.roomId); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+                <sh-device [device]="device"></sh-device>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="fullWidth positionRelative floatLeft filterBreak">
+        <div class="fullWidth positionRelative floatLeft rowTitle">DEVICE TYPES</div>
+        <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
+      </div>
+      <div class="fullWidth positionRelative deviceAccordion">
+        <mat-accordion class="fullWidth positionRelative" multi>
+          <mat-expansion-panel *ngFor="let type of existingDeviceTypes" class="positionRelative deviceExpansionPanel">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="panelTitle">{{type.name}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="displayFlex devicesContainer">
+              <!--          TODO: Add a function to populate devices by room            -->
+              <div *ngFor="let device of deviceService.getDevicesByType(type.type); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+                <sh-device [device]="device"></sh-device>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

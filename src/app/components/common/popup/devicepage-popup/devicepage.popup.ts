@@ -2,6 +2,13 @@ import { Component } from '@angular/core';
 import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../../common/common.component';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {
+  DISPLAY_DEVICE_POPUP,
+  DISPLAY_ROOM_POPUP,
+  TYPE_OUTLET,
+  TYPE_SENSOR, VALUE_DEVICE_POPUP,
+  VALUE_ROOM_POPUP
+} from "../../../../constants/constants.smarthome";
 
 @Component({
   selector: 'devicepage-popup',
@@ -11,14 +18,16 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class DevicePagePopup extends CommonComponent {
 
   panelTypes: any = [
-    { display: "Add Room", value: "ROOM_PANEL" },
-    { display: "Add Device", value: "DEVICE_PANEL" }
+    { display: DISPLAY_ROOM_POPUP, value: VALUE_ROOM_POPUP },
+    { display: DISPLAY_DEVICE_POPUP, value: VALUE_DEVICE_POPUP }
   ];
   panelType: string = '';
 
   roomNameControl = new FormControl('');
 
   device: shDevice | undefined;
+  devSwitch: shDevice = new shDevice('', TYPE_OUTLET, 'dev-outlet', '', '', undefined);
+  devSensor: shDevice = new shDevice('', TYPE_SENSOR, 'dev-sensor', '', '', undefined);
 
   devices: shDevice[] = [];
   deviceSelection: shDevice[] | null = null;
@@ -39,6 +48,8 @@ export class DevicePagePopup extends CommonComponent {
 
       this.addSubscription(this.deviceService.getAvailableDevices().subscribe(resp => {
         this.devices = resp.devices;
+        this.devices.push(this.devSwitch);
+        this.devices.push(this.devSensor);
       }));
   }
 
@@ -46,16 +57,12 @@ export class DevicePagePopup extends CommonComponent {
     let roomName: string | null = this.roomNameControl.value;
     if (roomName && roomName != '') {
       this.authService.newRoomEmitter.emit(roomName);
-      // this.addSubscription(this.authService.createRoom(roomName).subscribe(resp => {
-      //   console.log(resp);
-      // }))
     }
   }
 
   selectPanelType(): void {
     if (this.panelTypeControl.value) {
       this.panelType = this.panelTypeControl.value[0];
-      console.log(this.panelType);
     }
   }
 
@@ -72,7 +79,18 @@ export class DevicePagePopup extends CommonComponent {
 
     if(deviceNameFriendly && deviceNameFriendly != '' && roomAssignment && roomAssignment != '' && this.device) {
       if(this.authService.getCurrentUser()) {
-        let newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.item, this.device.data);
+        let newDevice: shDevice | null = null;
+        if(this.device.deviceName == this.devSwitch.deviceName) {
+          this.device.deviceName = this.device.deviceName + '-' + this.deviceService.getTestSwitchCount();
+          this.deviceService.addTestSwitch();
+          newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
+        } else if (this.device.deviceName == this.devSensor.deviceName) {
+          this.device.deviceName = this.device.deviceName + '-' + this.deviceService.getTestSensorCount();
+          this.deviceService.addTestSensor();
+          newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
+        } else {
+          newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
+        }
         this.deviceService.newDeviceEmitter.emit(newDevice);
       } else {
         snackBarMsg = {msg: 'Must be logged in', action: 'Try Again'};

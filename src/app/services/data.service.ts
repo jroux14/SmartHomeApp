@@ -7,6 +7,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class DataService {
   // Menu Emitters
   @Output() sideNavEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() newPanelEmitter: EventEmitter<any> = new EventEmitter();
 
   sideNav: MatSidenav | undefined;
   sideNavSubject = new BehaviorSubject<any>(null);

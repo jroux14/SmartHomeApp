@@ -16,7 +16,6 @@
 .devices-page-container {
     min-height: inherit;
     height: 100%;
-    margin-right: 2rem;
 }
 
 .devicePanel {
@@ -27,7 +26,7 @@
   min-height: 10rem;
   max-height: 10rem;
   flex-direction: row;
-  overflow-x: hidden;
+  overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;      /* Prevent wrapping */
   gap: 1rem;                /* Optional spacing between items */
@@ -37,18 +36,42 @@
 
 .divider {
   border-radius: 20px;
-  box-shadow: 0 1px 5px 0 var(--sh-darkgrey); /* Shadow effect */
+  box-shadow: 0 1px 2px 0 var(--sh-darkgrey); /* Shadow effect */
 }
 
 .rowTitle {
   font-size: 1.25rem;
   color: var(--sh-offwhite);
   font-weight: 100;
+  margin-bottom: 0.15rem;
 }
 
 .deviceCarousel {
   min-height: 250px; /* Same as 2 gridster rows*/
   margin: 1.5rem 0 0 2rem;
+}
+
+.filterBreak {
+  margin: 0 0 1rem 2rem;
+}
+
+.deviceAccordion {
+  display: flex;
+  flex-grow: 1;
+  margin: 1.5rem 0 2rem 2rem;
+}
+
+.deviceExpansionPanel {
+  background-color: var(--sh-lightgrey);
+  width: 100%;
+  /*margin: 0 0 0.2rem 2rem;*/
+}
+
+.panelTitle {
+  font-family: var(--primary-font);
+  font-size: 1.25rem;
+  color: var(--sh-offwhite);
+  font-weight: 100;
 }
 
 .nav-icon {
@@ -74,13 +97,13 @@
 .sidenav {
     background-color: var(--sh-darkgrey);
     width: 15rem;
-    filter: drop-shadow(rgb(32, 32, 32) 3px 0px 1.5px);
+    filter: drop-shadow(var(--sh-darkgrey) 3px 0px 2px);
 }
 
 .sidenav-container {
-    background-color: var(--sh-lightgrey);
-    min-height: calc(100vh - 4rem);
-    z-index: auto !important;
+  background-color: var(--sh-lightgrey);
+  height: calc(100% - 64px);
+  z-index: auto !important;
 }
 
 .sidenav-content {

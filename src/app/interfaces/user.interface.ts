@@ -1,10 +1,15 @@
+import {shRoom} from "./room.interface";
+import {shDashboard} from "./dashboard.interface";
+
 export class shUser {
     userId: string = '';
     firstName: string = '';
     email: string = '';
     phoneNum: string = '';
+    rooms: shRoom[] = [];
+    dashboard: shDashboard = new shDashboard('', []);
 
-    constructor(userId?: string, firstName?: string, email?: string, phoneNum?: string) {
+    constructor(userId?: string, firstName?: string, email?: string, phoneNum?: string, rooms?: shRoom[], dashboard?: shDashboard) {
         if (userId) {
             this.userId = userId;
         }
@@ -16,6 +21,12 @@ export class shUser {
         }
         if (phoneNum) {
             this.phoneNum = phoneNum;
+        }
+        if (rooms) {
+          this.rooms = rooms;
+        }
+        if (dashboard) {
+          this.dashboard = dashboard;
         }
     }
 }

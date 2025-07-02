@@ -1,7 +1,8 @@
-import {Component, SimpleChanges} from '@angular/core';
+import {Component, Input, SimpleChanges} from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DragDropItemComponent } from '../../../dragdrop/dragdropitem/dragdrop.item';
 import {isEqual} from "lodash";
+import {shDevice} from "../../../../../interfaces/device.interface";
 
 @Component({
   selector: 'switch',
@@ -9,6 +10,10 @@ import {isEqual} from "lodash";
   styleUrls: ['./switch.component.css'],
 })
 export class SwitchComponent extends DragDropItemComponent {
+
+  @Input()
+  device: shDevice | undefined;
+
   switchState: boolean = false;
   switchStateText: string = "";
 

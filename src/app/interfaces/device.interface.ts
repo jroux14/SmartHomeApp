@@ -7,17 +7,15 @@ export class shDevice {
     deviceType: any;
     deviceName: string;
     deviceNameFriendly: string;
-    roomName: string;
-    item: GridsterItem | undefined;
+    roomId: string;
     data: any | undefined;
 
-    constructor(userId: string, deviceType: string, deviceName: string, deviceNameFriendly: string, roomName: string, item?: GridsterItem | undefined, data?: any | undefined) {
+    constructor(userId: string, deviceType: string, deviceName: string, deviceNameFriendly: string, roomId: string, data?: any | undefined) {
         this.userId = userId;
         this.deviceType = deviceType;
         this.deviceName = deviceName;
         this.deviceNameFriendly = deviceNameFriendly;
-        this.roomName = roomName;
-        this.item = item
+        this.roomId = roomId;
         this.data = data;
     }
 }

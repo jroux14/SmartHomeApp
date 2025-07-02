@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import { CommonComponent } from '../../common/common.component';
-import { shDevice } from 'src/app/interfaces/device.interface';
+import {shPanel} from "../../../../interfaces/panel.interface";
 
 @Component({
   selector: 'dragdrop-item',
@@ -9,7 +9,7 @@ import { shDevice } from 'src/app/interfaces/device.interface';
 })
 export class DragDropItemComponent extends CommonComponent{
   @Input()
-  device: shDevice | undefined;
+  panel: shPanel | undefined;
 
   override ngOnInit() {
     super.ngOnInit();

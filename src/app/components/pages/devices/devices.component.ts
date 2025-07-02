@@ -7,6 +7,7 @@ import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.
 import { DevicePagePopup } from '../../common/popup/devicepage-popup/devicepage.popup';
 import { switchMap } from "rxjs";
 import { shRoom } from "../../../interfaces/room.interface";
+import {NAME_OUTLET, NAME_SENSOR, TYPE_OUTLET, TYPE_SENSOR} from "../../../constants/constants.smarthome";
 
 @Component({
   selector: 'app-home',
@@ -16,15 +17,23 @@ import { shRoom } from "../../../interfaces/room.interface";
 export class DevicesComponent extends CommonComponent{
   @ViewChild("sideNav") sideNav: MatSidenav | undefined;
 
+  deviceTypes: any[] = [
+    { name: NAME_OUTLET + 's', type: TYPE_OUTLET},
+    { name: NAME_SENSOR + 's', type: TYPE_SENSOR},
+  ]
+  existingDeviceTypes: any[] = [];
+
   newDevice: shDevice | undefined;
   newRoom: shRoom | undefined;
-
-  roomList: shRoom[] = [];
 
   loginDialog: MatDialogRef<LoginPopupComponent> | null = null;
 
   override ngOnInit() {
     super.ngOnInit();
+
+    this.existingDeviceTypes = this.deviceTypes.filter(type =>
+      this.deviceService.getDevicesByType(type.type).length > 0
+    );
 
     this.addSubscription(this.deviceService.newDeviceEmitter.pipe(
       switchMap(res => {
@@ -70,6 +79,7 @@ export class DevicesComponent extends CommonComponent{
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
+
     if (this.sideNav) {
       this.dataService.setSideNav(this.sideNav);
     }

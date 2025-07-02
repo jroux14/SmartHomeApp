@@ -1,0 +1,18 @@
+<div class="fullWidth positionRelative floatLeft">
+  <div class="positionRelative floatLeft topBar">
+    <div class="positionRelative floatLeft selectLabel">ROOM:</div>
+    <mat-form-field class="form-field">
+      <mat-select [formControl]="selectedFilterControl" >
+        <mat-option *ngFor="let filter of filterList" [value]="filter" >{{filter.roomName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
+  </div>
+  <div *ngIf="selectedFilterControl.value" class="displayFlex devicesContainer">
+    <!--          TODO: Add a function to populate devices by room            -->
+    <div *ngFor="let device of deviceService.getDevicesByRoomId(selectedFilterControl.value.roomId); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+      <sh-device [device]="device"></sh-device>
+    </div>
+  </div>
+</div>
+
