@@ -1,11 +1,12 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { shUser } from '../interfaces/user.interface';
-import { Observable } from 'rxjs';
-import { AUTH_ENDPOINT, ROOT_URL } from '../constants/constants.smarthome';
+import {Observable, of} from 'rxjs';
+import {AUTH_ENDPOINT, DEVICE_ENDPOINT, ROOT_URL} from '../constants/constants.smarthome';
 import {shRoom} from "../interfaces/room.interface";
 import {shDashboard} from "../interfaces/dashboard.interface";
 import {shPanel} from "../interfaces/panel.interface";
+import {shDevice} from "../interfaces/device.interface";
 
 @Injectable()
 export class AuthenticationService {
@@ -34,6 +35,19 @@ export class AuthenticationService {
     if (this.dashboard) {
       this.dashboard.panels.push(panel);
     }
+  }
+
+  public deletePanel(panel: shPanel): Observable<any> {
+    if (this.dashboard) {
+      this.dashboard.panels.splice(this.dashboard.panels.indexOf(panel), 1);
+      return this.http.post<any>(ROOT_URL + AUTH_ENDPOINT + "delete/panel", panel);
+    } else {
+      return of(null);
+    }
+  }
+
+  public updatePanelPosition(panel: shPanel): Observable<any> {
+    return this.http.post(ROOT_URL + AUTH_ENDPOINT + "update/panel", panel);
   }
 
   public getDashboardPanels(): shPanel[] {

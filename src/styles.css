@@ -271,7 +271,11 @@ body {
 }
 
 .fullWidth {
-  width: 100% !important
+  width: 100% !important;
+}
+
+.halfWidth {
+  width: 50% !important;
 }
 
 .quarterWidth {

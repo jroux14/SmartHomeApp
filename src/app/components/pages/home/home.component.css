@@ -14,7 +14,7 @@
 }
 
 ::ng-deep .mat-fab .mat-button-wrapper {
-  padding: 9px 0 !important;
+  padding: 0px 8px 0px 8px !important;
 }
 
 .slide-button {

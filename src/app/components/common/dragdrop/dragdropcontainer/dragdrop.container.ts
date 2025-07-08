@@ -1,15 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {
-  DisplayGrid,
-  GridsterConfig,
-  GridsterItem,
-  GridType
-} from "angular-gridster2";
-import { CommonComponent } from '../../common/common.component';
-import { shDevice } from 'src/app/interfaces/device.interface';
-import { TYPE_SENSOR } from 'src/app/constants/constants.smarthome';
-import { DevicePagePopup } from '../../popup/devicepage-popup/devicepage.popup';
-import { isEqual } from 'lodash'
+import {DisplayGrid, GridsterConfig, GridsterItem, GridType} from "angular-gridster2";
+import {CommonComponent} from '../../common/common.component';
+import {isEqual} from 'lodash'
 import {shPanel} from "../../../../interfaces/panel.interface";
 import {AddPanelPopup} from "../../popup/addpanel-popup/addpanel.popup";
 
@@ -46,7 +38,7 @@ export class DragDropContainerComponent extends CommonComponent{
       displayGrid: DisplayGrid.None,
       setGridSize: false,
       margin: 10,
-      outerMarginLeft: 20,
+      outerMarginLeft: 15,
       swap: true,
       pushItems: false,
       enableEmptyCellDrop: true,
@@ -65,6 +57,9 @@ export class DragDropContainerComponent extends CommonComponent{
         dragHandleClass: 'drag-handler',
         ignoreContent: true
       },
+      resizable: {
+        enabled: false,
+      },
       emptyCellDragCallback: this.emptyCellClick.bind(this),
       emptyCellDropCallback: this.emptyCellClick.bind(this)
     };
@@ -75,6 +70,19 @@ export class DragDropContainerComponent extends CommonComponent{
       this.options.enableEmptyCellClick = true;
       this.options.displayGrid = DisplayGrid.Always;
       this.changedOptions();
+    }));
+
+    this.addSubscription(this.dataService.editModeEmitter.subscribe(resp => {
+      console.log(resp);
+      if (this.options.resizable) {
+        if (resp) {
+          this.options.resizable.enabled = true;
+          this.changedOptions();
+        } else {
+          this.options.resizable.enabled = false;
+          this.changedOptions();
+        }
+      }
     }));
   }
 
@@ -101,9 +109,8 @@ export class DragDropContainerComponent extends CommonComponent{
 
   onItemChange(item: GridsterItem): void {
     this.authService.getDashboardPanels().forEach(panel => {
-      if (isEqual(panel.item, item)) {
-        // TODO: Port this over to auth service and create Spring Boot endpoint
-        // this.deviceService.updateDevicePosition(panel).subscribe();
+      if (panel.data && isEqual(panel.data.item, item)) {
+        this.authService.updatePanelPosition(panel).subscribe();
       }
     })
   }
@@ -121,7 +128,10 @@ export class DragDropContainerComponent extends CommonComponent{
           item.cols = this.options.maxCols? this.options.maxCols : 1;
           item.rows = 2;
 
-          this.newPanel.item = item;
+          this.newPanel.data = {
+            item: item,
+            filterValue: ''
+          };
           resolve("done");
         }
       }, 100);

@@ -5,13 +5,21 @@ export class shPanel {
   panelId: string;
   panelType: string;
   panelFilterCriteria: string | undefined;
-  item: GridsterItem | undefined;
+  data: data | undefined;
 
-
-  constructor(panelId: string, panelType: string, panelFilterCriteria?: string | undefined, item?: GridsterItem | undefined) {
+  constructor(panelId: string, panelType: string, panelFilterCriteria?: string, data?: any) {
     this.panelId = panelId;
     this.panelType = panelType;
-    this.panelFilterCriteria = panelFilterCriteria;
-    this.item = item
+    if (panelFilterCriteria) {
+      this.panelFilterCriteria = panelFilterCriteria;
+    }
+    if (this.data) {
+      this.data = data;
+    }
   }
+}
+
+interface data {
+  item: GridsterItem | undefined;
+  filterValue: string;
 }

@@ -1,9 +1,45 @@
 .dragHandle {
-    cursor: move;
-    margin: 1rem;
-    margin-top: 0.35rem;
-    margin-bottom: 0;
-    flex-grow: 1;
+  cursor: move;
+  margin-left: 0.4rem;
+}
+
+.topBtns {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.leftButtonStyle {
+  position: absolute;
+  top: 10rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: var(--sh-lightblue);
+  margin-right: 1rem;
+  z-index: 10;
+}
+
+.rightButtonStyle {
+  position: absolute;
+  right: -0.5rem;
+  top: 10rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: var(--sh-lightblue);
+  margin-right: 1rem;
+  z-index: 10;
+}
+
+.arrowIcons {
+  z-index: 11;
+}
+
+/* Active state: slide out to the right */
+.topBtns.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
 }
 
 .deleteButton {
@@ -31,7 +67,7 @@
 
 .topBar {
   width: calc(100% - 1rem);
-  margin: 1rem 0 0.15rem 0;
+  margin: 0 0 0.15rem 0;
   padding: 0 0.5rem 0 0.5rem;
 }
 
@@ -49,7 +85,7 @@
   min-height: 10rem;
   max-height: 10rem;
   flex-direction: row;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;      /* Prevent wrapping */
   gap: 1rem;                /* Optional spacing between items */

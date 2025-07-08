@@ -26,6 +26,7 @@ export class HomeComponent extends CommonComponent{
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+    this.dataService.editModeEmitter.emit(this.editMode);
   }
 
   addPanel() {

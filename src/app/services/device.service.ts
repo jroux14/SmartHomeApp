@@ -141,9 +141,4 @@ export class DeviceService {
   public registerDevice(device: shDevice): Observable<any> {
     return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "register", device);
   }
-
-  public updateDevicePosition(device: shDevice): Observable<any> {
-    return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "update/position", device);
-  }
-
 }

@@ -2,7 +2,7 @@
 <div #wrapper class="wrapper">
   <gridster *ngIf="options" class="grid" [options]="options">
     <div *ngFor="let panel of authService.getDashboardPanels(); let i = index; trackBy: trackByPanelId">
-      <gridster-item *ngIf="panel.item" class="custom-gridster-item" [item]="panel.item">
+      <gridster-item *ngIf="panel.data && panel.data.item" class="custom-gridster-item" [item]="panel.data.item">
         <dragdrop-item [panel]="panel"></dragdrop-item>
       </gridster-item>
     </div>

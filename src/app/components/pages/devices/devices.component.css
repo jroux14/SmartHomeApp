@@ -9,10 +9,6 @@
   background-color: var(--sh-lightblue);
 }
 
-::ng-deep .mat-fab .mat-button-wrapper {
-  padding: 9px 0 !important;
-}
-
 .devices-page-container {
     min-height: inherit;
     height: 100%;
@@ -56,9 +52,7 @@
 }
 
 .deviceAccordion {
-  display: flex;
-  flex-grow: 1;
-  margin: 1.5rem 0 2rem 2rem;
+  margin: 1.5rem 1.5rem 2rem 2rem;
 }
 
 .deviceExpansionPanel {
