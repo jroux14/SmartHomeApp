@@ -1,8 +1,8 @@
 <div class="fullWidth positionRelative floatLeft">
-  <div [class.active]="isEditMode" class="drag-handler halfWidth floatLeft positionRelative topBtns">
+  <div [class.active]="dataService.getEditMode()" class="drag-handler halfWidth floatLeft positionRelative topBtns">
     <i class="material-symbols-outlined positionRelative floatLeft dragHandle">drag_handle</i>
   </div>
-  <div [class.active]="isEditMode" class="halfWidth floatLeft positionRelative topBtns">
+  <div [class.active]="dataService.getEditMode()" class="halfWidth floatLeft positionRelative topBtns">
     <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deletePanel()">delete</button>
   </div>
   <div class="positionRelative floatLeft topBar">

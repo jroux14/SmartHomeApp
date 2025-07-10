@@ -11,10 +11,10 @@
     </mat-sidenav>
     <mat-sidenav-content class="page-content-container">
       <div class="editButtons">
-        <button mat-fab class="floatRight buttonStyle" (click)="toggleEditMode()">
+        <button mat-fab class="floatRight buttonStyle" (click)="dataService.toggleEditMode()">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-fab class="floatRight buttonStyle slide-button" [class.active]="editMode" (click)="addPanel()">
+        <button mat-fab class="floatRight buttonStyle slide-button" [class.active]="dataService.getEditMode()" (click)="addPanel()">
           <mat-icon>add</mat-icon>
         </button>
       </div>

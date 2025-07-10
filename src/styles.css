@@ -48,6 +48,20 @@
      'opsz' 24
 }
 
+/* Gridster Styles */
+
+gridster .gridster-column {
+  /*width: 125px !important;*/
+  border-left: 1px solid var(--sh-darkgrey) !important;
+  border-right: 1px solid var(--sh-darkgrey) !important;
+}
+
+gridster .gridster-row {
+  /*height: 125px !important;*/
+  border-top: 1px solid var(--sh-darkgrey) !important;
+  border-bottom: 1px solid var(--sh-darkgrey) !important;
+}
+
 /* Angular Material Styles */
 
 .mat-drawer-content {

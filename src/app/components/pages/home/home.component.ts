@@ -11,8 +11,6 @@ import {AddPanelPopup} from "../../common/popup/addpanel-popup/addpanel.popup";
 export class HomeComponent extends CommonComponent{
   @ViewChild("sideNav") sideNav: MatSidenav | undefined;
 
-  editMode: boolean = false;
-
   override ngOnInit() {
     super.ngOnInit();
   }
@@ -22,11 +20,6 @@ export class HomeComponent extends CommonComponent{
     if (this.sideNav) {
       this.dataService.setSideNav(this.sideNav);
     }
-  }
-
-  toggleEditMode() {
-    this.editMode = !this.editMode;
-    this.dataService.editModeEmitter.emit(this.editMode);
   }
 
   addPanel() {

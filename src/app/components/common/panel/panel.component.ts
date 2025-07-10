@@ -23,8 +23,6 @@ export class PanelComponent extends CommonComponent{
   showScrollButtons: boolean = false;
   scrollAmount = 300; // pixels per click
 
-  isEditMode: boolean = false;
-
   filterList: any[] | undefined;
   selectedFilterControl: FormControl<any | null> = new FormControl<any | null>(null);
 
@@ -37,10 +35,6 @@ export class PanelComponent extends CommonComponent{
         this.selectedFilterControl.setValue(this.filterList[0]);
       }
     }
-
-    this.addSubscription(this.dataService.editModeEmitter.subscribe(resp => {
-      this.isEditMode = resp;
-    }));
   }
 
   override ngAfterViewInit() {

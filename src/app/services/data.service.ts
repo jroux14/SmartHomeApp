@@ -10,10 +10,21 @@ export class DataService {
   @Output() newPanelEmitter: EventEmitter<any> = new EventEmitter();
   @Output() editModeEmitter: EventEmitter<any> = new EventEmitter();
 
+  private editMode: boolean = false;
+
   sideNav: MatSidenav | undefined;
   sideNavSubject = new BehaviorSubject<any>(null);
 
   constructor(public http: HttpClient) {}
+
+  getEditMode(): boolean {
+    return this.editMode;
+  }
+
+  toggleEditMode(): void {
+    this.editMode = !this.editMode;
+    this.editModeEmitter.emit(this.editMode);
+  }
 
   setSideNav(newSideNav: MatSidenav) {
     this.sideNav = newSideNav;
