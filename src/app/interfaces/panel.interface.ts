@@ -21,5 +21,5 @@ export class shPanel {
 
 interface data {
   item: GridsterItem | undefined;
-  filterValue: string;
+  filterValue: any;
 }

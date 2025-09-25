@@ -46,8 +46,8 @@ export class AuthenticationService {
     }
   }
 
-  public updatePanelPosition(panel: shPanel): Observable<any> {
-    return this.http.post(ROOT_URL + AUTH_ENDPOINT + "update/panel", panel);
+  public updatePanelData(panel: shPanel): Observable<any> {
+    return this.http.post(ROOT_URL + AUTH_ENDPOINT + "update/panel/data", panel);
   }
 
   public getDashboardPanels(): shPanel[] {

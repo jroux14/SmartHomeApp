@@ -9,21 +9,16 @@
     <div class="positionRelative floatLeft selectLabel">ROOM:</div>
     <mat-form-field class="form-field">
       <mat-select [formControl]="selectedFilterControl" (selectionChange)="onFilterChange($event)">
-        <mat-option *ngFor="let filter of filterList" [value]="filter" >{{filter.roomName}}</mat-option>
+        <mat-option *ngFor="let filter of filterList" [value]="filter.roomId" >{{filter.roomName}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
   </div>
   <div *ngIf="selectedFilterControl.value" class="displayFlex devicesContainer" #scrollContainer>
-    <button mat-fab *ngIf="showScrollButtons" class="floatRight leftButtonStyle" (click)="scrollLeft()">
-      <mat-icon>arrow_back_ios</mat-icon>
-    </button>
-    <div *ngFor="let device of deviceService.getDevicesByRoomId(selectedFilterControl.value.roomId); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+        <scroll-btns [scrollTarget]="scrollContainer" class="scrollBtns"></scroll-btns>
+    <div *ngFor="let device of deviceService.getDevicesByRoomId(selectedFilterControl.value); let i = index; trackBy: trackByDeviceId" class="devicePanel">
       <sh-device [device]="device"></sh-device>
     </div>
-    <button mat-fab *ngIf="showScrollButtons" class="floatRight rightButtonStyle" (click)="scrollRight()">
-      <mat-icon>arrow_forward_ios</mat-icon>
-    </button>
   </div>
 </div>
 

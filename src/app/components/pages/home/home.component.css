@@ -1,7 +1,9 @@
 
 .editButtons {
-  margin: 1rem 0 0 2rem;
-  height: 5%;
+  position: absolute;
+  top: 0.75rem;
+  right: -0.03rem;
+  z-index: 1;
 }
 
 .buttonStyle {
@@ -11,10 +13,6 @@
   background-color: var(--sh-lightblue);
   margin-right: 1rem;
   z-index: 1;
-}
-
-::ng-deep .mat-fab .mat-button-wrapper {
-  padding: 0px 8px 0px 8px !important;
 }
 
 .slide-button {
@@ -36,10 +34,6 @@
 
 .page-content-container {
   height: 100%;
-}
-
-.drag-drop-container {
-  min-height: calc(100% - 7%);
 }
 
 .drag-drop-content {

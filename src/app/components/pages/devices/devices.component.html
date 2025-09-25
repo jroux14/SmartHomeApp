@@ -23,7 +23,8 @@
             <mat-expansion-panel-header>
               <mat-panel-title class="panelTitle">All Devices</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="displayFlex devicesContainer">
+            <div class="displayFlex devicesContainer" #allContainer>
+              <scroll-btns [scrollTarget]="allContainer" class="scrollBtns"></scroll-btns>
               <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">
                 <sh-device [device]="device"></sh-device>
               </div>
@@ -32,7 +33,7 @@
         </mat-accordion>
       </div>
 
-      <div class="fullWidth positionRelative floatLeft filterBreak">
+      <div class="positionRelative floatLeft filterBreak">
         <div class="fullWidth positionRelative floatLeft rowTitle">ROOMS</div>
         <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
       </div>
@@ -42,7 +43,8 @@
             <mat-expansion-panel-header>
               <mat-panel-title class="panelTitle">{{room.roomName}}</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="displayFlex devicesContainer">
+            <div class="displayFlex devicesContainer" #roomContainer>
+              <scroll-btns [scrollTarget]="roomContainer" class="scrollBtns"></scroll-btns>
               <!--          TODO: Add a function to populate devices by room            -->
               <div *ngFor="let device of deviceService.getDevicesByRoomId(room.roomId); let i = index; trackBy: trackByDeviceId" class="devicePanel">
                 <sh-device [device]="device"></sh-device>
@@ -52,7 +54,7 @@
         </mat-accordion>
       </div>
 
-      <div class="fullWidth positionRelative floatLeft filterBreak">
+      <div class="positionRelative floatLeft filterBreak">
         <div class="fullWidth positionRelative floatLeft rowTitle">DEVICE TYPES</div>
         <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
       </div>
@@ -62,7 +64,8 @@
             <mat-expansion-panel-header>
               <mat-panel-title class="panelTitle">{{type.name}}</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="displayFlex devicesContainer">
+            <div class="displayFlex devicesContainer" #typeContainer>
+              <scroll-btns [scrollTarget]="typeContainer" class="scrollBtns"></scroll-btns>
               <!--          TODO: Add a function to populate devices by room            -->
               <div *ngFor="let device of deviceService.getDevicesByType(type.type); let i = index; trackBy: trackByDeviceId" class="devicePanel">
                 <sh-device [device]="device"></sh-device>

@@ -10,29 +10,8 @@
   transition: opacity 0.5s ease-in;
 }
 
-.leftButtonStyle {
-  position: absolute;
-  top: 10rem;
-  width: 2.25rem;
-  height: 2.25rem;
-  background-color: var(--sh-lightblue);
-  margin-right: 1rem;
-  z-index: 10;
-}
-
-.rightButtonStyle {
-  position: absolute;
-  right: -0.5rem;
-  top: 10rem;
-  width: 2.25rem;
-  height: 2.25rem;
-  background-color: var(--sh-lightblue);
-  margin-right: 1rem;
-  z-index: 10;
-}
-
-.arrowIcons {
-  z-index: 11;
+.scrollBtns {
+  margin-top: -1.5rem;
 }
 
 /* Active state: slide out to the right */
@@ -63,6 +42,8 @@
 
 .form-field {
   height: 3.5rem;
+  width: 50%;
+  max-width: 10rem;
 }
 
 .topBar {
@@ -78,7 +59,7 @@
 }
 
 .devicePanel {
-  padding: 1rem;
+  padding: 1.5rem 0.5rem 0.5rem 0.65rem;
 }
 
 .devicesContainer {
@@ -88,8 +69,8 @@
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;      /* Prevent wrapping */
-  gap: 1rem;                /* Optional spacing between items */
-  padding: 0.5rem;
+  gap: 0rem;                /* Optional spacing between items */
+  padding: 0.5rem 1px 1px 1px;
   scroll-behavior: smooth;  /* Optional for nicer scrolling */
 }
 

@@ -1,4 +1,8 @@
 
+.scrollBtns {
+  margin-top: 3.5rem;
+}
+
 .addButton {
   margin: 1rem 0 0 2rem;
 }
@@ -22,8 +26,7 @@
   min-height: 10rem;
   max-height: 10rem;
   flex-direction: row;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   white-space: nowrap;      /* Prevent wrapping */
   gap: 1rem;                /* Optional spacing between items */
   padding: 0.5rem;
@@ -48,7 +51,8 @@
 }
 
 .filterBreak {
-  margin: 0 0 1rem 2rem;
+  width: calc(100% - 3rem);
+  margin: 0 1rem 1rem 2rem;
 }
 
 .deviceAccordion {

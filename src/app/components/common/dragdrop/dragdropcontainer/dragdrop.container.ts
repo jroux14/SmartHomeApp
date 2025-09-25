@@ -61,8 +61,8 @@ export class DragDropContainerComponent extends CommonComponent{
       pushItems: false,
       enableEmptyCellDrop: true,
       enableOccupiedCellDrop: true,
-      rowHeightRatio: 1,
-      mobileBreakpoint: 641,
+      // rowHeightRatio: 1,
+      mobileBreakpoint: 0,
       compactType: 'none',
       initCallback: () => {
         this.gridsterReady = true;
@@ -278,7 +278,7 @@ export class DragDropContainerComponent extends CommonComponent{
     this.authService.getDashboardPanels().forEach(panel => {
       if (panel.data && isEqual(panel.data.item, item)) {
         this.originalLayout.set(panel.panelId, { ...item });
-        this.authService.updatePanelPosition(panel).subscribe();
+        this.addSubscription(this.authService.updatePanelData(panel).subscribe());
       }
     })
   }

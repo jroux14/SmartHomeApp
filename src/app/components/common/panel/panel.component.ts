@@ -20,8 +20,6 @@ export class PanelComponent extends CommonComponent{
   panel: shPanel | undefined;
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
-  showScrollButtons: boolean = false;
-  scrollAmount = 300; // pixels per click
 
   filterList: any[] | undefined;
   selectedFilterControl: FormControl<any | null> = new FormControl<any | null>(null);
@@ -32,41 +30,19 @@ export class PanelComponent extends CommonComponent{
     if (this.panel) {
       if (this.panel.panelFilterCriteria == DEVICE_ROOM_FILTER_VALUE) {
         this.filterList = this.authService.getRooms();
-        this.selectedFilterControl.setValue(this.filterList[0]);
+        if (this.panel.data && this.panel.data.filterValue) {
+          this.selectedFilterControl.setValue(this.panel.data.filterValue);
+        } else {
+          this.selectedFilterControl.setValue(this.filterList[0]);
+        }
       }
     }
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
-
-    this.checkForOverflow();
-    const resizeObserver = new ResizeObserver(() => {
-      this.checkForOverflow();
-    });
-    resizeObserver.observe(this.scrollContainer.nativeElement);
-  }
-
   onFilterChange(event: MatSelectChange) {
-    console.log("test")
-    // check for overflow
-    setTimeout(() => this.checkForOverflow(), 0);
-  }
-
-  checkForOverflow() {
-    const el = this.scrollContainer.nativeElement;
-    this.showScrollButtons = el.scrollWidth > el.clientWidth;
-  }
-
-  scrollLeft() {
-    if (this.scrollContainer) {
-      this.scrollContainer.nativeElement.scrollLeft -= this.scrollAmount;
-    }
-  }
-
-  scrollRight() {
-    if (this.scrollContainer) {
-      this.scrollContainer.nativeElement.scrollLeft += this.scrollAmount;
+    if (this.panel && this.panel.data) {
+      this.panel.data.filterValue = event.value;
+      this.addSubscription(this.authService.updatePanelData(this.panel).subscribe());
     }
   }
 

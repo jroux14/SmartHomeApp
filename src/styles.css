@@ -23,21 +23,21 @@
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
-  }
+  width: 0.25rem !important;
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background-color: var(--sh-offwhite);
-    box-shadow: inset 1px 1px 3px var(--sh-lightgrey);
-    /* border-radius: 5px; */
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: var(--sh-offwhite);
+  box-shadow: inset 1px 1px 3px var(--sh-lightgrey);
+  /* border-radius: 5px; */
+}
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--sh-darkgrey);
-    /* border-radius: 5px; */
-  }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--sh-darkgrey);
+  /* border-radius: 5px; */
+}
 
 /* Google Font Icon Style */
 .material-symbols-outlined {
@@ -64,8 +64,17 @@ gridster .gridster-row {
 
 /* Angular Material Styles */
 
+.mat-toolbar-row, .mat-toolbar-single-row {
+  padding: 0 !important;
+}
+
+.mat-fab .mat-button-wrapper {
+  padding: 0px 8px 0px 8px !important;
+}
+
 .mat-drawer-content {
   overflow: auto !important;
+  overflow-x: hidden !important;
 }
 
 .mat-bottom-sheet-container {
@@ -226,7 +235,6 @@ html {
 
 body {
     font-family: var(--primary-font) !important;
-    /* overflow-y: hidden; */
     height: 100vh;
     margin: 0;
     background-color: var(--sh-lightgrey);
@@ -322,6 +330,10 @@ body {
 
 .positionRelative {
     position: relative !important;
+}
+
+.positionFixed {
+  position: fixed !important;
 }
 
 .loginDialog .mat-dialog-container {

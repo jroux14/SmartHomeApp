@@ -1,0 +1,25 @@
+.leftButtonStyle {
+  position: absolute;
+  /*top: 10rem;*/
+  left: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: var(--sh-lightblue);
+  margin-right: 1rem;
+  z-index: 10;
+}
+
+.rightButtonStyle {
+  position: absolute;
+  right: -0.5rem;
+  /*top: 10rem;*/
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: var(--sh-lightblue);
+  margin-right: 1rem;
+  z-index: 10;
+}
+
+:host {
+  display: block;
+}
