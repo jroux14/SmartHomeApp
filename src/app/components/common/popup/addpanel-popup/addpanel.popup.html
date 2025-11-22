@@ -2,32 +2,8 @@
   <mat-selection-list [multiple]="false" [formControl]="panelTypeControl" *ngFor="let type of panelTypes">
     <mat-list-option [disabled]="panelTypeControl.value != null && panelTypeControl.value[0] != type.value" [value]="type.value">{{ type.display }}</mat-list-option>
   </mat-selection-list>
-  <div>
-    <button mat-raised-button class="typeButton" (click)="selectPanelType()">Next</button>
+
+  <div class="registerBtn">
+    <button mat-raised-button [disabled]="panelTypeControl.invalid" (click)="createPanel()" class="fullWidth floatLeft positionRelative">Add Panel</button>
   </div>
 </div>
-
-<div [ngSwitch]="panelType">
-  <div *ngSwitchCase="panelTypes[0].value" class="textInputs">
-<!--    <div class="fullWidth positionRelative floatLeft">Filter devices by</div>-->
-    <div class="deviceFilterLabel">
-      <mat-label >Filter devices by</mat-label>
-    </div>
-    <form class="fullWidth floatLeft positionRelative">
-      <mat-form-field class="fullWidth floatLeft positionRelative filterSelect">
-        <mat-select [formControl]="filterCriteriaControl" placeholder="Select Filter" required>
-          <mat-option *ngFor="let option of filterOptions" [value]="option.value" >{{option.display}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
-    <div class="registerBtn">
-      <button mat-raised-button [disabled]="filterCriteriaControl.invalid" (click)="createPanel()" class="fullWidth floatLeft positionRelative">Add Panel</button>
-    </div>
-  </div>
-  <mat-stepper *ngSwitchCase="panelTypes[1].value" orientation="vertical" [linear]="true">
-    <mat-step>
-      <div>{{panelType}}</div>
-    </mat-step>
-  </mat-stepper>
-</div>
-

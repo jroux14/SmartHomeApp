@@ -51,6 +51,7 @@ import { ScrollButtonsComponent } from "./components/common/scroll-btns/scroll-b
 
 import { AuthInterceptor } from './utils/auth.interceptor';
 import { AppInitializerService } from "./services/appinitializer.service";
+import { MatRadioModule } from "@angular/material/radio";
 
 export function appInitializerFactory(appInitService: AppInitializerService) {
   return () => appInitService.init();
@@ -102,7 +103,8 @@ export function appInitializerFactory(appInitService: AppInitializerService) {
     MatListModule,
     MatIconModule,
     MatBottomSheetModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatRadioModule
   ],
   providers: [
     DataService,

@@ -15,6 +15,7 @@ import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from
 import { PopupService } from 'src/app/services/popup.service';
 import { DeviceService } from 'src/app/services/device.service';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'common',
@@ -31,7 +32,7 @@ export class CommonComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
   linkText: string[] = ['Dashboard', 'Devices', 'Settings'];
   linkIcons: string[] = ['dashboard', 'device_hub', 'settings'];
 
-  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public bottomSheet: MatBottomSheet, public snackBar: MatSnackBar, public differs: KeyValueDiffers, public injector: Injector) {
+  constructor(public dataService: DataService, public authService: AuthenticationService, public deviceService: DeviceService, public popupService: PopupService, public bottomSheet: MatBottomSheet, public snackBar: MatSnackBar, public differs: KeyValueDiffers, public injector: Injector, public cd: ChangeDetectorRef) {
     CommonComponent.injector = injector;
   }
 

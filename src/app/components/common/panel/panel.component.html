@@ -5,13 +5,23 @@
   <div [class.active]="dataService.getEditMode()" class="halfWidth floatLeft positionRelative topBtns">
     <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deletePanel()">delete</button>
   </div>
-  <div class="positionRelative floatLeft topBar">
-    <div class="positionRelative floatLeft selectLabel">ROOM:</div>
-    <mat-form-field class="form-field">
-      <mat-select [formControl]="selectedFilterControl" (selectionChange)="onFilterChange($event)">
-        <mat-option *ngFor="let filter of filterList" [value]="filter.roomId" >{{filter.roomName}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div class="positionRelative floatLeft topBar" #topBar>
+    <div #topBarContent [@fadeSwap]="dataService.getEditMode() ? 'edit' : 'view'">
+      <div *ngIf="dataService.getEditMode()" class="fullWidth positionRelative floatLeft">
+        <div class="positionRelative floatLeft selectLabel">FILTER BY:</div>
+        <mat-radio-group class="radioBtnContainer" [formControl]="selectedFilterTypeControl" (change)="onFilterTypeChange($event)">
+          <mat-radio-button class="floatLeft positionRelative radioBtn" *ngFor="let filterType of filterTypeOptions" [checked]="selectedFilterType == filterType.value" [value]="filterType.value">{{filterType.display}}</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="form-field">
+          <mat-select [formControl]="selectedFilterControl" (selectionChange)="onFilterChange($event)">
+            <mat-option *ngFor="let filter of filterList" [value]="filter.roomId">{{filter.roomName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="!dataService.getEditMode()" class="fullWidth positionRelative floatLeft">
+        <div class="panelTitle">{{getFilterDisplay()}}</div>
+      </div>
+    </div>
     <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
   </div>
   <div *ngIf="selectedFilterControl.value" class="displayFlex devicesContainer" #scrollContainer>

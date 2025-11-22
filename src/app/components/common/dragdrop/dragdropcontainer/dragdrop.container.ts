@@ -4,6 +4,8 @@ import {CommonComponent} from '../../common/common.component';
 import {isEqual} from 'lodash'
 import {shPanel} from "../../../../interfaces/panel.interface";
 import {AddPanelPopup} from "../../popup/addpanel-popup/addpanel.popup";
+import * as constants from "node:constants";
+import {DEVICE_ROOM_FILTER_VALUE} from "../../../../constants/constants.smarthome";
 
 @Component({
   selector: 'dragdrop-container',

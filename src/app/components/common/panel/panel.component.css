@@ -3,11 +3,24 @@
   margin-left: 0.4rem;
 }
 
+.panelTitle {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--sh-offwhite);
+}
+
+.radioBtn {
+  margin-right: 0.75rem;
+  margin-top: 1rem;
+  color: var(--sh-offwhite);
+}
+
 .topBtns {
   opacity: 0;
   pointer-events: none;
   z-index: 0;
-  transition: opacity 0.5s ease-in;
+  transition: opacity 500ms ease-in;
 }
 
 .scrollBtns {
@@ -22,13 +35,10 @@
 }
 
 .deleteButton {
-    background-color: transparent;
-    border: 0;
-    margin: 1rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
-    cursor: pointer;
-    /*flex-grow: 1;*/
+  background-color: transparent;
+  border: 0;
+  margin: 0.25rem 1rem 0;
+  cursor: pointer;
 }
 
 .deleteButton:hover {
@@ -36,11 +46,14 @@
 }
 
 .divider {
+  width: calc(100% - 1rem);
   border-radius: 20px;
   box-shadow: 0 1px 2px 0 var(--sh-darkgrey); /* Shadow effect */
 }
 
 .form-field {
+  margin-left: 0.5rem;
+  /*margin-bottom: 0.5rem;*/
   height: 3.5rem;
   width: 50%;
   max-width: 10rem;
@@ -55,7 +68,7 @@
 .selectLabel {
   margin: 1rem 0.5rem;
   color: var(--sh-offwhite);
-  font-family: var(--primary-font);
+  font-family: var(--primary-font), serif;
 }
 
 .devicePanel {
@@ -69,7 +82,7 @@
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;      /* Prevent wrapping */
-  gap: 0rem;                /* Optional spacing between items */
+  gap: 0;                /* Optional spacing between items */
   padding: 0.5rem 1px 1px 1px;
   scroll-behavior: smooth;  /* Optional for nicer scrolling */
 }
