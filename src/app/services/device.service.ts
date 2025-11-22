@@ -1,4 +1,11 @@
-import { DEVICE_ENDPOINT, ROOT_URL } from '../constants/constants.smarthome'
+import {
+  DEVICE_ENDPOINT,
+  NAME_OUTLET,
+  NAME_SENSOR,
+  ROOT_URL,
+  TYPE_OUTLET,
+  TYPE_SENSOR
+} from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { interval, map, Observable, of, switchMap } from 'rxjs';
@@ -10,7 +17,10 @@ export class DeviceService {
   // Device Emitters
   @Output() newDeviceEmitter: EventEmitter<any> = new EventEmitter();
 
-
+  private deviceTypes: any[] = [
+    {display: NAME_SENSOR, value: TYPE_SENSOR},
+    {display: NAME_OUTLET, value: TYPE_OUTLET}
+  ]
   private devices: shDevice[] = [];
 
   public testSwitchCount: number = 0;
@@ -45,6 +55,10 @@ export class DeviceService {
           });
         }
       });
+  }
+
+  public getDeviceTypes(): any[] {
+    return this.deviceTypes;
   }
 
   public getTestSwitchCount(): number {

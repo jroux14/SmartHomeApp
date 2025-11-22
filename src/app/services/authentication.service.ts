@@ -40,14 +40,14 @@ export class AuthenticationService {
   public deletePanel(panel: shPanel): Observable<any> {
     if (this.dashboard) {
       this.dashboard.panels.splice(this.dashboard.panels.indexOf(panel), 1);
-      return this.http.post<any>(ROOT_URL + AUTH_ENDPOINT + "delete/panel", panel);
+      return this.http.post<any>(ROOT_URL + AUTH_ENDPOINT + "private/delete/panel", panel);
     } else {
       return of(null);
     }
   }
 
-  public updatePanelData(panel: shPanel): Observable<any> {
-    return this.http.post(ROOT_URL + AUTH_ENDPOINT + "update/panel/data", panel);
+  public updatePanel(panel: shPanel): Observable<any> {
+    return this.http.post(ROOT_URL + AUTH_ENDPOINT + "private/update/panel", panel);
   }
 
   public getDashboardPanels(): shPanel[] {

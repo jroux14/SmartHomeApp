@@ -9,6 +9,7 @@ export class DataService {
   @Output() sideNavEmitter: EventEmitter<any> = new EventEmitter();
   @Output() newPanelEmitter: EventEmitter<any> = new EventEmitter();
   @Output() editModeEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() checkForOverflowEmitter: EventEmitter<any> = new EventEmitter();
 
   private editMode: boolean = false;
 

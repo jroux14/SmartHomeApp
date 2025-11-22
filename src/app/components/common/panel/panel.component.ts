@@ -13,6 +13,7 @@ import {of, switchMap} from "rxjs";
 import {MatSelectChange} from "@angular/material/select";
 import {MatRadioChange} from "@angular/material/radio";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {shRoom} from "../../../interfaces/room.interface";
 
 @Component({
   selector: 'sh-panel',
@@ -47,7 +48,7 @@ export class PanelComponent extends CommonComponent{
   selectedFilterTypeControl: FormControl<any | null> = new FormControl<any | null>(null);
 
   filterList: any[] | undefined;
-  selectedFilterValue: string | null = null;
+  selectedFilterValue: string = "";
   selectedFilterControl: FormControl<any | null> = new FormControl<any | null>(null);
 
   override ngOnInit() {
@@ -56,17 +57,8 @@ export class PanelComponent extends CommonComponent{
     if (this.panel) {
       this.selectedFilterType = this.panel.panelFilterCriteria;
       this.selectedFilterTypeControl.setValue(this.selectedFilterType);
-      if (this.selectedFilterType == DEVICE_ROOM_FILTER_VALUE) {
-        this.filterList = this.authService.getRooms();
-        if (this.panel.data && this.panel.data.filterValue) {
-          this.selectedFilterValue = this.panel.data.filterValue;
-          this.selectedFilterControl.setValue(this.panel.data.filterValue);
-        } else {
-          this.selectedFilterValue = this.filterList[0];
-          this.selectedFilterControl.setValue(this.filterList[0]);
-        }
-      }
     }
+    this.updateFilterList();
   }
 
   ngAfterViewChecked() {
@@ -76,6 +68,67 @@ export class PanelComponent extends CommonComponent{
     }
   }
 
+  getPanelDevices(): shDevice[] {
+    if (this.selectedFilterType == DEVICE_ROOM_FILTER_VALUE) {
+      return this.deviceService.getDevicesByRoomId(this.selectedFilterValue);
+    } else if (this.selectedFilterType == DEVICE_TYPE_FILTER_VALUE) {
+      return this.deviceService.getDevicesByType(this.selectedFilterValue);
+    } else {
+      return [];
+    }
+  }
+
+  createRoomList(roomList: shRoom[]): any[] {
+    let rVal: any[] = [];
+    for (let room of roomList) {
+      rVal.push({"value": room.roomId, "display": room.roomName});
+    }
+    return rVal;
+  }
+
+  initFilterSelection() {
+    let optionFound: boolean = false;
+    if (this.panel && this.filterList){
+      if (this.panel.data && this.panel.data.filterValue) {
+        for (let option of this.filterList) {
+          if (this.panel.data.filterValue == option.value) {
+            this.selectedFilterValue = this.panel.data.filterValue;
+            this.selectedFilterControl.setValue(this.panel.data.filterValue);
+            optionFound = true;
+          }
+        }
+        if (optionFound) {
+          return;
+        } else {
+          this.selectedFilterValue = this.filterList[0].value;
+          this.selectedFilterControl.setValue(this.filterList[0].value);
+          setTimeout(() => {
+            this.updateFilter(this.selectedFilterValue);
+            this.dataService.checkForOverflowEmitter.emit();
+          });
+        }
+      } else {
+        this.selectedFilterValue = this.filterList[0].value;
+        this.selectedFilterControl.setValue(this.filterList[0].value);
+        setTimeout(() => {
+          this.updateFilter(this.selectedFilterValue);
+          this.dataService.checkForOverflowEmitter.emit();
+        });
+      }
+    }
+  }
+
+  updateFilterList() {
+    if (this.panel) {
+      if (this.selectedFilterType == DEVICE_ROOM_FILTER_VALUE) {
+        this.filterList = this.createRoomList(this.authService.getRooms());
+        this.initFilterSelection();
+      } else if (this.selectedFilterType == DEVICE_TYPE_FILTER_VALUE) {
+        this.filterList = this.deviceService.getDeviceTypes();
+        this.initFilterSelection();
+      }
+    }
+  }
 
   animateTopBarHeight() {
     if (!this.topBar || !this.topBarContent || this.isAnimating) return;
@@ -110,31 +163,36 @@ export class PanelComponent extends CommonComponent{
   getFilterDisplay(): string {
     if (this.filterList) {
       for (let filter of this.filterList) {
-        if (this.selectedFilterType == DEVICE_ROOM_FILTER_VALUE){
-          if (filter.roomId == this.selectedFilterValue) {
-            return filter.roomName.toUpperCase();
-          }
+        if (filter.value == this.selectedFilterValue) {
+          return filter.display.toUpperCase();
         }
       }
     }
     return "";
   }
 
-  onFilterChange(event: MatSelectChange) {
+  updateFilter(filterVal: string) {
     if (this.panel && this.panel.data) {
-      console.log(event);
-      console.log(this.filterList);
-      this.selectedFilterValue = event.value;
+      this.selectedFilterValue = filterVal;
       this.panel.data.filterValue = this.selectedFilterValue;
-      this.addSubscription(this.authService.updatePanelData(this.panel).subscribe());
+      this.addSubscription(this.authService.updatePanel(this.panel).subscribe());
     }
+  }
+
+  onFilterChange(event: MatSelectChange) {
+    setTimeout(() => {
+      this.updateFilter(event.value);
+      this.dataService.checkForOverflowEmitter.emit();
+    });
   }
 
   onFilterTypeChange(event: MatRadioChange) {
     if (this.panel && this.panel.data) {
-      console.log(event.value);
-      this.panel.panelFilterCriteria = event.value;
-      this.addSubscription(this.authService.updatePanelData(this.panel).subscribe());
+      this.selectedFilterType = event.value;
+      this.selectedFilterTypeControl.setValue(this.selectedFilterType);
+      this.panel.panelFilterCriteria = this.selectedFilterType;
+      this.updateFilterList();
+      this.addSubscription(this.authService.updatePanel(this.panel).subscribe());
     }
   }
 
@@ -164,4 +222,7 @@ export class PanelComponent extends CommonComponent{
         ).subscribe());
     }
   }
+
+  protected readonly DEVICE_TYPE_FILTER_VALUE = DEVICE_TYPE_FILTER_VALUE;
+  protected readonly DEVICE_ROOM_FILTER_VALUE = DEVICE_ROOM_FILTER_VALUE;
 }

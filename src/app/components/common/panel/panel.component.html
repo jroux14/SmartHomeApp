@@ -14,7 +14,7 @@
         </mat-radio-group>
         <mat-form-field class="form-field">
           <mat-select [formControl]="selectedFilterControl" (selectionChange)="onFilterChange($event)">
-            <mat-option *ngFor="let filter of filterList" [value]="filter.roomId">{{filter.roomName}}</mat-option>
+            <mat-option *ngFor="let filter of filterList" [value]="filter.value">{{filter.display}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -25,10 +25,15 @@
     <mat-divider class="fullWidth positionRelative floatLeft divider"></mat-divider>
   </div>
   <div *ngIf="selectedFilterControl.value" class="displayFlex devicesContainer" #scrollContainer>
-        <scroll-btns [scrollTarget]="scrollContainer" class="scrollBtns"></scroll-btns>
-    <div *ngFor="let device of deviceService.getDevicesByRoomId(selectedFilterControl.value); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+    <scroll-btns [scrollTarget]="scrollContainer" class="scrollBtns"></scroll-btns>
+    <div *ngFor="let device of getPanelDevices(); trackBy: trackByDeviceId" class="devicePanel">
       <sh-device [device]="device"></sh-device>
     </div>
+<!--    <div *ngIf="selectedFilterType == DEVICE_TYPE_FILTER_VALUE">-->
+<!--      <div *ngFor="let device of deviceService.getDevicesByType(selectedFilterValue); let i = index; trackBy: trackByDeviceId" class="devicePanel">-->
+<!--        <sh-device [device]="device"></sh-device>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </div>
 

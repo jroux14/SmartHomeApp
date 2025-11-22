@@ -14,6 +14,16 @@ export class ScrollButtonsComponent extends CommonComponent {
   showScrollButtons: boolean = false;
   scrollAmount = 270;
 
+  override ngOnInit() {
+    super.ngOnInit();
+
+    this.addSubscription(
+      this.dataService.checkForOverflowEmitter.subscribe(resp => {
+        this.checkForOverflow();
+      })
+    )
+  }
+
   override ngAfterViewInit() {
     super.ngAfterViewInit();
 
