@@ -25,7 +25,6 @@ export class AppInitializerService {
 
                 this.authService.setCurrentUser(resp.user);
                 this.authService.setDashboard(dashboard);
-                console.log(dashboard)
                 if (rooms && this.authService.getRooms().length == 0) {
                   rooms.forEach((room: shRoom) => {
                     this.authService.addRoom(room);

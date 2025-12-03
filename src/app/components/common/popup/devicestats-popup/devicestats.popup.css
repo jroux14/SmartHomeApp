@@ -1,0 +1,9 @@
+/*.popup {*/
+/*  height: 60vh !important;*/
+/*  width: 100vh !important;*/
+/*}*/
+:host {
+  height: 100%;           /* same as your inline style */
+  width: 100%;            /* optional */
+  display: block;         /* or block */
+}

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
 import { CommonComponent } from '../common/common.component';
 import {shPanel} from "../../../interfaces/panel.interface";
 import {
@@ -29,6 +29,7 @@ import {shRoom} from "../../../interfaces/room.interface";
   ]
 })
 export class PanelComponent extends CommonComponent{
+  protected cd = inject(ChangeDetectorRef);
 
   @Input()
   panel: shPanel | undefined;

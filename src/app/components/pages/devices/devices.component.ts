@@ -41,9 +41,9 @@ export class DevicesComponent extends CommonComponent{
         return this.deviceService.registerDevice(res)
       })
     ).subscribe((res) => {
-      if (res && res.success && res.id && this.newDevice) {
+      if (res && res.success && this.newDevice) {
         this.popupService.closePopup();
-        this.newDevice.id = res.id;
+        // this.newDevice.dev = res.id;
         this.deviceService.addDevice(this.newDevice);
       } else {
         if (res.error) {

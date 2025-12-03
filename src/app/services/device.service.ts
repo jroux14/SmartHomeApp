@@ -10,6 +10,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { interval, map, Observable, of, switchMap } from 'rxjs';
 import { shDevice } from '../interfaces/device.interface';
+import {shDeviceReading} from "../interfaces/devicereading.interface";
 
 @Injectable()
 export class DeviceService {
@@ -104,24 +105,27 @@ export class DeviceService {
   }
 
   public updateDeviceData(device: shDevice): Observable<shDevice> {
-    if (!device.id || !this.devices.includes(device)) {
+    if (!device.deviceName || !this.devices.includes(device)) {
       return of(device); // Return current state if nothing to do
     }
 
-    return this.getDeviceDataById(device.id).pipe(
-      map(resp => {
-        if (resp.data && resp.success) {
-          const updatedDevice = { ...device, data: resp.data }; // immutable update
-          const index = this.devices.findIndex(d => d.id === device.id);
-          if (index !== -1) {
-            this.devices[index] = updatedDevice;
-            console.log(this.devices[index]);
+    if (device.id) {
+      return this.getDeviceDataById(device.id).pipe(
+        map(resp => {
+          if (resp.data && resp.success) {
+            const updatedDevice = { ...device, data: resp.data }; // immutable update
+            const index = this.devices.findIndex(d => d.deviceName === device.deviceName);
+            if (index !== -1) {
+              this.devices[index] = updatedDevice;
+            }
+            return updatedDevice;
           }
-          return updatedDevice;
-        }
-        return device; // fallback to original if fetch fails
-      })
-    );
+          return device; // fallback to original if fetch fails
+        })
+      );
+    } else {
+      return of(device);
+    }
   }
 
   public getDeviceDataById(deviceId: String) : Observable<any> {
@@ -132,6 +136,11 @@ export class DeviceService {
   public getAllDeviceData() : Observable<any> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data", { headers });
+  }
+
+  public getSensorReadingsByDeviceId(deviceId: string, start: string, end: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/sensor/data/" + deviceId + "?start=" + start + "&end=" + end, { headers });
   }
 
   public toggleSwitch(deviceName: string) : Observable<any> {

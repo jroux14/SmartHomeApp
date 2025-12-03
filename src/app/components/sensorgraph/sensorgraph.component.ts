@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Chart } from 'chart.js/auto';
-import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../common/common/common.component';
+import {shDeviceReading} from "../../interfaces/devicereading.interface";
+import {Chart, ChartConfiguration} from "chart.js";
+import 'chart.js/auto';
 
 @Component({
   selector: 'sensorgraph',
@@ -9,66 +10,64 @@ import { CommonComponent } from '../common/common/common.component';
   styleUrls: ['./sensorgraph.component.css']
 })
 export class SensorGraphComponent extends CommonComponent {
-  @Input()
-  device: shDevice | undefined;
-  @Input()
-  componentID: string = '';
+  @Input() deviceId: string | undefined;
 
-  graphCtx: any;
-  thisChart: Chart | undefined
+  private chart!: Chart;
 
   override ngOnInit(): void {
     super.ngOnInit();
   }
 
-  override ngAfterViewInit() {
+  override ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    this.initGraph();
+    this.fetchAndRenderChart();
   }
 
-  initGraph() {
-    if(this.componentID != '') {
-        this.graphCtx = document.getElementById(this.componentID);
-    }
-    if(this.graphCtx) {
-        let chart = new Chart(this.graphCtx, {
-            type: 'line',
-            data: {
-                labels: ['07:32:57','10:12:05','12:42:37','13:50:39','16:25:45','20:37:59'],
-                datasets: [
-                    {
-                        label: 'test',
-                        data: [1, 2, 3, 4, 5, 6]
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Degrees F'
-                        },
-                    },
-                    x: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Time (hh:mm:ss)'
-                        },
-                    }
-                },
-                maintainAspectRatio: false
-            }
-        });
+  private fetchAndRenderChart(): void {
+    const start = '2025-12-01T00:00:00Z';
+    const end = '2025-12-03T23:59:59Z';
 
-        if(chart) {
-            this.thisChart = chart;
+    if (this.deviceId && this.deviceId !== '') {
+      this.addSubscription(this.deviceService.getSensorReadingsByDeviceId(this.deviceId, start, end).subscribe(resp => {
+        let readings: shDeviceReading[] = resp.data;
+        const sensorMap = new Map<string, { timestamps: string[], values: number[] }>();
+
+        if(readings.length > 0){
+          readings.forEach(r => {
+            const name = r.metadata.name;
+            if (!sensorMap.has(name)) {
+              sensorMap.set(name, { timestamps: [], values: [] });
+            }
+            sensorMap.get(name)!.timestamps.push(new Date(r.timestamp).toLocaleString());
+            sensorMap.get(name)!.values.push(r.value);
+          });
+
+          const firstSensor = sensorMap.values().next().value;
+          const labels = firstSensor.timestamps;
+
+          const datasets = Array.from(sensorMap.entries()).map(([name, data], i) => ({
+            label: name,
+            data: data.values,
+            borderColor: ['red','blue','green','orange','purple','brown','cyan'][i % 7],
+            fill: false,
+          }));
+
+          const config: ChartConfiguration<'line'> = {
+            type: 'line',
+            data: { labels, datasets },
+            options: { responsive: true, maintainAspectRatio: false }
+          };
+
+          const canvas = document.getElementById('sensorChart') as HTMLCanvasElement;
+          if (this.chart) {
+            this.chart.destroy();
+          }
+          this.chart = new Chart(canvas, config);
+        } else {
+          this.openSnackBar("No readings to display", "Ok");
         }
 
+      }));
     }
-
   }
-
 }

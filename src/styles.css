@@ -41,11 +41,11 @@
 
 /* Google Font Icon Style */
 .material-symbols-outlined {
-    font-variation-settings:
-     'FILL' 0,
-     'wght' 100,
-     'GRAD' 0,
-     'opsz' 24
+  font-variation-settings:
+   'FILL' 0,
+   'wght' 0,
+   'GRAD' 0,
+   'opsz' 24
 }
 
 /* Gridster Styles */
@@ -124,128 +124,133 @@ gridster .gridster-row {
 }
 
 .mat-toolbar {
-    background: var(--sh-darkgrey);
+  background: var(--sh-darkgrey);
 }
 
 .mat-form-field-flex {
-    color: var(--sh-darkgrey);
-    background-color: rgb(232, 240, 254);
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+  color: var(--sh-darkgrey);
+  background-color: rgb(232, 240, 254);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: .4375rem .5rem;
+  padding: .4375rem .5rem;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
-    will-change: transform;
-    margin-left: 0.5rem;
-    color: var(--sh-lightgrey);
+  will-change: transform;
+  margin-left: 0.5rem;
+  color: var(--sh-lightgrey);
 }
 
 .mat-form-field-ripple {
-    background-color: var(--sh-offwhite);
+  background-color: var(--sh-offwhite);
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-    background-color: var(--sh-offwhite);
+  background-color: var(--sh-offwhite);
 }
 
 .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: var(--sh-lightblue);
+  background-color: var(--sh-lightblue);
 }
 
 .mat-form-field.mat-focused .mat-form-field-label {
-    color: var(--sh-darkgrey);
+  color: var(--sh-darkgrey);
 }
 
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
-    transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.001px);
-    width: 133.3333333333%;
+  transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.001px);
+  width: 133.3333333333%;
 }
 
 .mat-form-field-appearance-legacy.mat-form-field-can-float .mat-form-field-autofill-control:-webkit-autofill+.mat-form-field-label-wrapper .mat-form-field-label {
-    transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.00101px);
-    width: 133.3333433333%;
+  transform: translateY(-1rem) scale(0.75) perspective(100px) translateZ(0.00101px);
+  width: 133.3333433333%;
 }
 
 .mat-input-element {
-    caret-color: var(--sh-darkgrey);
+  caret-color: var(--sh-darkgrey);
 }
 
 .mat-raised-button {
-    background-color: var(--sh-darkgrey);
-    color: var(--sh-offwhite);
-    font-family: var(--primary-font);
-    font-weight: 300;
+  background-color: var(--sh-darkgrey);
+  color: var(--sh-offwhite);
+  font-family: var(--primary-font);
+  font-weight: 300;
 }
 
 .mat-slide-toggle {
-    height: 22px !important;
+  height: 22px !important;
 }
 
 .mat-slide-toggle-bar {
-    width: 45px !important;
-    height: 22px !important;
-    border-radius: 25px !important;
+  width: 45px !important;
+  height: 22px !important;
+  border-radius: 25px !important;
 }
 
 .mat-slide-toggle-thumb-container {
-    width: 25px !important;
-    height: 25px !important;
-    left: -2px !important;
-    top: -2px !important;
+  width: 25px !important;
+  height: 25px !important;
+  left: -2px !important;
+  top: -2px !important;
 }
 
 .mat-slide-toggle-thumb {
-    height: 25px !important;
-    width: 25px !important;
+  height: 25px !important;
+  width: 25px !important;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
-    transform: translate3d(22px, 0, 0) !important;
+  transform: translate3d(22px, 0, 0) !important;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: var(--sh-darkgrey);
+  background-color: var(--sh-darkgrey);
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: var(--sh-lightblue);
-    box-shadow: inset 0 0 0.5rem var(--sh-lightgrey);
+  background-color: var(--sh-lightblue);
+  box-shadow: inset 0 0 0.5rem var(--sh-lightgrey);
 }
 
 .mat-snack-bar-container {
-    min-width: 300px !important;
+  min-width: 300px !important;
 }
 
 .mat-snack-bar-container {
-    color: var(--sh-offwhite);
-    background: var(--sh-lightgrey);
+  color: var(--sh-offwhite);
+  background: var(--sh-lightgrey);
 }
 
 .mat-simple-snackbar-action {
-    color: var(--sh-lightblue);
+  color: var(--sh-lightblue);
 }
 
 .mat-menu-panel {
-    background: var(--sh-darkgrey) !important;
+  background: var(--sh-darkgrey) !important;
+}
+
+.mat-expansion-panel-content {
+  font: var(--primary-font);
 }
 
 .input:-internal-autofill-selected {
-    background-color: var(--sh-offwhite) !important;
+  background-color: var(--sh-offwhite) !important;
 }
 
 html {
-    height: 100vh;
+  height: 100vh;
 }
 
 body {
-    font-family: var(--primary-font) !important;
-    height: 100vh;
-    margin: 0;
-    background-color: var(--sh-lightgrey);
+  font: var(--primary-font) !important;
+  font-family: var(--primary-font) !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  background-color: var(--sh-lightgrey) !important;
 }
 
 .pageContent {
@@ -253,51 +258,55 @@ body {
 }
 
 .floatLeft {
-    float: left !important;
+  float: left !important;
 }
 
 .floatRight {
-    float: right !important;
+  float: right !important;
 }
 
 .inlineBlock {
-    display: inline-block !important;
+  display: inline-block !important;
 }
 
 .style-darkgrey {
-    color: var(--sh-darkgrey) !important;
+  color: var(--sh-darkgrey) !important;
 }
 
 .style-lightgrey {
-    color: var(--sh-lightgrey) !important;
+  color: var(--sh-lightgrey) !important;
 }
 
 .style-offwhite {
-    color: var(--sh-offwhite) !important;
+  color: var(--sh-offwhite) !important;
 }
 
 .darkBG {
-    background-color: var(--sh-darkgrey) !important;
+  background-color: var(--sh-darkgrey) !important;
 }
 
 .lightBG {
-    background-color: var(--sh-lightgrey) !important;
+  background-color: var(--sh-lightgrey) !important;
 }
 
 .whiteBG {
-    background-color: var(--sh-offwhite) !important;
+  background-color: var(--sh-offwhite) !important;
 }
 
 .centerText {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 .rightText {
-    text-align: right !important;
+  text-align: right !important;
 }
 
 .leftText {
-    text-align: left !important;
+  text-align: left !important;
+}
+
+.fontLarge {
+  font-size: 2.5rem !important;
 }
 
 .fullWidth {
@@ -313,7 +322,11 @@ body {
 }
 
 .thirdWidth {
-    width: calc(100% / 3) !important;
+  width: calc(100% / 3) !important;
+}
+
+.twoThirdWidth {
+  width: calc((100% / 3) * 2) !important;
 }
 
 .justifyCenter {
@@ -333,40 +346,53 @@ body {
 }
 
 .flexGrow {
-    flex-grow: 1 !important;
+  flex-grow: 1 !important;
 }
 
 .positionRelative {
-    position: relative !important;
+  position: relative !important;
 }
 
 .positionFixed {
   position: fixed !important;
 }
 
+.sensorReadingsDialog .mat-dialog-content {
+  padding: 1rem;
+  height: 100%;
+}
+
+.sensorReadingsDialog .mat-dialog-container {
+  filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
+  border-radius: 1rem;
+  width: 50vw;
+  background-color: var(--sh-lightgrey);
+  color: var(--sh-offwhite);
+}
+
 .loginDialog .mat-dialog-container {
-    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
-    border-radius: 1rem;
-    padding-bottom: 3rem;
-    width: 20rem;
-    background-color: var(--sh-lightgrey);
-    color: var(--sh-offwhite);
+  filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
+  border-radius: 1rem;
+  padding-bottom: 3rem;
+  width: 20rem;
+  background-color: var(--sh-lightgrey);
+  color: var(--sh-offwhite);
 }
 
 .newAccountDialog .mat-dialog-container {
-    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
-    border-radius: 1rem;
-    padding-bottom: 3rem;
-    width: 20rem;
-    background-color: var(--sh-lightgrey);
-    color: var(--sh-offwhite);
+  filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
+  border-radius: 1rem;
+  padding-bottom: 3rem;
+  width: 20rem;
+  background-color: var(--sh-lightgrey);
+  color: var(--sh-offwhite);
 }
 
 .baseDialog .mat-dialog-container {
-    filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
-    border-radius: 1rem;
-    padding-bottom: 3rem;
-    width: 20rem;
-    background-color: var(--sh-lightgrey);
-    color: var(--sh-offwhite);
+  filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
+  border-radius: 1rem;
+  padding-bottom: 3rem;
+  width: 20rem;
+  background-color: var(--sh-lightgrey);
+  color: var(--sh-offwhite);
 }

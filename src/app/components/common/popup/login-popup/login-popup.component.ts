@@ -92,9 +92,7 @@ export class LoginPopupComponent extends CommonComponent {
 
   areFieldsComplete(): boolean {
     if(this.isNewUser) {
-      console.log("hello")
       if (this.firstName == '' || this.email == '' || this.phoneNum == '' || this.username == '' || this.password == '' || this.confirmPassword == '') {
-        console.log('fail')
         return false;
       } else {
         return true;

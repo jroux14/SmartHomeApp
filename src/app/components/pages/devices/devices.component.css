@@ -1,16 +1,44 @@
 
+.wrapper {
+  margin-top: 4rem;
+  height: calc(100% - 4rem);
+}
+
 .scrollBtns {
   margin-top: 3.5rem;
 }
 
-.addButton {
-  margin: 1rem 0 0 2rem;
+.editButtons {
+  position: absolute;
+  top: 0.75rem;
+  right: -0.03rem;
+  z-index: 1;
 }
 
 .buttonStyle {
+  position: relative;
   width: 2.5rem;
   height: 2.5rem;
   background-color: var(--sh-lightblue);
+  margin-right: 1rem;
+  z-index: 1;
+}
+
+.slide-button {
+  position: relative;
+  transform: translateX(0);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Active state: slide out to the right */
+.slide-button.active {
+  transform: translateX(-0.5rem); /* adjust as needed */
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
 }
 
 .devices-page-container {

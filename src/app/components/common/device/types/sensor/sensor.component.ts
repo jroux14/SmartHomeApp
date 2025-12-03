@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input, KeyValueDiffers} from '@angular/core';
 import { DragDropItemComponent } from '../../../dragdrop/dragdropitem/dragdrop.item';
 import {shDevice} from "../../../../../interfaces/device.interface";
 
@@ -8,11 +8,12 @@ import {shDevice} from "../../../../../interfaces/device.interface";
   styleUrls: ['./sensor.component.css'],
 })
 export class SensorComponent extends DragDropItemComponent {
+  protected diffUtil = inject(KeyValueDiffers);
 
   @Input()
   device: shDevice | undefined;
 
-  private differ = this.differs.find({}).create();
+  private differ = this.diffUtil.find({}).create();
 
   override ngOnInit(): void {
     super.ngOnInit();

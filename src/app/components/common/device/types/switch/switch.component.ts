@@ -19,6 +19,9 @@ export class SwitchComponent extends DragDropItemComponent {
 
   override ngOnInit(): void {
     super.ngOnInit();
+
+    // dev switches won't ever fire a change so just call this to init text
+    this.updateSwitchState();
   }
 
   override ngOnChanges(changes: SimpleChanges) {
@@ -36,7 +39,6 @@ export class SwitchComponent extends DragDropItemComponent {
       // First time initialization
       this.updateSwitchState();
     }
-
   }
 
   updateSwitchState(): void {

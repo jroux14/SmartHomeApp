@@ -1,18 +1,29 @@
-.dragHandle {
-    cursor: move;
-    margin: 1rem;
-    margin-top: 0.35rem;
-    margin-bottom: 0;
-    flex-grow: 1;
+.statusIndicator {
+  cursor: default;
+  margin: 0.35rem 0.5rem 0 1rem;
+  flex-grow: 1;
+  font-weight: 100;
+  color: #41BE5C;
+}
+
+.expandButton {
+  background-color: transparent;
+  border: 0;
+  margin: 0.35rem 0.5rem 0 1rem;
+  cursor: pointer;
+  font-weight: 100;
+  /*flex-grow: 1;*/
+}
+
+.expandButton:hover {
+  color: var(--sh-lightblue);
 }
 
 .deleteButton {
     background-color: transparent;
     border: 0;
-    margin: 1rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
-    cursor: pointer;
+  margin: 0.35rem 0.5rem 0 1rem;
+  cursor: pointer;
     /*flex-grow: 1;*/
 }
 

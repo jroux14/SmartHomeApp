@@ -48,6 +48,7 @@ import { ConfirmationSnackbarComponent } from './components/common/confirmations
 import { DeviceComponent } from "./components/common/device/device.component";
 import { PanelComponent } from "./components/common/panel/panel.component";
 import { ScrollButtonsComponent } from "./components/common/scroll-btns/scroll-btns.component";
+import { DeviceStatsPopup } from "./components/common/popup/devicestats-popup/devicestats.popup";
 
 import { AuthInterceptor } from './utils/auth.interceptor';
 import { AppInitializerService } from "./services/appinitializer.service";
@@ -77,7 +78,8 @@ export function appInitializerFactory(appInitService: AppInitializerService) {
     SwitchComponent,
     SensorComponent,
     ConfirmationSnackbarComponent,
-    ScrollButtonsComponent
+    ScrollButtonsComponent,
+    DeviceStatsPopup
   ],
   imports: [
     BrowserModule,

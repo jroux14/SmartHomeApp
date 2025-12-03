@@ -4,6 +4,7 @@ import { shDevice } from 'src/app/interfaces/device.interface';
 import { TYPE_SENSOR, TYPE_OUTLET } from 'src/app/constants/constants.smarthome';
 import { of, switchMap } from "rxjs";
 import {ConfirmationSnackbarComponent} from "../confirmationsnackbar/confirmationsnackbar.component";
+import {DeviceStatsPopup} from "../popup/devicestats-popup/devicestats.popup";
 
 @Component({
   selector: 'sh-device',
@@ -20,12 +21,29 @@ export class DeviceComponent extends CommonComponent{
   }
   deviceType: string = '';
 
+  editModeActive: boolean = false;
+
   override ngOnInit() {
     super.ngOnInit();
 
     if(this.device) {
       this.deviceType = this.device.deviceType;
     }
+
+    this.addSubscription(this.dataService.editModeEmitter.subscribe(resp => {
+      this.editModeActive = resp;
+    }));
+  }
+
+  showDeviceStats() {
+    let popupData = {
+      "device": this.device
+    }
+    this.popupService.openPopup(DeviceStatsPopup, {
+      height: '60vh',
+      panelClass: 'sensorReadingsDialog',
+      data: popupData
+    });
   }
 
   deleteDevice() {

@@ -1,7 +1,7 @@
 .wrapper {
-  height: calc(100% - 2rem);
+  height: calc(100% - 3.5rem);
   min-width: 430px !important;
-  margin-top: 2rem !important;
+  margin-top: 3.5rem !important;
 }
 
 .grid {
