@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { CommonComponent } from '../common/common/common.component';
-import {shDeviceReading} from "../../interfaces/devicereading.interface";
-import {Chart, ChartConfiguration} from "chart.js";
+import { Component, Input, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
+import { shDeviceReading } from "../../interfaces/devicereading.interface";
+import { Chart, ChartConfiguration } from "chart.js";
 import 'chart.js/auto';
+import {CommonComponent} from "../common/common/common.component";
 
 @Component({
   selector: 'sensorgraph',
@@ -11,63 +11,96 @@ import 'chart.js/auto';
 })
 export class SensorGraphComponent extends CommonComponent {
   @Input() deviceId: string | undefined;
+  @Input() selectedSensor: string = 'voltage';
+  @Input() selectedTimescale: string = 'day';
 
   private chart!: Chart;
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-  }
-
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    this.fetchAndRenderChart();
+    this.loadData();
   }
 
-  private fetchAndRenderChart(): void {
-    const start = '2025-12-01T00:00:00Z';
-    const end = '2025-12-03T23:59:59Z';
+  override ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+    if (changes['selectedSensor'] || changes['selectedTimescale'] || changes['deviceId']) {
+      this.loadData();
+    }
+  }
 
-    if (this.deviceId && this.deviceId !== '') {
-      this.addSubscription(this.deviceService.getSensorReadingsByDeviceId(this.deviceId, start, end).subscribe(resp => {
-        let readings: shDeviceReading[] = resp.data;
-        const sensorMap = new Map<string, { timestamps: string[], values: number[] }>();
+  private loadData(): void {
+    if (!this.deviceId) return;
 
-        if(readings.length > 0){
-          readings.forEach(r => {
-            const name = r.metadata.name;
-            if (!sensorMap.has(name)) {
-              sensorMap.set(name, { timestamps: [], values: [] });
-            }
-            sensorMap.get(name)!.timestamps.push(new Date(r.timestamp).toLocaleString());
-            sensorMap.get(name)!.values.push(r.value);
-          });
+    const { start, end } = this.computeTimeRange(this.selectedTimescale);
 
-          const firstSensor = sensorMap.values().next().value;
-          const labels = firstSensor.timestamps;
+    this.addSubscription(
+      this.deviceService.getSensorReadingsByDeviceId(this.deviceId, start, end)
+        .subscribe(resp => {
+          const readings: shDeviceReading[] = resp.data || [];
 
-          const datasets = Array.from(sensorMap.entries()).map(([name, data], i) => ({
-            label: name,
-            data: data.values,
-            borderColor: ['red','blue','green','orange','purple','brown','cyan'][i % 7],
-            fill: false,
-          }));
+          // Filter for selected sensor
+          const filtered = readings.filter(r => r.metadata.name === this.selectedSensor);
+          if (filtered.length === 0) {
+            this.openSnackBar("No readings to display", "Ok");
+            if (this.chart) this.chart.destroy();
+            return;
+          }
+
+          const labels = filtered.map(r => new Date(r.timestamp).toLocaleString());
+          const data = filtered.map(r => r.value as number);
+
+          const textColor = getComputedStyle(document.documentElement)
+            .getPropertyValue('--sh-offwhite')
+            .trim();
+          const lineColor = getComputedStyle(document.documentElement)
+            .getPropertyValue('--sh-lightblue')
+            .trim();
 
           const config: ChartConfiguration<'line'> = {
             type: 'line',
-            data: { labels, datasets },
-            options: { responsive: true, maintainAspectRatio: false }
+            data: {
+              labels,
+              datasets: [{
+                label: this.selectedSensor,
+                data,
+                borderColor: lineColor,
+                fill: false
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: { ticks: { color: textColor } },
+                y: { ticks: { color: textColor } }
+              },
+              plugins: {
+                legend: { labels: { color: textColor } }
+              }
+            }
           };
 
           const canvas = document.getElementById('sensorChart') as HTMLCanvasElement;
-          if (this.chart) {
-            this.chart.destroy();
-          }
+          if (this.chart) this.chart.destroy();
           this.chart = new Chart(canvas, config);
-        } else {
-          this.openSnackBar("No readings to display", "Ok");
-        }
+        })
+    );
+  }
 
-      }));
+  private computeTimeRange(timescale: string): { start: string; end: string } {
+    const now = new Date();
+    let startDate = new Date();
+
+    switch(timescale) {
+      case 'hour': startDate.setHours(now.getHours() - 1); break;
+      case 'day': startDate.setDate(now.getDate() - 1); break;
+      case 'month': startDate.setMonth(now.getMonth() - 1); break;
+      case 'year': startDate.setFullYear(now.getFullYear() - 1); break;
+      case '5 years': startDate.setFullYear(now.getFullYear() - 5); break;
+      case 'lifetime': startDate = new Date(0); break;
+      default: startDate.setDate(now.getDate() - 1);
     }
+
+    return { start: startDate.toISOString(), end: now.toISOString() };
   }
 }

@@ -29,7 +29,7 @@
               </mat-expansion-panel-header>
               <div class="displayFlex devicesContainer" #allContainer>
                 <scroll-btns [scrollTarget]="allContainer" class="scrollBtns"></scroll-btns>
-                <div *ngFor="let device of deviceService.getDevices(); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+                <div *ngFor="let device of getDevicesByPanelType('', ''); let i = index; trackBy: trackByDeviceId" class="devicePanel">
                   <sh-device [device]="device"></sh-device>
                 </div>
               </div>
@@ -49,8 +49,7 @@
               </mat-expansion-panel-header>
               <div class="displayFlex devicesContainer" #roomContainer>
                 <scroll-btns [scrollTarget]="roomContainer" class="scrollBtns"></scroll-btns>
-                <!--          TODO: Add a function to populate devices by room            -->
-                <div *ngFor="let device of deviceService.getDevicesByRoomId(room.roomId); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+                <div *ngFor="let device of getDevicesByPanelType(this.TYPE_ROOM, room.roomId); let i = index; trackBy: trackByDeviceId" class="devicePanel">
                   <sh-device [device]="device"></sh-device>
                 </div>
               </div>
@@ -70,8 +69,7 @@
               </mat-expansion-panel-header>
               <div class="displayFlex devicesContainer" #typeContainer>
                 <scroll-btns [scrollTarget]="typeContainer" class="scrollBtns"></scroll-btns>
-                <!--          TODO: Add a function to populate devices by room            -->
-                <div *ngFor="let device of deviceService.getDevicesByType(type.type); let i = index; trackBy: trackByDeviceId" class="devicePanel">
+                <div *ngFor="let device of getDevicesByPanelType(this.TYPE_DEVICE, type.type); let i = index; trackBy: trackByDeviceId" class="devicePanel">
                   <sh-device [device]="device"></sh-device>
                 </div>
               </div>

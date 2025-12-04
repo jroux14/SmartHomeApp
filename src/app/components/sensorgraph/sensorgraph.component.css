@@ -1,8 +1,6 @@
 
 .sensor-graph-container {
-  height: 100%;     /* take 20% of available dialog content height */
-  width: 90%;
-  /*display: flex;*/
+  height: 90%;     /* take 20% of available dialog content height */
 }
 
 .canvas {

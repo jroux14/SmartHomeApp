@@ -64,6 +64,23 @@ gridster .gridster-row {
 
 /* Angular Material Styles */
 
+.chart-content {
+  height: 100% !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: var(--sh-offwhite) !important;
+
+}
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: var(--sh-lightblue) !important;
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: var(--sh-lightblue) !important;
+}
+
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: var(--sh-lightblue) !important;
 }
@@ -358,14 +375,13 @@ body {
 }
 
 .sensorReadingsDialog .mat-dialog-content {
-  padding: 1rem;
   height: 100%;
 }
 
 .sensorReadingsDialog .mat-dialog-container {
   filter: drop-shadow(0px 0px 6px rgb(32, 32, 32));
   border-radius: 1rem;
-  width: 50vw;
+  width: 90vw;
   background-color: var(--sh-lightgrey);
   color: var(--sh-offwhite);
 }

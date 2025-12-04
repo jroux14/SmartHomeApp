@@ -40,7 +40,7 @@ export class DeviceComponent extends CommonComponent{
       "device": this.device
     }
     this.popupService.openPopup(DeviceStatsPopup, {
-      height: '60vh',
+      height: '75vh',
       panelClass: 'sensorReadingsDialog',
       data: popupData
     });

@@ -5,7 +5,7 @@ import { shDevice } from 'src/app/interfaces/device.interface';
 import { CommonComponent } from '../../common/common/common.component';
 import { LoginPopupComponent } from '../../common/popup/login-popup/login-popup.component';
 import { DevicePagePopup } from '../../common/popup/devicepage-popup/devicepage.popup';
-import { switchMap } from "rxjs";
+import {Observable, switchMap} from "rxjs";
 import { shRoom } from "../../../interfaces/room.interface";
 import {NAME_OUTLET, NAME_SENSOR, TYPE_OUTLET, TYPE_SENSOR} from "../../../constants/constants.smarthome";
 
@@ -16,6 +16,9 @@ import {NAME_OUTLET, NAME_SENSOR, TYPE_OUTLET, TYPE_SENSOR} from "../../../const
 })
 export class DevicesComponent extends CommonComponent{
   @ViewChild("sideNav") sideNav: MatSidenav | undefined;
+
+  TYPE_ROOM: string = "ROOM_PANEL";
+  TYPE_DEVICE: string = "DEVICE_TYPE_PANEL"
 
   deviceTypes: any[] = [
     { name: NAME_OUTLET + 's', type: TYPE_OUTLET},
@@ -43,7 +46,6 @@ export class DevicesComponent extends CommonComponent{
     ).subscribe((res) => {
       if (res && res.success && this.newDevice) {
         this.popupService.closePopup();
-        // this.newDevice.dev = res.id;
         this.deviceService.addDevice(this.newDevice);
       } else {
         if (res.error) {
@@ -82,6 +84,16 @@ export class DevicesComponent extends CommonComponent{
 
     if (this.sideNav) {
       this.dataService.setSideNav(this.sideNav);
+    }
+  }
+
+  getDevicesByPanelType(type: string, typeValue: string): shDevice[] {
+    if (type == this.TYPE_DEVICE) {
+      return this.deviceService.getDevicesByType(typeValue);
+    } else if (type == this.TYPE_ROOM) {
+      return this.deviceService.getDevicesByRoomId(typeValue);
+    } else {
+      return this.deviceService.getDevices();
     }
   }
 

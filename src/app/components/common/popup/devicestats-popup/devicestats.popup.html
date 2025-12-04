@@ -1,5 +1,31 @@
-<div>
-  <mat-dialog-content>
-    <sensorgraph [deviceId]="getDeviceId()"></sensorgraph>
+<div class="device-stats-popup">
+  <!-- Header with device name and dropdowns -->
+  <div class="popup-header">
+    <div class="device-name">{{ device?.deviceNameFriendly }}</div>
+
+    <div class="popup-controls">
+      <mat-form-field appearance="fill">
+        <mat-label>Sensor</mat-label>
+        <mat-select [(value)]="selectedSensor" (selectionChange)="onSensorChange($event.value)">
+          <mat-option *ngFor="let s of sensorTypes" [value]="s">{{ s }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Timescale</mat-label>
+        <mat-select [(value)]="selectedTimescale" (selectionChange)="onTimescaleChange($event.value)">
+          <mat-option *ngFor="let t of timescales" [value]="t">{{ t }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Chart container -->
+  <mat-dialog-content class="chart-content">
+    <sensorgraph
+      [deviceId]="getDeviceId()"
+      [selectedSensor]="selectedSensor"
+      [selectedTimescale]="selectedTimescale">
+    </sensorgraph>
   </mat-dialog-content>
 </div>
