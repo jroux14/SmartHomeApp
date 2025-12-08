@@ -1,9 +1,10 @@
 <div class="device-stats-popup">
   <!-- Header with device name and dropdowns -->
   <div class="popup-header">
-    <div class="device-name">{{ device?.deviceNameFriendly }}</div>
+<!--    <div class="thirdWidth"></div>-->
+    <div class="device-name thirdWidth">{{ device!.deviceNameFriendly.toUpperCase() }}</div>
 
-    <div class="popup-controls">
+    <div class="popup-controls thirdWidth">
       <mat-form-field appearance="fill">
         <mat-label>Sensor</mat-label>
         <mat-select [(value)]="selectedSensor" (selectionChange)="onSensorChange($event.value)">
@@ -14,7 +15,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Timescale</mat-label>
         <mat-select [(value)]="selectedTimescale" (selectionChange)="onTimescaleChange($event.value)">
-          <mat-option *ngFor="let t of timescales" [value]="t">{{ t }}</mat-option>
+          <mat-option *ngFor="let t of timescaleKeys!" [value]="t">{{ timescales![t].display }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

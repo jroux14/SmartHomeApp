@@ -24,12 +24,16 @@
 }
 
 .device-name {
-  font-weight: bold;
+  text-align: start;
+  font-weight: lighter;
   font-size: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 3rem;
 }
 
 .popup-controls {
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
 }
 

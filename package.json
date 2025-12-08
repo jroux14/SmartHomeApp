@@ -24,6 +24,7 @@
     "angular-gridster2": "^14.1.4",
     "bcrypt": "^5.1.0",
     "chart.js": "^4.2.1",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "ngx-markdown": "^14.0.1",
     "rxjs": "~7.5.0",
     "rxjs-compat": "^6.6.7",

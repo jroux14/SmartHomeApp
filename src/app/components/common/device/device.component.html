@@ -1,14 +1,14 @@
 <div class="deviceContainer">
   <div class="topBtns">
 <!-- TODO: Wire up status indicator   -->
-    <div class="flexGrow thirdWidth floatLeft positionRelative">
+    <div class="floatLeft positionRelative">
       <i class="material-symbols-outlined statusIndicator">android_wifi_4_bar</i>
     </div>
-    <label *ngIf="device" class="centerText thirdWidth floatLeft positionRelative title">{{device.deviceNameFriendly}}</label>
-    <div *ngIf="editModeActive" class="thirdWidth floatLeft positionRelative">
+    <label *ngIf="device" class="centerText flexGrow floatLeft positionRelative title">{{device.deviceNameFriendly}}</label>
+    <div *ngIf="editModeActive" class="floatLeft positionRelative">
       <button type="button" class="material-symbols-outlined floatRight deleteButton" (click)="deleteDevice()">delete</button>
     </div>
-    <div *ngIf="!editModeActive" class="thirdWidth floatLeft positionRelative">
+    <div *ngIf="!editModeActive" class="floatLeft positionRelative">
       <button type="button" class="material-symbols-outlined floatRight expandButton" (click)="showDeviceStats()">monitoring</button>
     </div>
   </div>

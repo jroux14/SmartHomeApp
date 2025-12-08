@@ -11,6 +11,37 @@ export class DataService {
   @Output() editModeEmitter: EventEmitter<any> = new EventEmitter();
   @Output() checkForOverflowEmitter: EventEmitter<any> = new EventEmitter();
 
+  private TIMESCALES: Record<string, {
+    display: string;
+    format: (d: Date) => string;
+  }> = {
+    hour: {
+      display: "Last Hour",
+      format: d => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },
+    day: {
+      display: "Last Day",
+      format: d => d.toLocaleTimeString([], { hour: '2-digit' })
+    },
+    month: {
+      display: "Last Month",
+      format: d => d.toLocaleDateString([], { month: 'short', day: 'numeric' })
+    },
+    year: {
+      display: "Last Year",
+      format: d => d.toLocaleDateString([], { month: 'short' })
+    },
+    five_years: {
+      display: "Last 5 Years",
+      format: d => d.getFullYear().toString()
+    },
+    lifetime: {
+      display: "All Time",
+      format: d => d.getFullYear().toString()
+    }
+  };
+  private timescaleKeys: string[] = Object.keys(this.TIMESCALES);
+
   private editMode: boolean = false;
 
   sideNav: MatSidenav | undefined;
@@ -34,5 +65,13 @@ export class DataService {
 
   getSideNav(): MatSidenav | undefined {
     return this.sideNav;
+  }
+
+  getTimescales(): Record<string, { display: string; format: (d: Date) => string; }> {
+    return this.TIMESCALES;
+  }
+
+  getTimescaleKeys(): string[] {
+    return this.timescaleKeys;
   }
 }

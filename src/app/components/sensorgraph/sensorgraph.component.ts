@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { shDeviceReading } from "../../interfaces/devicereading.interface";
 import { Chart, ChartConfiguration } from "chart.js";
+import 'chartjs-adapter-date-fns';
 import 'chart.js/auto';
 import {CommonComponent} from "../common/common/common.component";
 
@@ -46,7 +47,7 @@ export class SensorGraphComponent extends CommonComponent {
             return;
           }
 
-          const labels = filtered.map(r => new Date(r.timestamp).toLocaleString());
+          const labels = filtered.map(r => r.timestamp); // raw ISO timestamps
           const data = filtered.map(r => r.value as number);
 
           const textColor = getComputedStyle(document.documentElement)
@@ -64,19 +65,32 @@ export class SensorGraphComponent extends CommonComponent {
                 label: this.selectedSensor,
                 data,
                 borderColor: lineColor,
-                fill: false
+                fill: false,
+                tension: 0.4
               }]
             },
             options: {
               responsive: true,
               maintainAspectRatio: false,
               scales: {
-                x: { ticks: { color: textColor } },
+                x: {
+                  type: 'time',
+                  time: {
+                    unit: this.getTimeUnit(this.selectedTimescale)
+                  },
+                  ticks: {
+                    color: textColor,
+                    callback: (value) => {
+                      const d = new Date(value as number);
+                      return this.dataService.getTimescales()[this.selectedTimescale].format(d);
+                    }
+                  }
+                },
                 y: { ticks: { color: textColor } }
               },
               plugins: {
                 legend: { labels: { color: textColor } }
-              }
+              },
             }
           };
 
@@ -87,20 +101,63 @@ export class SensorGraphComponent extends CommonComponent {
     );
   }
 
+  getTimeUnit(scale: string): any {
+    switch(scale) {
+      case 'hour': return 'minute';   // multiple readings per hour → group by minutes
+      case 'day': return 'hour';
+      case 'month': return 'day';
+      case 'year': return 'month';
+      case '5 years':
+      case 'lifetime':
+        return 'year';
+      default:
+        return 'day';
+    }
+  }
+
+
   private computeTimeRange(timescale: string): { start: string; end: string } {
     const now = new Date();
-    let startDate = new Date();
+    let start: Date;
+    let end: Date = now;
 
-    switch(timescale) {
-      case 'hour': startDate.setHours(now.getHours() - 1); break;
-      case 'day': startDate.setDate(now.getDate() - 1); break;
-      case 'month': startDate.setMonth(now.getMonth() - 1); break;
-      case 'year': startDate.setFullYear(now.getFullYear() - 1); break;
-      case '5 years': startDate.setFullYear(now.getFullYear() - 5); break;
-      case 'lifetime': startDate = new Date(0); break;
-      default: startDate.setDate(now.getDate() - 1);
+    switch (timescale) {
+      case 'hour': {
+        // Last 60 minutes
+        start = new Date(now.getTime() - 60 * 60 * 1000);
+        break;
+      }
+      case 'day': {
+        // Today 00:00:00 → now
+        start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+        break;
+      }
+      case 'month': {
+        // First day of THIS month → now
+        start = new Date(now.getFullYear(), now.getMonth(), 1);
+        break;
+      }
+      case 'year': {
+        // Jan 1st THIS year → now
+        start = new Date(now.getFullYear(), 0, 1);
+        break;
+      }
+      case 'five_years': {
+        // Jan 1st of (current year - 5)
+        start = new Date(now.getFullYear() - 5, 0, 1);
+        break;
+      }
+      case 'lifetime': {
+        // Start of epoch
+        start = new Date(0);
+        break;
+      }
+      default:
+        start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
     }
-
-    return { start: startDate.toISOString(), end: now.toISOString() };
+    return {
+      start: start.toISOString(),
+      end: end.toISOString()
+    };
   }
 }
