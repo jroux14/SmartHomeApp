@@ -7,7 +7,7 @@ import {
   TYPE_SENSOR
 } from '../constants/constants.smarthome'
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { interval, map, Observable, of, switchMap } from 'rxjs';
 import { shDevice } from '../interfaces/device.interface';
 import {shDeviceReading} from "../interfaces/devicereading.interface";
@@ -141,6 +141,38 @@ export class DeviceService {
   public getSensorReadingsByDeviceId(deviceId: string, start: string, end: string): Observable<any> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/sensor/data/" + deviceId + "?start=" + start + "&end=" + end, { headers });
+  }
+
+  public getHourlySensorReadingsByDeviceId(deviceId: string, sensorName: string, start: string, end: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const params = new HttpParams()
+      .set('start', start)
+      .set('end', end);
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/" + sensorName + "/data/" + deviceId + "/hourly", { headers: headers, params: params });
+  }
+
+  public getDailySensorReadingsByDeviceId(deviceId: string, sensorName: string, start: string, end: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const params = new HttpParams()
+      .set('start', start)
+      .set('end', end);
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/" + sensorName + "/data/" + deviceId + "/daily", { headers: headers, params: params });
+  }
+
+  public getMonthlySensorReadingsByDeviceId(deviceId: string, sensorName: string, start: string, end: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const params = new HttpParams()
+      .set('start', start)
+      .set('end', end);
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/" + sensorName + "/data/" + deviceId + "/monthly", { headers: headers, params: params });
+  }
+
+  public getYearlySensorReadingsByDeviceId(deviceId: string, sensorName: string, startYear: number, endYear: number): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const params = new HttpParams()
+      .set('start', startYear)
+      .set('end', endYear);
+    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/" + sensorName + "/data/" + deviceId + "/yearly", { headers: headers, params: params });
   }
 
   public toggleSwitch(deviceName: string) : Observable<any> {
