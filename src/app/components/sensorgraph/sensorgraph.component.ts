@@ -34,24 +34,19 @@ export class SensorGraphComponent extends CommonComponent {
     if (!this.deviceId) throw new Error('Device ID not set');
     const sensor = this.selectedSensor;
 
-    // Compute start/end based on timescale
     const { start, end } = this.computeTimeRange(this.selectedTimescale);
 
     switch (this.selectedTimescale) {
       case 'hour':
-        // last hour of raw readings
         return this.deviceService.getSensorReadingsByDeviceId(this.deviceId, start, end);
 
       case 'day':
-        // aggregated hourly readings for the day
         return this.deviceService.getHourlySensorReadingsByDeviceId(this.deviceId, sensor, start, end);
 
       case 'month':
-        // aggregated daily readings for the month
         return this.deviceService.getDailySensorReadingsByDeviceId(this.deviceId, sensor, start, end);
 
       case 'year':
-        // aggregated monthly readings for the year
         return this.deviceService.getMonthlySensorReadingsByDeviceId(this.deviceId, sensor, start, end);
 
       case 'five_years':

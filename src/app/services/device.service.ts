@@ -28,31 +28,41 @@ export class DeviceService {
   public testSensorCount: number = 0;
 
   constructor(public http: HttpClient) {
-    interval(1000)
+    interval(5000)
       .pipe(
         switchMap(() => {
-          if (this.devices.length != 0) {
-            return this.getAllDeviceData();
-          } else {
-            return of(null);
-          }
+          return this.getAllDeviceData();
         })
       ).subscribe((res) => {
-        if (res && res.success && res.data) {
-          this.devices = this.devices.map(device => {
-            const deviceId = device.id;
-            const updatedData = deviceId ? res.data[deviceId] : null;
+        const existingById = new Map(
+          this.devices.map(d => [d.id, d])
+        );
 
-            if (!updatedData) return device;
+        if (res) {
+          console.log(res);
+          this.devices = res.map(serverDevice => {
+            const local = existingById.get(serverDevice.id);
 
-            const currentDataStr = JSON.stringify(device.data);
-            const newDataStr = JSON.stringify(updatedData);
-
-            if (currentDataStr !== newDataStr) {
-              return { ...device, data: updatedData }; // only overwrite if different
+            // New device → just add it
+            if (!local) {
+              return serverDevice;
             }
 
-            return device; // unchanged
+            // Existing device → only replace if data changed
+            const localDataStr = JSON.stringify(local.data);
+            const serverDataStr = JSON.stringify(serverDevice.data);
+
+            if (localDataStr !== serverDataStr) {
+              return {
+                ...local,
+                data: serverDevice.data,
+                deviceNameFriendly: serverDevice.deviceNameFriendly,
+                roomId: serverDevice.roomId
+              };
+            }
+
+            // No meaningful change
+            return local;
           });
         }
       });
@@ -133,9 +143,9 @@ export class DeviceService {
     return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data/" + deviceId, { headers });
   }
 
-  public getAllDeviceData() : Observable<any> {
+  public getAllDeviceData() : Observable<shDevice[]> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get(ROOT_URL + DEVICE_ENDPOINT + "get/data", { headers });
+    return this.http.get<shDevice[]>(ROOT_URL + DEVICE_ENDPOINT + "get/data", { headers });
   }
 
   public getSensorReadingsByDeviceId(deviceId: string, start: string, end: string): Observable<any> {
@@ -190,10 +200,10 @@ export class DeviceService {
 
   public deleteDevice(device: shDevice): Observable<any> {
     this.devices.splice(this.devices.indexOf(device), 1);
-    return this.http.post<any>(ROOT_URL + DEVICE_ENDPOINT + "delete", device);
+    return this.http.delete<any>(ROOT_URL + DEVICE_ENDPOINT + "delete/" + device.id);
   }
 
-  public registerDevice(device: shDevice): Observable<any> {
-    return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "register", device);
+  public registerDevice(request: any): Observable<any> {
+    return this.http.post(ROOT_URL + DEVICE_ENDPOINT + "register", request);
   }
 }

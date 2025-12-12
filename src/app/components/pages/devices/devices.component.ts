@@ -40,14 +40,15 @@ export class DevicesComponent extends CommonComponent{
 
     this.addSubscription(this.deviceService.newDeviceEmitter.pipe(
       switchMap(res => {
-        this.newDevice = res;
+        // this.newDevice = res;
         return this.deviceService.registerDevice(res)
       })
     ).subscribe((res) => {
-      if (res && res.success && res.id && this.newDevice) {
+      console.log(res);
+      if (res) {
         this.popupService.closePopup();
-        this.newDevice.id = res.id;
-        this.deviceService.addDevice(this.newDevice);
+        // this.newDevice.id = res.id;
+        // this.deviceService.addDevice(this.newDevice);
       } else {
         if (res.error) {
           let ref = this.openSnackBar(res.error, "Try Again");

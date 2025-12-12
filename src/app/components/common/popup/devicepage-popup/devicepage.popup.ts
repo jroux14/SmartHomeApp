@@ -47,7 +47,7 @@ export class DevicePagePopup extends CommonComponent {
       super.ngOnInit();
 
       this.addSubscription(this.deviceService.getAvailableDevices().subscribe(resp => {
-        this.devices = resp.devices;
+        this.devices = resp;
         this.devices.push(this.devSwitch);
         this.devices.push(this.devSensor);
       }));
@@ -79,19 +79,19 @@ export class DevicePagePopup extends CommonComponent {
 
     if(deviceNameFriendly && deviceNameFriendly != '' && roomAssignment && roomAssignment != '' && this.device) {
       if(this.authService.getCurrentUser()) {
-        let newDevice: shDevice | null = null;
+        // let newDevice: shDevice | null = null;
         if(this.device.deviceName == this.devSwitch.deviceName) {
           this.device.deviceName = this.device.deviceName + '-' + this.deviceService.getTestSwitchCount();
           this.deviceService.addTestSwitch();
-          newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
+          // newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
         } else if (this.device.deviceName == this.devSensor.deviceName) {
           this.device.deviceName = this.device.deviceName + '-' + this.deviceService.getTestSensorCount();
           this.deviceService.addTestSensor();
-          newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
+          // newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
         } else {
-          newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
+          // newDevice = new shDevice(this.authService.getCurrentUserId(), this.device.deviceType, this.device.deviceName, deviceNameFriendly, roomAssignment, this.device.data);
         }
-        this.deviceService.newDeviceEmitter.emit(newDevice);
+        this.deviceService.newDeviceEmitter.emit({"deviceName": this.device.deviceName, "deviceNameFriendly": deviceNameFriendly, "roomId": roomAssignment});
       } else {
         snackBarMsg = {msg: 'Must be logged in', action: 'Try Again'};
       }
